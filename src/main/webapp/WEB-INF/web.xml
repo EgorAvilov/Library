@@ -1,0 +1,47 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+    <listener>
+        <listener-class>by.itechart.library.controller.ApplicationListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>by.itechart.library.controller.MainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Sign-up</servlet-name>
+        <jsp-file>/sign-up.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Sign-up</servlet-name>
+        <url-pattern>/sign-up</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/sign-in</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>MainPage</servlet-name>
+        <jsp-file>/WEB-INF/main-page.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MainPage</servlet-name>
+        <url-pattern>/main-page</url-pattern>
+    </servlet-mapping>
+</web-app>
