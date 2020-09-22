@@ -31,13 +31,16 @@ public class SQLRequest {
     /**
      * запросы для таблицы Borrow Record
      */
-    public static final String GET_BORROW_RECORDS_BY_USER_ID = "SELECT * FROM borrow_records WHERE reader_id = ? LIMIT ?,?";
+    public static final String GET_BORROW_RECORDS_BY_USER_ID = "SELECT * FROM borrow_records WHERE user_id = ? LIMIT ?,?";
     public static final String GET_ALL_BORROW_RECORDS = "SELECT * FROM borrow_records LIMIT ?, ?";
-    public static final String CREATE_BORROW_RECORD = "INSERT INTO borrow_record (reader_id, borrow_date, due_date, book_id ) values(?,?,?,?)";
+    public static final String CREATE_BORROW_RECORD = "INSERT INTO borrow_record (user_id, borrow_date, due_date, book_id ) values(?,?,?,?)";
     public static final String UPDATE_BORROW_RECORD_BY_ADMIN = "UPDATE borrow_records SET  status_id=?, comment=? WHERE id=?";
     public static final String GET_BORROW_RECORD_BY_ID = "SELECT * FROM borrow_records WHERE id = ? LIMIT ?,?";
     public static final String UPDATE_BORROW_RECORD_BY_USER = "UPDATE borrow_records SET return_date=? WHERE id=?";
     public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_ADMIN = "SELECT COUNT (id) FROM borrow_records";
-    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_USER = "SELECT COUNT (id) FROM borrow_records WHERE reader_id=?";
+    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_USER = "SELECT COUNT (id) FROM borrow_records WHERE user_id=?";
+
+    public static final String GET_ALL_BORROW_RECORDS_FOR_FIRST_REMIND="";
+
 
 }

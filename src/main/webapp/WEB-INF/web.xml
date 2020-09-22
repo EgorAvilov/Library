@@ -27,7 +27,7 @@
 
     <servlet>
         <servlet-name>Index</servlet-name>
-        <jsp-file>/index.jsp</jsp-file>
+        <jsp-file>/sign-in.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>

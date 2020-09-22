@@ -12,7 +12,7 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <link rel="stylesheet" type="text/css" href="css/sign-in.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/library-sign-in.css">
 
     <title>Sign in</title>
 </head>
@@ -21,7 +21,7 @@
         <div class="modal-content">
 
             <div class="col-12 user-img">
-                <img src="face.png" alt="">
+                <img src="resource/img/face.png" alt="">
             </div>
 
             <div class="col-12 form-input">

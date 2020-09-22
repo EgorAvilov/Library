@@ -50,11 +50,11 @@ public class ResultCreatorImpl implements ResultCreator {
 
     @Override
     public BorrowRecord getNextBorrowRecord(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong(ColumnName.BORROW_RECORD_BOOK_ID);
+        long id = resultSet.getLong(ColumnName.BORROW_RECORD_ID);
         long userId = resultSet.getLong(ColumnName.BORROW_RECORD_USER_ID);
-        LocalDate borrowDate = resultSet.getDate(ColumnName.BOOK_PUBLISH_DATE).toLocalDate();
-        LocalDate dueDate = resultSet.getDate(ColumnName.BOOK_PUBLISH_DATE).toLocalDate();
-        LocalDate returnDate = resultSet.getDate(ColumnName.BOOK_PUBLISH_DATE).toLocalDate();
+        LocalDate borrowDate = resultSet.getDate(ColumnName.BORROW_RECORD_BORROW_DATE).toLocalDate();
+        LocalDate dueDate = resultSet.getDate(ColumnName.BORROW_RECORD_DUE_DATE).toLocalDate();
+        LocalDate returnDate = resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE).toLocalDate();
         int statusId = resultSet.getInt(ColumnName.BORROW_RECORD_STATUS_ID);
         String comment = resultSet.getNString(ColumnName.BORROW_RECORD_COMMENT);
         long bookId = resultSet.getLong(ColumnName.BORROW_RECORD_BOOK_ID);
