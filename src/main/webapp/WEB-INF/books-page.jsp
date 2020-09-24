@@ -5,19 +5,26 @@
 <%--
   Created by IntelliJ IDEA.
   User: Lenovo
-  Date: 18.09.2020
-  Time: 23:52
+  Date: 23.09.2020
+  Time: 21:38
   To change this template use File | Settings | File Templates.
 --%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Books</title>
 </head>
 <body>
-<h1>HELLO!!!!!</h1>
-<form action="controller" method="get">
-    <input type="hidden" name="command" value="view-all-books">
-    <button type="submit">Show books</button>
-</form>
+<tr>
+    <th>id</th>
+    <th>title</th>
+</tr>
+<c:forEach items="${requestScope.books}" var="book">
+    <tr>
+        <td>${book.id}</td>
+    </tr>
+    <tr>
+        <td>${book.title}</td>
+    </tr>
+</c:forEach>
 </body>
 </html>

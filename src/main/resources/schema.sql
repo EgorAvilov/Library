@@ -62,8 +62,6 @@ create table if not exists borrow_records
 	book_id int not null,
 	status_id int null,
 	comment varchar(255) null,
-	first_remind tinyint(1) default 0 not null,
-	second_remind tinyint(1) default 0 not null,
 	constraint borrow_records_book_info_id_fk
 		foreign key (book_id) references books (id)
 			on update cascade on delete cascade,

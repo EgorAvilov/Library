@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
   User: Lenovo
@@ -5,18 +9,17 @@
   Time: 23:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <link rel="stylesheet" type="text/css" href="resource/css/library-sign-in.css">
+    <link rel="stylesheet" type="text/css" href="resource/css/sign-in.css">
 
     <title>Sign in</title>
 </head>
-<body>
+<body style="background-image: url('resource/img/background.jpg')">
     <div class="col-sm-9 main-section">
         <div class="modal-content">
 
@@ -25,7 +28,7 @@
             </div>
 
             <div class="col-12 form-input">
-                <form action="controller" method="post" oninput="return validateSignIn()">
+                <form action="controller" method="post">
                     <div class="input-group flex-nowrap">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="addon-wrapping">

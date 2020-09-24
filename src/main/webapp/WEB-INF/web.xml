@@ -34,7 +34,9 @@
         <url-pattern>/sign-in</url-pattern>
     </servlet-mapping>
 
-
+    <welcome-file-list>
+        <welcome-file>/sign-in.jsp</welcome-file>
+    </welcome-file-list>
 
     <servlet>
         <servlet-name>MainPage</servlet-name>
@@ -43,5 +45,14 @@
     <servlet-mapping>
         <servlet-name>MainPage</servlet-name>
         <url-pattern>/main-page</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BooksPage</servlet-name>
+        <jsp-file>/WEB-INF/books-page.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BooksPage</servlet-name>
+        <url-pattern>/books-page</url-pattern>
     </servlet-mapping>
 </web-app>
