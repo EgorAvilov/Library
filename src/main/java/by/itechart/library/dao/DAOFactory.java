@@ -12,12 +12,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DAOFactory {
+
     @Getter
     private static final DAOFactory instance = new DAOFactory();
+
     @Getter
     private UserDAO userDAO = new UserDAOImpl();
+
     @Getter
     private BookDAO bookDAO = new BookDAOImpl();
+
     @Getter
     private BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAOImpl();
 

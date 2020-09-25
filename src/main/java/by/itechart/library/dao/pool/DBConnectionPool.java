@@ -1,7 +1,8 @@
 package by.itechart.library.dao.pool;
 
 import by.itechart.library.dao.exception.ConnectionPoolException;
-import com.zaxxer.hikari.*;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -9,6 +10,7 @@ import lombok.extern.log4j.Log4j;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 @Log4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DBConnectionPool {
@@ -18,7 +20,7 @@ public class DBConnectionPool {
 
     private DataSource dataSource;
 
-    public static DBConnectionPool getInstance(){
+    public static DBConnectionPool getInstance() {
         return INSTANCE;
     }
 
@@ -26,7 +28,7 @@ public class DBConnectionPool {
         dataSource = new HikariDataSource(initConfig());
     }
 
-    public void destroy(){
+    public void destroy() {
         dataSource = null;
     }
 
@@ -39,8 +41,8 @@ public class DBConnectionPool {
         }
     }
 
-    private HikariConfig initConfig(){
-        HikariConfig hikariConfig = new HikariConfig(){{
+    private HikariConfig initConfig() {
+        HikariConfig hikariConfig = new HikariConfig() {{
             setDriverClassName(resourceBundle.getDBValue(DBConstant.DB_DRIVER));
             setJdbcUrl(resourceBundle.getDBValue(DBConstant.DB_URL));
             setUsername(resourceBundle.getDBValue(DBConstant.DB_USERNAME));

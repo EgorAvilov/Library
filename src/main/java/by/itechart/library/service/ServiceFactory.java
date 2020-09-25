@@ -18,18 +18,25 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServiceFactory {
+
     @Getter
     private static final ServiceFactory instance = new ServiceFactory();
+
     @Getter
     private UserService userService = new UserServiceImpl();
+
     @Getter
     private CommonService commonService = new CommonServiceImpl();
+
     @Getter
     private AdminService adminService = new AdminServiceImpl();
+
     @Getter
     private BookValidator bookValidation = new BookValidatorImpl();
+
     @Getter
     private UserValidator userValidation = new UserValidatorImpl();
+
     @Getter
     private BorrowRecordValidator borrowRecordValidation = new BorrowRecordValidatorImpl();
 }

@@ -4,7 +4,6 @@ import by.itechart.library.controller.command.Command;
 import by.itechart.library.controller.command.ParameterName;
 import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
-import by.itechart.library.controller.util.api.AttributesInitializer;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.Role;
 import by.itechart.library.entity.User;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+
 @Log4j
 public class SignUpCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -27,9 +27,7 @@ public class SignUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         PathCreator pathCreator = utilFactory.getPathCreator();
-        AttributesInitializer attributeInitializer = utilFactory.getAttributesInitializer();
         String path = pathCreator.getError();
-
 
         String username = request.getParameter(ParameterName.USERNAME);
         String password = request.getParameter(ParameterName.PASSWORD);
@@ -40,10 +38,12 @@ public class SignUpCommand implements Command {
         String phoneNumber = request.getParameter(ParameterName.PHONE_NUMBER);
         LocalDate dateOfRegistration = LocalDate.now();
         Role role;
-        if (request.getSession().isNew()) {
+        if (request.getSession()
+                   .isNew()) {
             role = Role.USER;
         } else {//проверить на работоспособность
-            role = Role.values()[(int) request.getSession().getAttribute(ParameterName.ROLE)];
+            role = Role.values()[(int) request.getSession()
+                                              .getAttribute(ParameterName.ROLE)];
         }
 
 
@@ -58,16 +58,14 @@ public class SignUpCommand implements Command {
         user.setPhoneNumber(phoneNumber);
         user.setRole(role);//сделать по проверке сессии, если админ то другое
         user.setDateOfRegistration(dateOfRegistration);
-        //  user.setDeletedStatus(); ставиться само
 
         HttpSession session = request.getSession();
 
         try {
             commonService.signUp(user);
             path = pathCreator.getSignIn();
-           // attributeInitializer.setSessionAttributesUser(session, user);
-            session.setAttribute(ParameterName.USER,user);
-            path=pathCreator.getMainPage();
+            session.setAttribute(ParameterName.USER, user);
+            path = pathCreator.getMainPage();
         } catch (ServiceException e) {
             log.error(e);
             throw new CommandException(e);

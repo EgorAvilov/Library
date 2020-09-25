@@ -11,6 +11,7 @@ public class PathCreatorImpl implements PathCreator {
     private final static String MAIN_PAGE = "main-page";
     private final static String EDIT_BOOK = "edit-book";
     private final static String EDIT_PROFILE = "edit-profile";
+
     @Override
     public String getError() {
         return ERROR;

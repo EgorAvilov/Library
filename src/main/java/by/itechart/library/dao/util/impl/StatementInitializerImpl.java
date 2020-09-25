@@ -55,17 +55,17 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void addBook(PreparedStatement statement, Book book) throws SQLException {
-            statement.setBytes(1, book.getCover());
-            statement.setNString(2, book.getTitle());
-            statement.setNString(3, book.getAuthors());
-            statement.setNString(4, book.getPublisher());
-            statement.setDate(5, Date.valueOf(book.getPublishDate()));
-            statement.setNString(6, book.getGenres());
-            statement.setInt(7, book.getPageCount());
-            statement.setNString(8, book.getISBN());
-            statement.setNString(9, book.getDescription());
-            statement.setInt(10, book.getTotalAmount());
-            statement.setInt(11, book.getAvailableAmount());
+        statement.setBytes(1, book.getCover());
+        statement.setNString(2, book.getTitle());
+        statement.setNString(3, book.getAuthors());
+        statement.setNString(4, book.getPublisher());
+        statement.setDate(5, Date.valueOf(book.getPublishDate()));
+        statement.setNString(6, book.getGenres());
+        statement.setInt(7, book.getPageCount());
+        statement.setNString(8, book.getISBN());
+        statement.setNString(9, book.getDescription());
+        statement.setInt(10, book.getTotalAmount());
+        statement.setInt(11, book.getAvailableAmount());
     }
 
 

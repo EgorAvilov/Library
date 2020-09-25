@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 @Log4j
 public class ViewAllUsersCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -26,6 +27,7 @@ public class ViewAllUsersCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         HttpSession session = request.getSession();
+
         int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
         int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
 

@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 @Log4j
 public class ViewProfileCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -36,8 +37,8 @@ public class ViewProfileCommand implements Command {
                 user = commonService.getProfile(userId);
                 request.setAttribute(ParameterName.USER, user);
                 path = pathCreator.getUserPage();
-            }else{
-                path=pathCreator.getError();
+            } else {
+                path = pathCreator.getError();
             }
         } catch (ServiceException e) {
             log.error(e);

@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 @Log4j
 public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     private DAOUtilFactory utilFactory = DAOUtilFactory.getInstance();
@@ -233,7 +234,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addRemindDate(statement,remindDate);
+            statementInitializer.addRemindDate(statement, remindDate);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 EmailSenderDto emailSenderDto = resultCreator.getNextEmailSender(resultSet);

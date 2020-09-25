@@ -7,5 +7,4 @@ public interface BorrowRecordValidator {
 
     public boolean validateAdd(BorrowRecord borrowRecord) throws ServiceException;
 
-
 }

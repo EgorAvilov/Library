@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
 @Log4j
 public class BookDAOImpl implements BookDAO {
@@ -183,7 +182,7 @@ public class BookDAOImpl implements BookDAO {
             statement = connection.prepareStatement(request);
             resultSet = statement.executeQuery();
             resultSet.last();
-            numberOfRows =resultSet.getInt(1);
+            numberOfRows = resultSet.getInt(1);
             while (resultSet.next()) {
                 numberOfRows++;
             }
@@ -226,7 +225,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public void takeBook(long bookId) throws DAOException {
         int availableAmount = getAvailableAmountOfBooks(bookId);
-        if(availableAmount<=0){
+        if (availableAmount <= 0) {
             throw new DAOException("No free books");
         }
         availableAmount--;

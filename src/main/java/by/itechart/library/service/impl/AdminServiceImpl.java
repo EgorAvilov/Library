@@ -13,6 +13,7 @@ import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
+
 @Log4j
 public class AdminServiceImpl implements AdminService {
 
@@ -23,7 +24,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addBook(Book book) throws ServiceException {
-        try {//проветь id
+        try {
             bookDAO.addBook(book);
         } catch (DAOException e) {
             log.error(e);
@@ -102,9 +103,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int getNumberOfBorrowRecordRows() throws ServiceException {
-        int numberOfRows=0;
+        int numberOfRows = 0;
         try {
-            numberOfRows=borrowRecordDAO.getNumberOfRowsByAdmin();
+            numberOfRows = borrowRecordDAO.getNumberOfRowsByAdmin();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -114,9 +115,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int getNumberOfUserRows() throws ServiceException {
-        int numberOfRows=0;
+        int numberOfRows = 0;
         try {
-            numberOfRows=userDAO.getNumberOfRows();
+            numberOfRows = userDAO.getNumberOfRows();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);

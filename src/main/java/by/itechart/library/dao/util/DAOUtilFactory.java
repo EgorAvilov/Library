@@ -13,10 +13,13 @@ public class DAOUtilFactory {
 
     @Getter
     private static final DAOUtilFactory Instance = new DAOUtilFactory();
+
     @Getter
     private ResultCreator resultCreator = new ResultCreatorImpl();
+
     @Getter
     private ResourceCloser resourceCloser = new ResourceCloserImpl();
+
     @Getter
     private StatementInitializer statementInitializer = new StatementInitializerImpl();
 }

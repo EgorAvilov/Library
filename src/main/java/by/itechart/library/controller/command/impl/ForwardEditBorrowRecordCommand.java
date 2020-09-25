@@ -6,7 +6,6 @@ import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
-import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
@@ -16,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 @Log4j
 public class ForwardEditBorrowRecordCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -26,7 +26,7 @@ public class ForwardEditBorrowRecordCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         PathCreator pathCreator = utilFactory.getPathCreator();
-        HttpSession session= request.getSession();
+        HttpSession session = request.getSession();
         String path = pathCreator.getError();
         int borrowRecordId = Integer.parseInt(request.getParameter(ParameterName.BORROW_RECORD_ID));
 
@@ -38,7 +38,7 @@ public class ForwardEditBorrowRecordCommand implements Command {
                 borrowRecord = commonService.getBorrowRecord(borrowRecordId);
                 request.setAttribute(ParameterName.BORROW_RECORD, borrowRecord);
                 path = pathCreator.getEditBook();
-            }else {
+            } else {
                 path = pathCreator.getError();
             }
         } catch (ServiceException e) {

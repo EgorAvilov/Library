@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
 @Log4j
 public class ViewAllBooksCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();

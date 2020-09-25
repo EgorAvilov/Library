@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
 @Log4j
 public class SearchBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -25,14 +26,14 @@ public class SearchBookCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
 
-        String title=request.getParameter(ParameterName.SEARCH_TITLE);
-        String authors=request.getParameter(ParameterName.SEARCH_AUTHORS);
-        String genres=request.getParameter(ParameterName.SEARCH_GENRES);
-        String description=request.getParameter(ParameterName.SEARCH_DESCRIPTION);
+        String title = request.getParameter(ParameterName.SEARCH_TITLE);
+        String authors = request.getParameter(ParameterName.SEARCH_AUTHORS);
+        String genres = request.getParameter(ParameterName.SEARCH_GENRES);
+        String description = request.getParameter(ParameterName.SEARCH_DESCRIPTION);
 
         List<Book> books;
         try {
-            books = commonService.searchBooks(title,authors,genres,description);
+            books = commonService.searchBooks(title, authors, genres, description);
             request.setAttribute(ParameterName.BOOKS, books);
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {

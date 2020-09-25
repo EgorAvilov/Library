@@ -5,7 +5,6 @@ import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.entity.*;
 import by.itechart.library.service.dto.EmailSenderDto;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,7 +18,8 @@ public class ResultCreatorImpl implements ResultCreator {
         String title = resultSet.getNString(ColumnName.BOOK_TITLE);
         String authors = resultSet.getNString(ColumnName.BOOK_AUTHORS);
         String publisher = resultSet.getNString(ColumnName.BOOK_PUBLISHER);
-        LocalDate publishDate = resultSet.getDate(ColumnName.BOOK_PUBLISH_DATE).toLocalDate();
+        LocalDate publishDate = resultSet.getDate(ColumnName.BOOK_PUBLISH_DATE)
+                                         .toLocalDate();
         String genres = resultSet.getNString(ColumnName.BOOK_GENRES);
         int pageCount = resultSet.getInt(ColumnName.BOOK_PAGE_COUNT);
         String ISBN = resultSet.getNString(ColumnName.BOOK_ISBN);
@@ -53,9 +53,12 @@ public class ResultCreatorImpl implements ResultCreator {
     public BorrowRecord getNextBorrowRecord(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong(ColumnName.BORROW_RECORD_ID);
         long userId = resultSet.getLong(ColumnName.BORROW_RECORD_USER_ID);
-        LocalDate borrowDate = resultSet.getDate(ColumnName.BORROW_RECORD_BORROW_DATE).toLocalDate();
-        LocalDate dueDate = resultSet.getDate(ColumnName.BORROW_RECORD_DUE_DATE).toLocalDate();
-        LocalDate returnDate = resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE).toLocalDate();
+        LocalDate borrowDate = resultSet.getDate(ColumnName.BORROW_RECORD_BORROW_DATE)
+                                        .toLocalDate();
+        LocalDate dueDate = resultSet.getDate(ColumnName.BORROW_RECORD_DUE_DATE)
+                                     .toLocalDate();
+        LocalDate returnDate = resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE)
+                                        .toLocalDate();
         int statusId = resultSet.getInt(ColumnName.BORROW_RECORD_STATUS_ID);
         String comment = resultSet.getNString(ColumnName.BORROW_RECORD_COMMENT);
         long bookId = resultSet.getLong(ColumnName.BORROW_RECORD_BOOK_ID);
@@ -68,7 +71,7 @@ public class ResultCreatorImpl implements ResultCreator {
         borrowRecord.setDueDate(dueDate);
         borrowRecord.setReturnDate(returnDate);
         //borrowRecord.setStatusId(statusId);
-        borrowRecord.setRecordStatus(BorrowRecordStatus.values()[statusId-1]);
+        borrowRecord.setRecordStatus(BorrowRecordStatus.values()[statusId - 1]);
         borrowRecord.setComment(comment);
         borrowRecord.setBookId(bookId);
 
@@ -83,7 +86,8 @@ public class ResultCreatorImpl implements ResultCreator {
         String lastName = resultSet.getNString(ColumnName.USER_LAST_NAME);
         boolean gender = resultSet.getBoolean(ColumnName.USER_GENDER);
         String email = resultSet.getNString(ColumnName.USER_EMAIL);
-        LocalDate dateOfRegistration = resultSet.getDate(ColumnName.USER_DATE_OF_REGISTRATION).toLocalDate();
+        LocalDate dateOfRegistration = resultSet.getDate(ColumnName.USER_DATE_OF_REGISTRATION)
+                                                .toLocalDate();
         String phoneNumber = resultSet.getNString(ColumnName.USER_PHONE_NUMBER);
         String username = resultSet.getNString(ColumnName.USER_USERNAME);
         String password = resultSet.getNString(ColumnName.USER_PASSWORD);
@@ -101,7 +105,7 @@ public class ResultCreatorImpl implements ResultCreator {
         user.setPhoneNumber(phoneNumber);
         user.setUsername(username);
         user.setPassword(password);
-        user.setRole(Role.values()[roleId-1]);
+        user.setRole(Role.values()[roleId - 1]);
         user.setDeletedStatus(deletedStatus);
 
         return user;
@@ -114,9 +118,6 @@ public class ResultCreatorImpl implements ResultCreator {
 
     @Override
     public EmailSenderDto getNextEmailSender(ResultSet resultSet) throws SQLException {
-
-
-
 
 
         return null;

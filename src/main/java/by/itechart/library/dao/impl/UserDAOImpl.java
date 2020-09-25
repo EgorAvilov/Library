@@ -69,8 +69,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during adding user");
-        }
-        finally {
+        } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
         }

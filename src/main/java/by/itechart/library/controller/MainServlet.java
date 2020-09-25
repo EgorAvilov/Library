@@ -51,10 +51,4 @@ public class MainServlet extends HttpServlet {
             response.sendRedirect(pathCreator.getError());
         }
     }
-
-   /* private String getPath(String action, HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
-     //   Command command = commandFactory.createCommand(action, request, response);
-        return command.execute(request, response);
-    }*/
 }

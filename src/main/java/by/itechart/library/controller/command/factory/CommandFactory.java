@@ -3,7 +3,6 @@ package by.itechart.library.controller.command.factory;
 
 import by.itechart.library.controller.command.Command;
 import by.itechart.library.controller.command.impl.*;
-import by.itechart.library.controller.util.ControllerUtilFactory;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j;
 
@@ -12,8 +11,10 @@ import java.util.Map;
 
 @Log4j
 public class CommandFactory {
+
     @Getter
     private static final CommandFactory instance = new CommandFactory();
+
     @Getter
     private final Map<String, Command> operations = new HashMap<>();
 

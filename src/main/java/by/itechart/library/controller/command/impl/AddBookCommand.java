@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+
 @Log4j
 public class AddBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
@@ -35,8 +36,6 @@ public class AddBookCommand implements Command {
         byte[] cover = new byte[0];
         try {
             //сделать проверку на размер и прочее
-            File picture=new File(request.getParameter(ParameterName.COVER));
-
             cover = FileUtils.readFileToByteArray(new File(request.getParameter(ParameterName.COVER)));
         } catch (IOException e) {
             log.error(e);

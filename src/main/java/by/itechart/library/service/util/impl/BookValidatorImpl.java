@@ -51,7 +51,7 @@ public class BookValidatorImpl implements BookValidator {
 
     private boolean validateAuthors(String authors) throws ServiceException {
         String[] authorsList = authors.split("\\s*(\\s|,|!|\\.)\\s*");
-        for (String author : authorsList) {//сравнение на заглавную первую букву
+        for (String author : authorsList) {
             if (!Character.isUpperCase(author.charAt(0))) {
                 throw new ServiceException("Authors should start with upper case");
             }
@@ -60,7 +60,6 @@ public class BookValidatorImpl implements BookValidator {
             for (int j = i + 1; j < authorsList.length; j++) {
                 if (authorsList[i].equalsIgnoreCase(authorsList[j])) {
                     throw new ServiceException("Authors should be unique");
-
                 }
             }
         }

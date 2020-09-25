@@ -12,13 +12,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UtilFactory {
+
     @Getter
     private static final UtilFactory instance = new UtilFactory();
+
     @Getter
     private UserValidator userValidator = new UserValidatorImpl();
+
     @Getter
     private BookValidator bookValidator = new BookValidatorImpl();
+
     @Getter
     private BorrowRecordValidator borrowRecordValidator = new BorrowRecordValidatorImpl();
-
 }
