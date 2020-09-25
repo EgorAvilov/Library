@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 @Log4j
 public class UserDAOImpl implements UserDAO {
 
@@ -32,9 +33,9 @@ public class UserDAOImpl implements UserDAO {
     public User getUser(String username, String password) throws DAOException {
         String request = SQLRequest.GET_USER_BY_CREDENTIALS;
         User user = null;
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet resultSet;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
@@ -47,6 +48,10 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException(e);
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return user;
     }
@@ -54,8 +59,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addUser(User user) throws DAOException {
         String request = SQLRequest.CREATE_USER;
-        Connection connection;
-        PreparedStatement statement;
+        Connection connection = null;
+        PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
@@ -64,6 +69,10 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong. Please try again.");
+        }
+        finally {
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
@@ -82,6 +91,7 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
@@ -107,6 +117,7 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return user;
     }
@@ -128,6 +139,7 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return result;
     }
@@ -135,7 +147,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public int getNumberOfRows() throws DAOException {
         String request = SQLRequest.COUNT_ROWS_OF_USERS;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int numberOfRows = 0;
@@ -154,6 +166,7 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return numberOfRows;
     }
@@ -181,6 +194,7 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return users;
     }

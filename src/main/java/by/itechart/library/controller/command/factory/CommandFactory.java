@@ -44,11 +44,7 @@ public class CommandFactory {
     }
 
 
-    public Command createCommand(String commandName/*, HttpServletRequest request, HttpServletResponse response*/) {
-        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-        //HttpRequestResponseKeeper keeper = utilFactory.getHttpRequestResponseKeeper();
-        // keeper.setAll(request, response);
-
+    public Command createCommand(String commandName) {
         Command command = null;
         try {
             command = operations.get(commandName);

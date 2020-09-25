@@ -4,6 +4,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public interface ResourceCloser {
-    public void close(ResultSet resultSet);
-    public void close(Statement statement);
+    public void close(AutoCloseable resource);
+
 }

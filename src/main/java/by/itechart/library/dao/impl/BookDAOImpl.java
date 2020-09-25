@@ -29,7 +29,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public void addBook(Book book) throws DAOException {
         String request = SQLRequest.CREATE_BOOK;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -41,6 +41,7 @@ public class BookDAOImpl implements BookDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
@@ -65,6 +66,7 @@ public class BookDAOImpl implements BookDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
 
         }
         return book;
@@ -73,7 +75,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public void updateBook(Book book) throws DAOException {
         String request = SQLRequest.UPDATE_BOOK;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -85,13 +87,14 @@ public class BookDAOImpl implements BookDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
     @Override
     public int changeDeletedStatus(long bookId) throws DAOException {
         String request = SQLRequest.CHANGE_BOOK_DELETED_STATUS;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         int result;
         try {
@@ -105,6 +108,7 @@ public class BookDAOImpl implements BookDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return result;
     }
@@ -114,7 +118,7 @@ public class BookDAOImpl implements BookDAO {
         String request = SQLRequest.GET_ALL_BOOKS;
         int start = currentPage * recordsPerPage - recordsPerPage;
         List<Book> books = new ArrayList<>();
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -132,6 +136,7 @@ public class BookDAOImpl implements BookDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
 
         }
         return books;
@@ -141,7 +146,7 @@ public class BookDAOImpl implements BookDAO {
     public List<Book> searchBooks(String title, String authors, String genres, String description) throws DAOException {
         String request = SQLRequest.SEARCH_BOOKS_BY_PARAMETERS;
         List<Book> books = new ArrayList<>();
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -159,6 +164,7 @@ public class BookDAOImpl implements BookDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return books;
     }
@@ -166,7 +172,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public int getNumberOfRows() throws DAOException {
         String request = SQLRequest.COUNT_ROWS_OF_BOOKS;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int numberOfRows = 0;
@@ -185,6 +191,7 @@ public class BookDAOImpl implements BookDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return numberOfRows;
     }
@@ -192,7 +199,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean checkISBN(String ISBN) throws DAOException {
         String request = SQLRequest.GET_ALL_BOOKS_BY_ISBN;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -209,6 +216,7 @@ public class BookDAOImpl implements BookDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return true;
     }
@@ -226,9 +234,9 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public int getAvailableAmountOfBooks(long bookId) throws DAOException {
         String request = SQLRequest.GET_AVAILABLE_AMOUNT_OF_BOOKS_BY_ID;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         int availableAmount = 0;
         try {
             connection = dbConnectionPool.getConnection();
@@ -242,7 +250,9 @@ public class BookDAOImpl implements BookDAO {
             log.error(e);
             throw new DAOException(e);
         } finally {
+            resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return availableAmount;
     }
@@ -250,7 +260,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException {
         String request = SQLRequest.CHANGE_BOOK_AVAILABLE_AMOUNT;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -262,6 +272,7 @@ public class BookDAOImpl implements BookDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 }

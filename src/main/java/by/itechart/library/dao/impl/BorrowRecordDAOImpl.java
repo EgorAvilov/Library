@@ -33,7 +33,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         String request = SQLRequest.GET_ALL_BORROW_RECORDS;
         int start = currentPage * recordsPerPage - recordsPerPage;
         List<BorrowRecord> borrowRecords = new ArrayList<>();
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -51,6 +51,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return borrowRecords;
     }
@@ -58,7 +59,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     @Override
     public void addBorrowRecord(BorrowRecord borrowRecord) throws DAOException {
         String request = SQLRequest.CREATE_BORROW_RECORD;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -70,6 +71,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
@@ -78,7 +80,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         String request = SQLRequest.GET_BORROW_RECORDS_BY_USER_ID;
         int start = currentPage * recordsPerPage - recordsPerPage;
         List<BorrowRecord> borrowRecords = new ArrayList<>();
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -96,6 +98,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return borrowRecords;
     }
@@ -103,7 +106,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     @Override
     public void updateBorrowRecordByAdmin(BorrowRecord borrowRecord) throws DAOException {
         String request = SQLRequest.UPDATE_BORROW_RECORD_BY_ADMIN;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -115,13 +118,14 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
     @Override
     public void updateBorrowRecordByUser(BorrowRecord borrowRecord) throws DAOException {
         String request = SQLRequest.UPDATE_BORROW_RECORD_BY_USER;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = dbConnectionPool.getConnection();
@@ -133,6 +137,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
     }
 
@@ -157,6 +162,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
 
         }
         return borrowRecord;
@@ -165,7 +171,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     @Override
     public int getNumberOfRowsByAdmin() throws DAOException {
         String request = SQLRequest.COUNT_ROWS_OF_BORROW_RECORDS_BY_ADMIN;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int numberOfRows = 0;
@@ -184,6 +190,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return numberOfRows;
     }
@@ -191,7 +198,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     @Override
     public int getNumberOfRowsByUser(long userId) throws DAOException {
         String request = SQLRequest.COUNT_ROWS_OF_BORROW_RECORDS_BY_USER;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int numberOfRows = 0;
@@ -211,6 +218,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return numberOfRows;
     }
@@ -219,7 +227,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     public List<EmailSenderDto> getAllBorrowRecordsForRemind(LocalDate remindDate) throws DAOException {
         String request = SQLRequest.GET_ALL_BORROW_RECORDS_FOR_REMINDS;
         List<EmailSenderDto> emailSenderDtoList = new ArrayList<>();
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
@@ -237,6 +245,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
+            resourceCloser.close(connection);
         }
         return emailSenderDtoList;
     }
