@@ -11,8 +11,10 @@ import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.io.FileUtils;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @Log4j
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10,      // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class AddBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -33,14 +38,17 @@ public class AddBookCommand implements Command {
         String path = pathCreator.getError();
 
         HttpSession session = request.getSession();
+
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        factory.setSizeThreshold(1024 * 1024 * 2);
+        File image = new File(request.getParameter(ParameterName.COVER));
         byte[] cover = new byte[0];
         try {
-            //сделать проверку на размер и прочее
-            cover = FileUtils.readFileToByteArray(new File(request.getParameter(ParameterName.COVER)));
+            cover = FileUtils.readFileToByteArray(image);
         } catch (IOException e) {
-            log.error(e);
-            throw new CommandException(e);
+            e.printStackTrace();
         }
+
 
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
@@ -68,6 +76,8 @@ public class AddBookCommand implements Command {
 
         int role = (int) session.getAttribute(ParameterName.ROLE);
         try {
+
+
             if (valueChecker.isAdmin(role)) {
                 adminService.addBook(book);
                 path = pathCreator.getBooksPage();
@@ -80,4 +90,6 @@ public class AddBookCommand implements Command {
         }
         return path;
     }
+
+
 }
