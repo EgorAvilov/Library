@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
             user = resultCreator.getNextUser(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting user by credentials");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -68,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
             statement.execute();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException("Something went wrong. Please try again.");
+            throw new DAOException("Something went wrong during adding user");
         }
         finally {
             resourceCloser.close(statement);
@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during updating user");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -113,7 +113,7 @@ public class UserDAOImpl implements UserDAO {
             user = resultCreator.getNextUser(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting user by id");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -136,7 +136,7 @@ public class UserDAOImpl implements UserDAO {
             result = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during deleting user");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -162,7 +162,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during counting number of rows in users");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -190,7 +190,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting all users");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);

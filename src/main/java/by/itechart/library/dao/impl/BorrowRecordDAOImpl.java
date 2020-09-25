@@ -47,7 +47,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting all borrow records");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -68,7 +68,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during adding borrow record");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -94,7 +94,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting all user borrow records");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -115,7 +115,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during updating borrow record by admin");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -134,7 +134,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during updating borrow record by user");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -158,7 +158,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting borrow record by id");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -186,7 +186,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during counting rows in borrow record by admin");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -214,7 +214,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during counting rows in borrow record by user");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -241,7 +241,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting all borrow record for remind");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);

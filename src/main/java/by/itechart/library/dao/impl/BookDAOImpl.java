@@ -18,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
+
 @Log4j
 public class BookDAOImpl implements BookDAO {
     private DBConnectionPool dbConnectionPool = DBConnectionPool.getInstance();
@@ -62,7 +64,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("No book with such id");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -84,7 +86,7 @@ public class BookDAOImpl implements BookDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("No such book to update");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -105,7 +107,7 @@ public class BookDAOImpl implements BookDAO {
             result = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during deleting book");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -132,7 +134,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting all books");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -160,7 +162,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during searching book");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -187,7 +189,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during counting rows in books");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -212,7 +214,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during checking ISBN");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -248,7 +250,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during getting available amount of books");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -269,7 +271,7 @@ public class BookDAOImpl implements BookDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during setting available amount of books");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
