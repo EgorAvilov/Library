@@ -5,17 +5,29 @@ import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.Book;
 import by.itechart.library.service.exception.ServiceException;
-import by.itechart.library.service.util.BookValidation;
+import by.itechart.library.service.util.BookValidator;
 
 import java.time.LocalDate;
 
-public class BookValidationImpl implements BookValidation {
+public class BookValidatorImpl implements BookValidator {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
 
     @Override
     public boolean validateAdd(Book book) throws ServiceException {
+        return validateTitle(book.getTitle())
+                && validateAuthors(book.getAuthors())
+                && validatePublisher(book.getPublisher())
+                && validatePublishDate(book.getPublishDate())
+                && validateGenres(book.getGenres())
+                && validateTotalAmount(book.getTotalAmount())
+                && validatePageCount(book.getPageCount())
+                && validateISBN(book.getISBN());
+    }
+
+    @Override
+    public boolean validateUpdate(Book book) throws ServiceException {
         return validateTitle(book.getTitle())
                 && validateAuthors(book.getAuthors())
                 && validatePublisher(book.getPublisher())
@@ -37,7 +49,7 @@ public class BookValidationImpl implements BookValidation {
     }
 
     private boolean validateAuthors(String authors) throws ServiceException {
-        String[] authorsList = authors.split(" ");
+        String[] authorsList = authors.split("\\s*(\\s|,|!|\\.)\\s*");
         for (String author : authorsList) {//сравнение на заглавную первую букву
             if (!Character.isUpperCase(author.charAt(0))) {
                 throw new ServiceException("Authors should start with upper case");
@@ -72,7 +84,7 @@ public class BookValidationImpl implements BookValidation {
     }
 
     private boolean validateGenres(String genres) throws ServiceException {
-        String[] genresList = genres.split(" ");
+        String[] genresList = genres.split("\\s*(\\s|,|!|\\.)\\s*");
         for (int i = 0; i < genresList.length; i++) {
             for (int j = i + 1; j < genresList.length; j++) {
                 if (genresList[i].equalsIgnoreCase(genresList[j])) {

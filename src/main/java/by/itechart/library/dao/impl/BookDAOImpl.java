@@ -168,7 +168,7 @@ public class BookDAOImpl implements BookDAO {
             statement = connection.prepareStatement(request);
             resultSet = statement.executeQuery();
             resultSet.last();
-            numberOfRows = resultSet.getRow();
+            numberOfRows =resultSet.getInt(1);
             while (resultSet.next()) {
                 numberOfRows++;
             }

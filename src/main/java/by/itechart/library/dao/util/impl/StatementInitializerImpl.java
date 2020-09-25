@@ -8,6 +8,7 @@ import by.itechart.library.entity.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class StatementInitializerImpl implements StatementInitializer {
     @Override
@@ -140,5 +141,10 @@ public class StatementInitializerImpl implements StatementInitializer {
         statement.setLong(1, userId);
         statement.setInt(2, start);
         statement.setInt(3, recordsPerPage);
+    }
+
+    @Override
+    public void addRemindDate(PreparedStatement statement, LocalDate dueDate) throws SQLException {
+        statement.setDate(1, Date.valueOf(dueDate));
     }
 }

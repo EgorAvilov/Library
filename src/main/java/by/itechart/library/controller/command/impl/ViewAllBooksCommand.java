@@ -4,7 +4,6 @@ import by.itechart.library.controller.command.Command;
 import by.itechart.library.controller.command.ParameterName;
 import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
-import by.itechart.library.controller.util.api.Pagination;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.Book;
 import by.itechart.library.service.ServiceFactory;
@@ -20,6 +19,7 @@ public class ViewAllBooksCommand implements Command {
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
+    //здесь убрать хардкод
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         PathCreator pathCreator = utilFactory.getPathCreator();

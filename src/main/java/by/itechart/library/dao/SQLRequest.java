@@ -10,7 +10,7 @@ public class SQLRequest {
     public static final String UPDATE_USER = "UPDATE users SET first_name=?, email=?, phone_number=?, last_name=?, gender=?, password=? WHERE id=?";
     public static final String CHANGE_USER_DELETED_STATUS = "UPDATE users SET deleted_status=? WHERE id=?";
     public static final String GET_ALL_USERS = "SELECT * FROM users LIMIT ?, ?";
-    public static final String COUNT_ROWS_OF_USERS = "SELECT COUNT (id) FROM users";
+    public static final String COUNT_ROWS_OF_USERS = "SELECT count(id) FROM users";
 
     /**
      * запросы для таблицы Book
@@ -24,7 +24,7 @@ public class SQLRequest {
     public static final String CHANGE_BOOK_DELETED_STATUS = "UPDATE books SET deleted_status=? WHERE id=?";
     public static final String CHANGE_BOOK_AVAILABLE_AMOUNT = "UPDATE books SET available_amount=? WHERE id=?";
     public static final String SEARCH_BOOKS_BY_PARAMETERS = "SELECT * FROM books WHERE title LIKE '%?%' OR  authors LIKE '%?%' OR genres LIKE '%?%' OR description LIKE '%?%'";
-    public static final String COUNT_ROWS_OF_BOOKS = "SELECT COUNT (id) FROM books";
+    public static final String COUNT_ROWS_OF_BOOKS = "SELECT count(id) FROM books";
     public static final String GET_ALL_BOOKS_BY_ISBN = "SELECT * FROM books WHERE isbn = ?";
 
 
@@ -37,10 +37,10 @@ public class SQLRequest {
     public static final String UPDATE_BORROW_RECORD_BY_ADMIN = "UPDATE borrow_records SET  status_id=?, comment=? WHERE id=?";
     public static final String GET_BORROW_RECORD_BY_ID = "SELECT * FROM borrow_records WHERE id = ? LIMIT ?,?";
     public static final String UPDATE_BORROW_RECORD_BY_USER = "UPDATE borrow_records SET return_date=? WHERE id=?";
-    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_ADMIN = "SELECT COUNT (id) FROM borrow_records";
-    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_USER = "SELECT COUNT (id) FROM borrow_records WHERE user_id=?";
+    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_ADMIN = "SELECT count(id) FROM borrow_records";
+    public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_USER = "SELECT count(id) FROM borrow_records WHERE user_id=?";
 
-    public static final String GET_ALL_BORROW_RECORDS_FOR_FIRST_REMIND="";
+    public static final String GET_ALL_BORROW_RECORDS_FOR_REMINDS = "SELECT b.title, u.email, u.first_name FROM borrow_records br JOIN books b ON b.id=br.book_id JOIN users u ON br.user_id=u.id WHERE br.due_date=?";
 
 
 }

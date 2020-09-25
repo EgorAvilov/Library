@@ -17,6 +17,8 @@
 <h1>HELLO!!!!!</h1>
 <form action="controller" method="get">
     <input type="hidden" name="command" value="view-all-books">
+    <input type="hidden" name="currentPage" value="1">
+    <input type="hidden" name="recordsPerPage" value="20">
     <button type="submit">Show books</button>
 </form>
 </body>

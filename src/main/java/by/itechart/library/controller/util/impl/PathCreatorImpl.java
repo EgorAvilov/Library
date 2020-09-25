@@ -28,7 +28,7 @@ public class PathCreatorImpl implements PathCreator {
 
     @Override
     public String getBooksPage() {
-        return null;
+        return "books-page";
     }
 
     @Override

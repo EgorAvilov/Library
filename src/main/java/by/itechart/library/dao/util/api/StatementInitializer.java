@@ -6,6 +6,7 @@ import by.itechart.library.entity.User;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public interface StatementInitializer {
     public void addCredentials(PreparedStatement statement, String username, String password) throws SQLException;
@@ -38,5 +39,5 @@ public interface StatementInitializer {
 
     public void addPaginationParameters(PreparedStatement statement, long userId, int start, int recordsPerPage) throws SQLException;
 
-
+    public void addRemindDate(PreparedStatement statement, LocalDate dueDate) throws SQLException;
 }

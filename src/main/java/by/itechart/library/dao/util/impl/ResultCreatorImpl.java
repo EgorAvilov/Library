@@ -3,6 +3,7 @@ package by.itechart.library.dao.util.impl;
 import by.itechart.library.dao.ColumnName;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.entity.*;
+import by.itechart.library.service.dto.EmailSenderDto;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -89,7 +90,6 @@ public class ResultCreatorImpl implements ResultCreator {
         int roleId = resultSet.getInt(ColumnName.USER_ROLE_ID);
         boolean deletedStatus = resultSet.getBoolean(ColumnName.USER_DELETED_STATUS);
 
-
         User user = new User();
 
         user.setId(id);
@@ -110,5 +110,15 @@ public class ResultCreatorImpl implements ResultCreator {
     @Override
     public int getNextBookAvailableAmount(ResultSet resultSet) throws SQLException {
         return resultSet.getInt(ColumnName.BOOK_AVAILABLE_AMOUNT);
+    }
+
+    @Override
+    public EmailSenderDto getNextEmailSender(ResultSet resultSet) throws SQLException {
+
+
+
+
+
+        return null;
     }
 }

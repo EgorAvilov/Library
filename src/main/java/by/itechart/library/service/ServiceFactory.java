@@ -6,6 +6,12 @@ import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.impl.AdminServiceImpl;
 import by.itechart.library.service.impl.CommonServiceImpl;
 import by.itechart.library.service.impl.UserServiceImpl;
+import by.itechart.library.service.util.BookValidator;
+import by.itechart.library.service.util.BorrowRecordValidator;
+import by.itechart.library.service.util.UserValidator;
+import by.itechart.library.service.util.impl.BookValidatorImpl;
+import by.itechart.library.service.util.impl.BorrowRecordValidatorImpl;
+import by.itechart.library.service.util.impl.UserValidatorImpl;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +26,10 @@ public class ServiceFactory {
     private CommonService commonService = new CommonServiceImpl();
     @Getter
     private AdminService adminService = new AdminServiceImpl();
-
-
-
+    @Getter
+    private BookValidator bookValidation = new BookValidatorImpl();
+    @Getter
+    private UserValidator userValidation = new UserValidatorImpl();
+    @Getter
+    private BorrowRecordValidator borrowRecordValidation = new BorrowRecordValidatorImpl();
 }

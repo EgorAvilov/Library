@@ -8,16 +8,23 @@ import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
+import by.itechart.library.service.ServiceFactory;
+import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
+import by.itechart.library.service.util.UserValidator;
+import by.itechart.library.service.util.impl.UserValidatorImpl;
 
 import java.util.List;
 
 public class CommonServiceImpl implements CommonService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
+    private UtilFactory utilFactory=UtilFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
     private UserDAO userDAO = daoFactory.getUserDAO();
+    private ServiceFactory serviceFactory = ServiceFactory.getInstance();
+    private UserValidator userValidation = utilFactory.getUserValidator();
 
     @Override
     public User signIn(String username, String password) throws ServiceException {
@@ -32,6 +39,7 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void signUp(User user) throws ServiceException {
+        userValidation.validateAdd(user);
         try {
             userDAO.addUser(user);
         } catch (DAOException e) {

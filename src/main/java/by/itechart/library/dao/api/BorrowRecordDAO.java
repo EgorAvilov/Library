@@ -2,7 +2,9 @@ package by.itechart.library.dao.api;
 
 import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.service.dto.EmailSenderDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BorrowRecordDAO {
@@ -22,4 +24,8 @@ public interface BorrowRecordDAO {
     public int getNumberOfRowsByAdmin() throws DAOException;
 
     public int getNumberOfRowsByUser(long userId) throws DAOException;
+
+    public List<EmailSenderDto> getAllBorrowRecordsForRemind(LocalDate remindDate) throws DAOException;
+
+
 }

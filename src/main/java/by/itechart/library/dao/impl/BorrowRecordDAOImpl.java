@@ -10,11 +10,13 @@ import by.itechart.library.dao.util.api.ResourceCloser;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.dao.util.api.StatementInitializer;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.service.dto.EmailSenderDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,7 +167,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statement = connection.prepareStatement(request);
             resultSet = statement.executeQuery();
             resultSet.last();
-            numberOfRows = resultSet.getRow();
+            numberOfRows = resultSet.getInt(1);
             while (resultSet.next()) {
                 numberOfRows++;
             }
@@ -191,7 +193,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statementInitializer.addId(statement, userId);
             resultSet = statement.executeQuery();
             resultSet.last();
-            numberOfRows = resultSet.getRow();
+            numberOfRows = resultSet.getInt(1);
             while (resultSet.next()) {
                 numberOfRows++;
             }
@@ -202,5 +204,30 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             resourceCloser.close(statement);
         }
         return numberOfRows;
+    }
+
+    @Override
+    public List<EmailSenderDto> getAllBorrowRecordsForRemind(LocalDate remindDate) throws DAOException {
+        String request = SQLRequest.GET_ALL_BORROW_RECORDS_FOR_REMINDS;
+        List<EmailSenderDto> emailSenderDtoList = new ArrayList<>();
+        Connection connection;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.addRemindDate(statement,remindDate);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                EmailSenderDto emailSenderDto = resultCreator.getNextEmailSender(resultSet);
+                emailSenderDtoList.add(emailSenderDto);
+            }
+        } catch (SQLException | ConnectionPoolException ex) {
+            throw new DAOException(ex);
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+        }
+        return emailSenderDtoList;
     }
 }
