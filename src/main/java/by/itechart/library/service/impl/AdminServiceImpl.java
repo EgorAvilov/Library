@@ -8,8 +8,11 @@ import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
+import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
+import by.itechart.library.service.exception.ValidatorException;
+import by.itechart.library.service.util.BookValidator;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
@@ -21,12 +24,14 @@ public class AdminServiceImpl implements AdminService {
     private BookDAO bookDAO = daoFactory.getBookDAO();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
     private UserDAO userDAO = daoFactory.getUserDAO();
-
+    private UtilFactory utilFactory = UtilFactory.getInstance();
+    private BookValidator bookValidator= utilFactory.getBookValidator();
     @Override
     public void addBook(Book book) throws ServiceException {
         try {
+            bookValidator.validateAdd(book);
             bookDAO.addBook(book);
-        } catch (DAOException e) {
+        } catch (DAOException | ValidatorException e) {
             log.error(e);
             throw new ServiceException(e);
         }
@@ -35,8 +40,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateBook(Book book) throws ServiceException {
         try {
+           bookValidator.validateUpdate(book);
             bookDAO.updateBook(book);
-        } catch (DAOException e) {
+        } catch (DAOException | ValidatorException e) {
             log.error(e);
             throw new ServiceException(e);
         }

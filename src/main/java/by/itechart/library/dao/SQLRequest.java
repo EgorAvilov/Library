@@ -25,7 +25,7 @@ public class SQLRequest {
     public static final String CHANGE_BOOK_AVAILABLE_AMOUNT = "UPDATE books SET available_amount=? WHERE id=?";
     public static final String SEARCH_BOOKS_BY_PARAMETERS = "SELECT * FROM books WHERE title LIKE '%?%' OR  authors LIKE '%?%' OR genres LIKE '%?%' OR description LIKE '%?%'";
     public static final String COUNT_ROWS_OF_BOOKS = "SELECT count(id) FROM books";
-    public static final String GET_ALL_BOOKS_BY_ISBN = "SELECT * FROM books WHERE isbn = ?";
+    public static final String GET_ALL_BOOKS_BY_ISBN = "SELECT * FROM books WHERE isbn = ? and id<>?";
 
 
     /**

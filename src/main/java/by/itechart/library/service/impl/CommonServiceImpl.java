@@ -12,6 +12,7 @@ import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
+import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.UserValidator;
 import by.itechart.library.service.util.impl.UserValidatorImpl;
 import lombok.extern.log4j.Log4j;
@@ -41,10 +42,10 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void signUp(User user) throws ServiceException {
-        userValidation.validateAdd(user);
         try {
+            userValidation.validateAdd(user);
             userDAO.addUser(user);
-        } catch (DAOException e) {
+        } catch (DAOException | ValidatorException e) {
             log.error(e);
             throw new ServiceException(e);
         }
@@ -65,8 +66,9 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void updateProfile(User user) throws ServiceException {
         try {
+            userValidation.validateUpdate(user);
             userDAO.updateUser(user);
-        } catch (DAOException e) {
+        } catch (DAOException | ValidatorException e) {
             log.error(e);
             throw new ServiceException(e);
         }

@@ -122,8 +122,9 @@ public class StatementInitializerImpl implements StatementInitializer {
     }
 
     @Override
-    public void addISBN(PreparedStatement statement, String ISBN) throws SQLException {
+    public void addISBN(PreparedStatement statement, String ISBN, long id) throws SQLException {
         statement.setNString(1, ISBN);
+        statement.setLong(2, id);
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface BookDAO {
 
     public int getNumberOfRows() throws DAOException;
 
-    public boolean checkISBN(String ISBN) throws DAOException;
+    public boolean checkISBN(String ISBN, long id) throws DAOException;
 
     public void takeBook(long bookId) throws DAOException;
 

@@ -198,7 +198,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean checkISBN(String ISBN) throws DAOException {
+    public boolean checkISBN(String ISBN, long id) throws DAOException {
         String request = SQLRequest.GET_ALL_BOOKS_BY_ISBN;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -206,7 +206,7 @@ public class BookDAOImpl implements BookDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addISBN(statement, ISBN);
+            statementInitializer.addISBN(statement, ISBN,id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 throw new DAOException("Your ISBN is not unique");
