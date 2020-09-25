@@ -10,9 +10,10 @@ import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 
 import java.util.List;
-
+@Log4j
 public class AdminServiceImpl implements AdminService {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -25,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
         try {//проветь id
             bookDAO.addBook(book);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
     }
@@ -34,6 +36,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             bookDAO.updateBook(book);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
     }
@@ -45,6 +48,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             result = bookDAO.changeDeletedStatus(bookId);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return result;
@@ -56,6 +60,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             result = userDAO.changeDeletedStatus(userId);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return result;
@@ -67,6 +72,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             borrowRecords = borrowRecordDAO.getAll(currentPage, recordsPerPage);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return borrowRecords;
@@ -77,6 +83,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             borrowRecordDAO.updateBorrowRecordByAdmin(borrowRecord);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
     }
@@ -87,6 +94,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             users = userDAO.getAll(currentPage, recordsPerPage);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return users;
@@ -98,6 +106,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             numberOfRows=borrowRecordDAO.getNumberOfRowsByAdmin();
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return numberOfRows;
@@ -109,6 +118,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             numberOfRows=userDAO.getNumberOfRows();
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return numberOfRows;

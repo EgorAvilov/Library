@@ -8,9 +8,10 @@ import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 
 import java.util.List;
-
+@Log4j
 public class UserServiceImpl implements UserService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
             bookDAO.takeBook(bookId);
             borrowRecordDAO.addBorrowRecord(borrowRecord);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
     }
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
         try {
             borrowRecordDAO.updateBorrowRecordByUser(borrowRecord);
         } catch (DAOException e) {//здесь вернуть книгу в availableAmount но проверить тсатус который дает админ
+            log.error(e);
             throw new ServiceException(e);
         }
     }
@@ -43,6 +46,7 @@ public class UserServiceImpl implements UserService {
         try {
             borrowRecords = borrowRecordDAO.getAllByUserId(userId, currentPage, recordsPerPage);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return borrowRecords;
@@ -54,6 +58,7 @@ public class UserServiceImpl implements UserService {
         try {
             numberOfRows = borrowRecordDAO.getNumberOfRowsByUser(userId);
         } catch (DAOException e) {
+            log.error(e);
             throw new ServiceException(e);
         }
         return numberOfRows;

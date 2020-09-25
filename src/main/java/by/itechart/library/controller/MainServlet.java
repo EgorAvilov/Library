@@ -27,7 +27,6 @@ public class MainServlet extends HttpServlet {
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
         try {
-           // String path = getPath(action, request, response);
             String path = command.execute(request, response);
             response.sendRedirect(path);
         } catch (CommandException e) {
@@ -43,10 +42,8 @@ public class MainServlet extends HttpServlet {
 
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
-
         try {
             String path = command.execute(request, response);
-            // String path = getPath(action, request, response);
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request, response);
         } catch (CommandException e) {

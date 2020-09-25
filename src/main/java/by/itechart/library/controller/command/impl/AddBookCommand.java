@@ -10,6 +10,7 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.io.FileUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-
+@Log4j
 public class AddBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -38,6 +39,7 @@ public class AddBookCommand implements Command {
 
             cover = FileUtils.readFileToByteArray(new File(request.getParameter(ParameterName.COVER)));
         } catch (IOException e) {
+            log.error(e);
             throw new CommandException(e);
         }
 
@@ -74,6 +76,7 @@ public class AddBookCommand implements Command {
                 path = pathCreator.getError();
             }
         } catch (ServiceException e) {
+            log.error(e);
             throw new CommandException(e);
         }
         return path;

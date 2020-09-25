@@ -11,6 +11,7 @@ import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.dao.util.api.StatementInitializer;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.dto.EmailSenderDto;
+import lombok.extern.log4j.Log4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Log4j
 public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     private DAOUtilFactory utilFactory = DAOUtilFactory.getInstance();
     private ResultCreator resultCreator = utilFactory.getResultCreator();
@@ -44,8 +45,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
                 BorrowRecord borrowRecord = resultCreator.getNextBorrowRecord(resultSet);
                 borrowRecords.add(borrowRecord);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -63,8 +65,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statement = connection.prepareStatement(request);
             statementInitializer.addBorrowRecord(statement, borrowRecord);
             statement.executeQuery();
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
         }
@@ -87,8 +90,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
                 BorrowRecord borrowRecord = resultCreator.getNextBorrowRecord(resultSet);
                 borrowRecords.add(borrowRecord);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -107,6 +111,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statementInitializer.updateBorrowRecordByAdmin(statement, borrowRecord);
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -124,6 +129,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             statementInitializer.updateBorrowRecordByUser(statement, borrowRecord);
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -145,8 +151,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             if (resultSet.next()) {
                 borrowRecord = resultCreator.getNextBorrowRecord(resultSet);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -171,8 +178,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             while (resultSet.next()) {
                 numberOfRows++;
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -197,8 +205,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             while (resultSet.next()) {
                 numberOfRows++;
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -222,8 +231,9 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
                 EmailSenderDto emailSenderDto = resultCreator.getNextEmailSender(resultSet);
                 emailSenderDtoList.add(emailSenderDto);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);

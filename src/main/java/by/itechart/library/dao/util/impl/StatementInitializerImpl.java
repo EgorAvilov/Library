@@ -55,7 +55,6 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void addBook(PreparedStatement statement, Book book) throws SQLException {
-        try {
             statement.setBytes(1, book.getCover());
             statement.setNString(2, book.getTitle());
             statement.setNString(3, book.getAuthors());
@@ -67,9 +66,6 @@ public class StatementInitializerImpl implements StatementInitializer {
             statement.setNString(9, book.getDescription());
             statement.setInt(10, book.getTotalAmount());
             statement.setInt(11, book.getAvailableAmount());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 

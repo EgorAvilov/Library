@@ -4,11 +4,12 @@ import by.itechart.library.dao.exception.ConnectionPoolException;
 import com.zaxxer.hikari.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+@Log4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DBConnectionPool {
     private static final DBConnectionPool INSTANCE = new DBConnectionPool();
@@ -33,6 +34,7 @@ public class DBConnectionPool {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
+            log.error(e);
             throw new ConnectionPoolException(e);
         }
     }
@@ -43,12 +45,6 @@ public class DBConnectionPool {
             setJdbcUrl(resourceBundle.getDBValue(DBConstant.DB_URL));
             setUsername(resourceBundle.getDBValue(DBConstant.DB_USERNAME));
             setPassword(resourceBundle.getDBValue(DBConstant.DB_PASSWORD));
-
-//            int poolSize = Integer.parseInt(resourceBundle.getDBValue(DBConstant.DB_MAX_POOL_SIZE));
-//            setMaximumPoolSize(poolSize);
-//
-//            int timeout = Integer.parseInt(resourceBundle.getDBValue(DBConstant.DB_CONNECTION_TIME_OUT));
-//            setConnectionTimeout(timeout);
         }};
 
         return hikariConfig;

@@ -10,6 +10,7 @@ import by.itechart.library.dao.util.api.ResourceCloser;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.dao.util.api.StatementInitializer;
 import by.itechart.library.entity.User;
+import lombok.extern.log4j.Log4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Log4j
 public class UserDAOImpl implements UserDAO {
 
     private DBConnectionPool dbConnectionPool = DBConnectionPool.getInstance();
@@ -43,8 +44,9 @@ public class UserDAOImpl implements UserDAO {
                 throw new DAOException("No user with such credentials!");
             }
             user = resultCreator.getNextUser(resultSet);
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         }
         return user;
     }
@@ -59,7 +61,8 @@ public class UserDAOImpl implements UserDAO {
             statement = connection.prepareStatement(request);
             statementInitializer.addUser(statement, user);
             statement.execute();
-        } catch (SQLException | ConnectionPoolException ex) {
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException("Something went wrong. Please try again.");
         }
     }
@@ -75,6 +78,7 @@ public class UserDAOImpl implements UserDAO {
             statementInitializer.updateUser(statement, user);
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -97,8 +101,9 @@ public class UserDAOImpl implements UserDAO {
                 throw new DAOException("No user with such id!");
             }
             user = resultCreator.getNextUser(resultSet);
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -119,6 +124,7 @@ public class UserDAOImpl implements UserDAO {
             statementInitializer.changeDeletedStatus(statement, !user.isDeletedStatus(), userId);
             result = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -142,8 +148,9 @@ public class UserDAOImpl implements UserDAO {
             while (resultSet.next()) {
                 numberOfRows++;
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -168,12 +175,12 @@ public class UserDAOImpl implements UserDAO {
                 User user = resultCreator.getNextUser(resultSet);
                 users.add(user);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
-
         }
         return users;
     }

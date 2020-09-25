@@ -10,12 +10,13 @@ import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
+@Log4j
 public class ViewAllBorrowRecordsByUserCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -51,6 +52,7 @@ public class ViewAllBorrowRecordsByUserCommand implements Command {
                 path = pathCreator.getError();
             }
         } catch (ServiceException e) {
+            log.error(e);
             throw new CommandException(e);
         }
         return path;

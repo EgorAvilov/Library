@@ -6,9 +6,10 @@ import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.Book;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.util.BookValidator;
+import lombok.extern.log4j.Log4j;
 
 import java.time.LocalDate;
-
+@Log4j
 public class BookValidatorImpl implements BookValidator {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -114,7 +115,8 @@ public class BookValidatorImpl implements BookValidator {
         try {
             bookDAO.checkISBN(ISBN);
         } catch (DAOException e) {
-            e.printStackTrace();
+            log.error(e);
+            throw new ServiceException(e);
         }
         return true;
     }

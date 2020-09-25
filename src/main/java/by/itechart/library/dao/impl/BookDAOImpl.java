@@ -10,6 +10,7 @@ import by.itechart.library.dao.util.api.ResourceCloser;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.dao.util.api.StatementInitializer;
 import by.itechart.library.entity.Book;
+import lombok.extern.log4j.Log4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Log4j
 public class BookDAOImpl implements BookDAO {
     private DBConnectionPool dbConnectionPool = DBConnectionPool.getInstance();
     private DAOUtilFactory utilFactory = DAOUtilFactory.getInstance();
@@ -35,8 +36,9 @@ public class BookDAOImpl implements BookDAO {
             statement = connection.prepareStatement(request);
             statementInitializer.addBook(statement, book);
             statement.executeQuery();
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
         }
@@ -57,8 +59,9 @@ public class BookDAOImpl implements BookDAO {
             if (resultSet.next()) {
                 book = resultCreator.getNextBook(resultSet);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -78,6 +81,7 @@ public class BookDAOImpl implements BookDAO {
             statementInitializer.updateBook(statement, book);
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -97,6 +101,7 @@ public class BookDAOImpl implements BookDAO {
             statementInitializer.changeDeletedStatus(statement, !book.isDeletedStatus(), bookId);
             result = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -121,8 +126,9 @@ public class BookDAOImpl implements BookDAO {
                 Book book = resultCreator.getNextBook(resultSet);
                 books.add(book);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -147,8 +153,9 @@ public class BookDAOImpl implements BookDAO {
                 Book book = resultCreator.getNextBook(resultSet);
                 books.add(book);
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -172,8 +179,9 @@ public class BookDAOImpl implements BookDAO {
             while (resultSet.next()) {
                 numberOfRows++;
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -195,8 +203,9 @@ public class BookDAOImpl implements BookDAO {
             if (resultSet.next()) {
                 throw new DAOException("Your ISBN is not unique");
             }
-        } catch (SQLException | ConnectionPoolException ex) {
-            throw new DAOException(ex);
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
@@ -230,6 +239,7 @@ public class BookDAOImpl implements BookDAO {
                 availableAmount = resultCreator.getNextBookAvailableAmount(resultSet);
             }
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);
@@ -248,6 +258,7 @@ public class BookDAOImpl implements BookDAO {
             statementInitializer.updateBookAvailableAmount(statement, bookId, availableAmount);
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             resourceCloser.close(statement);

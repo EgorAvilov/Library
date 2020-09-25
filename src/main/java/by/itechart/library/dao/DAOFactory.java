@@ -16,10 +16,10 @@ public class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
     @Getter
     private UserDAO userDAO = new UserDAOImpl();
-@Getter
-    private BookDAO bookDAO=new BookDAOImpl();
-@Getter
-    private BorrowRecordDAO borrowRecordDAO=new BorrowRecordDAOImpl();
+    @Getter
+    private BookDAO bookDAO = new BookDAOImpl();
+    @Getter
+    private BorrowRecordDAO borrowRecordDAO = new BorrowRecordDAOImpl();
 
 
 }

@@ -9,11 +9,12 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
+@Log4j
 public class SearchBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -35,6 +36,7 @@ public class SearchBookCommand implements Command {
             request.setAttribute(ParameterName.BOOKS, books);
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {
+            log.error(e);
             throw new CommandException(e);
         }
         return path;
