@@ -8,9 +8,12 @@ public class PathCreatorImpl implements PathCreator {
     private final static String ERROR = "error";
     private final static String SIGN_IN = "sign-in";
     private final static String USER_PAGE = "user-page";
+    private final static String USERS_PAGE = "users-page";
     private final static String MAIN_PAGE = "main-page";
     private final static String EDIT_BOOK = "edit-book";
     private final static String EDIT_PROFILE = "edit-profile";
+    private final static String BOOKS_PAGE = "books-page";
+
 
     @Override
     public String getError() {
@@ -29,7 +32,7 @@ public class PathCreatorImpl implements PathCreator {
 
     @Override
     public String getBooksPage() {
-        return "books-page";
+        return BOOKS_PAGE;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class PathCreatorImpl implements PathCreator {
 
     @Override
     public String getUsersPage() {
-        return null;
+        return USERS_PAGE;
     }
 
     @Override

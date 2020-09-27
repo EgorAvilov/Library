@@ -3,14 +3,16 @@ package by.itechart.library.controller;
 import by.itechart.library.dao.pool.DBConnectionPool;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import javax.servlet.http.HttpSessionBindingEvent;
 
+@Log4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ApplicationListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
@@ -25,6 +27,8 @@ public class ApplicationListener implements ServletContextListener,
       */
         DBConnectionPool connectionPool = DBConnectionPool.getInstance();
         connectionPool.init();
+        log.info("Initialization of Connection pool");
+
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

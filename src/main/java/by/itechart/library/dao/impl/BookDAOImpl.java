@@ -39,7 +39,7 @@ public class BookDAOImpl implements BookDAO {
             statement.executeQuery();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException(e);
+            throw new DAOException("Something went wrong during adding a book");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
@@ -161,7 +161,7 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
-            throw new DAOException("Something went wrong during searching book");
+            throw new DAOException("Something went wrong during searching books");
         } finally {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);

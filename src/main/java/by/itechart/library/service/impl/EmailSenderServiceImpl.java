@@ -3,12 +3,14 @@ package by.itechart.library.service.impl;
 import by.itechart.library.dao.DAOFactory;
 import by.itechart.library.dao.api.BorrowRecordDAO;
 import by.itechart.library.dao.exception.DAOException;
-import by.itechart.library.service.api.EmailSenderService;
 import by.itechart.library.service.dto.EmailSenderDto;
 import by.itechart.library.service.exception.ServiceException;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,21 +23,24 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 import java.util.TimerTask;
+
 //поставить ежесуточный таймер
 /* Timer timer = new Timer("Timer");
          long delay  = 3000L;
          long period = 3000L;
          timer.scheduleAtFixedRate(repeatedTask, delay, period);*/
-public class EmailSenderServiceImpl implements EmailSenderService {
+public class EmailSenderServiceImpl implements Job {
+
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
 
-    @Override
+
     public void sendRemindBefore7Days() throws ServiceException {
         List<EmailSenderDto> emailSenderDtoList;
         try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now().plusDays(7));
+            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                       .plusDays(7));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -50,14 +55,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
                         helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                        helloAgain.setAttribute("dueDate", LocalDate.now().plusDays(7));
+                        helloAgain.setAttribute("dueDate", LocalDate.now()
+                                                                    .plusDays(7));
 
                         Properties properties = new Properties();
-                        properties.load(EmailSenderServiceImpl.class.getClassLoader() .getResourceAsStream("mail.properties"));
+                        properties.load(EmailSenderServiceImpl.class.getClassLoader()
+                                                                    .getResourceAsStream("mail.properties"));
 
                         Session session = Session.getDefaultInstance(properties);
                         MimeMessage message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user").toString()));
+                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
+                                                                      .toString()));
                         message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
                         message.setSubject("Test");
                         message.setText(helloAgain.toString());
@@ -76,11 +84,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     }
 
-    @Override
+
     public void sendRemindBefore1Day() throws ServiceException {
         List<EmailSenderDto> emailSenderDtoList;
         try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now().plusDays(1));
+            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                       .plusDays(1));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -95,14 +104,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
                         helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                        helloAgain.setAttribute("dueDate", LocalDate.now().plusDays(1));
+                        helloAgain.setAttribute("dueDate", LocalDate.now()
+                                                                    .plusDays(1));
 
                         Properties properties = new Properties();
-                        properties.load(EmailSenderServiceImpl.class.getClassLoader() .getResourceAsStream("mail.properties"));
+                        properties.load(EmailSenderServiceImpl.class.getClassLoader()
+                                                                    .getResourceAsStream("mail.properties"));
 
                         Session session = Session.getDefaultInstance(properties);
                         MimeMessage message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user").toString()));
+                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
+                                                                      .toString()));
                         message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
                         message.setSubject("Test");
                         message.setText(helloAgain.toString());
@@ -121,11 +133,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     }
 
-    @Override
+
     public void sendRemindAfter1Day() throws ServiceException {
         List<EmailSenderDto> emailSenderDtoList;
         try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now().minusDays(1));
+            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                       .minusDays(1));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -140,14 +153,17 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
                         helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                        helloAgain.setAttribute("dueDate", LocalDate.now().minusDays(1));
+                        helloAgain.setAttribute("dueDate", LocalDate.now()
+                                                                    .minusDays(1));
 
                         Properties properties = new Properties();
-                        properties.load(EmailSenderServiceImpl.class.getClassLoader() .getResourceAsStream("mail.properties"));
+                        properties.load(EmailSenderServiceImpl.class.getClassLoader()
+                                                                    .getResourceAsStream("mail.properties"));
 
                         Session session = Session.getDefaultInstance(properties);
                         MimeMessage message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user").toString()));
+                        message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
+                                                                      .toString()));
                         message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
                         message.setSubject("Test");
                         message.setText(helloAgain.toString());
@@ -163,6 +179,18 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 }
             }
         };
+    }
+
+
+    @Override
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        try {
+            sendRemindBefore7Days();
+            sendRemindBefore1Day();
+            sendRemindAfter1Day();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 }
 

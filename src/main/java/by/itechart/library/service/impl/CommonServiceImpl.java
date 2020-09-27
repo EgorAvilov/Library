@@ -14,14 +14,14 @@ import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.UserValidator;
-import by.itechart.library.service.util.impl.UserValidatorImpl;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
+
 @Log4j
 public class CommonServiceImpl implements CommonService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
-    private UtilFactory utilFactory=UtilFactory.getInstance();
+    private UtilFactory utilFactory = UtilFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
     private UserDAO userDAO = daoFactory.getUserDAO();
@@ -31,8 +31,12 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public User signIn(String username, String password) throws ServiceException {
         User user;
+
         try {
             user = userDAO.getUser(username, password);
+            if (user.isDeletedStatus()) {
+                throw new ServiceException("Your account is deleted");
+            }
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -78,7 +82,7 @@ public class CommonServiceImpl implements CommonService {
     public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws ServiceException {
         List<Book> books;
         try {
-            books = bookDAO.getAllBooks(currentPage,recordsPerPage);
+            books = bookDAO.getAllBooks(currentPage, recordsPerPage);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -114,7 +118,7 @@ public class CommonServiceImpl implements CommonService {
     public List<Book> searchBooks(String title, String authors, String genres, String description) throws ServiceException {
         List<Book> books;
         try {
-            books = bookDAO.searchBooks(title,authors,genres,description);
+            books = bookDAO.searchBooks(title, authors, genres, description);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
@@ -124,9 +128,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public int getNumberOfBookRows() throws ServiceException {
-        int numberOfRows=0;
+        int numberOfRows = 0;
         try {
-            numberOfRows=bookDAO.getNumberOfRows();
+            numberOfRows = bookDAO.getNumberOfRows();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);

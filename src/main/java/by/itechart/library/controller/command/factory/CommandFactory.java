@@ -41,9 +41,7 @@ public class CommandFactory {
         operations.put(CommandName.COMMAND_VIEW_ALL_USERS, new ViewAllUsersCommand());
         operations.put(CommandName.COMMAND_VIEW_BOOK, new ViewBookCommand());
         operations.put(CommandName.COMMAND_VIEW_PROFILE, new ViewProfileCommand());
-
     }
-
 
     public Command createCommand(String commandName) {
         Command command = null;
@@ -54,5 +52,4 @@ public class CommandFactory {
         }
         return command;
     }
-
 }
