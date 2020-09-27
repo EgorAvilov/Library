@@ -51,4 +51,36 @@ public class MainServlet extends HttpServlet {
             response.sendRedirect(pathCreator.getError());
         }
     }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+        PathCreator pathCreator = utilFactory.getPathCreator();
+        CommandFactory commandFactory = CommandFactory.getInstance();
+
+        String action = request.getParameter(ParameterName.COMMAND);
+        Command command = commandFactory.createCommand(action);
+        try {
+            String path = command.execute(request, response);
+            response.sendRedirect(path);
+        } catch (CommandException e) {
+            log.error(e);
+            response.sendRedirect(pathCreator.getError());
+        }
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+        PathCreator pathCreator = utilFactory.getPathCreator();
+        CommandFactory commandFactory = CommandFactory.getInstance();
+
+        String action = request.getParameter(ParameterName.COMMAND);
+        Command command = commandFactory.createCommand(action);
+        try {
+            String path = command.execute(request, response);
+            response.sendRedirect(path);
+        } catch (CommandException e) {
+            log.error(e);
+            response.sendRedirect(pathCreator.getError());
+        }
+    }
 }
