@@ -30,10 +30,10 @@ public class ChangeUserDeletedStatusCommand implements Command {
         String path = pathCreator.getError();
         long userId = Long.parseLong(request.getParameter(ParameterName.USER_ID));
         int role = (int) session.getAttribute(ParameterName.ROLE);
-        int result = 0;
+
         try {
             if (valueChecker.isAdmin(role)) {
-                result = adminService.changeUserDeletedStatus(userId);
+                 adminService.changeUserDeletedStatus(userId);
                 // path=pathCreator.ge
             } else {
                 path = pathCreator.getError();

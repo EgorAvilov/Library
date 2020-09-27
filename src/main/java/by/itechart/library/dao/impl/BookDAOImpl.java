@@ -93,17 +93,17 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public int changeDeletedStatus(long bookId) throws DAOException {
+    public void changeDeletedStatus(long bookId) throws DAOException {
         String request = SQLRequest.CHANGE_BOOK_DELETED_STATUS;
         Connection connection = null;
         PreparedStatement statement = null;
-        int result;
+
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             Book book = getBook(bookId);
             statementInitializer.changeDeletedStatus(statement, !book.isDeletedStatus(), bookId);
-            result = statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during deleting book");
@@ -111,7 +111,6 @@ public class BookDAOImpl implements BookDAO {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
         }
-        return result;
     }
 
     @Override

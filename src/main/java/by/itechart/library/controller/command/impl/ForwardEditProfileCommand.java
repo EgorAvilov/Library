@@ -26,7 +26,7 @@ public class ForwardEditProfileCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
 
         HttpSession session = request.getSession();
         long userId = (int) session.getAttribute(ParameterName.USER_ID);
@@ -40,7 +40,6 @@ public class ForwardEditProfileCommand implements Command {
             } else {
                 path = pathCreator.getError();
             }
-
         } catch (ServiceException e) {
             log.error(e);
             throw new CommandException(e);

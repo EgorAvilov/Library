@@ -29,11 +29,10 @@ public class ChangeBookDeletedStatusCommand implements Command {
 
         String path = pathCreator.getError();
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
-        int result = 0;
         int role = (int) session.getAttribute(ParameterName.ROLE);
         try {
             if (valueChecker.isAdmin(role)) {
-                result = adminService.changeBookDeletedStatus(bookId);
+                 adminService.changeBookDeletedStatus(bookId);
                 path = pathCreator.getBooksPage();
             } else {
                 path = pathCreator.getError();

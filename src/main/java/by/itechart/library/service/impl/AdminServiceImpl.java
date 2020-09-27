@@ -50,27 +50,25 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public int changeBookDeletedStatus(long bookId) throws ServiceException {
-        int result;
+    public void changeBookDeletedStatus(long bookId) throws ServiceException {
         try {
-            result = bookDAO.changeDeletedStatus(bookId);
+           bookDAO.changeDeletedStatus(bookId);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
         }
-        return result;
+
     }
 
     @Override
-    public int changeUserDeletedStatus(long userId) throws ServiceException {
-        int result;
+    public void changeUserDeletedStatus(long userId) throws ServiceException {
+
         try {
-            result = userDAO.changeDeletedStatus(userId);
+           userDAO.changeDeletedStatus(userId);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
         }
-        return result;
     }
 
     @Override

@@ -122,17 +122,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int changeDeletedStatus(long userId) throws DAOException {
+    public void changeDeletedStatus(long userId) throws DAOException {
         String request = SQLRequest.CHANGE_USER_DELETED_STATUS;
         Connection connection = null;
         PreparedStatement statement = null;
-        int result = 0;
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             User user = getUser(userId);
             statementInitializer.changeDeletedStatus(statement, !user.isDeletedStatus(), userId);
-            result = statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during deleting user");
@@ -140,7 +139,6 @@ public class UserDAOImpl implements UserDAO {
             resourceCloser.close(statement);
             resourceCloser.close(connection);
         }
-        return result;
     }
 
     @Override

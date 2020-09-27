@@ -12,9 +12,9 @@ public interface AdminService {
 
     public void updateBook(Book book) throws ServiceException;
 
-    public int changeBookDeletedStatus(long bookId) throws ServiceException;
+    public void changeBookDeletedStatus(long bookId) throws ServiceException;
 
-    public int changeUserDeletedStatus(long userId) throws ServiceException;
+    public void changeUserDeletedStatus(long userId) throws ServiceException;
 
     public List<BorrowRecord> getAllBorrowRecords(int currentPage, int recordsPerPage) throws ServiceException;
 

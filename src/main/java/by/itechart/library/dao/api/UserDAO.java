@@ -14,7 +14,7 @@ public interface UserDAO {
 
     public User getUser(long userId) throws DAOException;
 
-    public int changeDeletedStatus(long userId) throws DAOException;
+    public void changeDeletedStatus(long userId) throws DAOException;
 
     public int getNumberOfRows() throws DAOException;
 

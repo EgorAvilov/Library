@@ -12,7 +12,7 @@ public interface BookDAO {
 
     public void updateBook(Book book) throws DAOException;
 
-    public int changeDeletedStatus(long bookId) throws DAOException;
+    public void changeDeletedStatus(long bookId) throws DAOException;
 
     public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException;
 
