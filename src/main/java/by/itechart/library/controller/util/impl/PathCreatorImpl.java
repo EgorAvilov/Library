@@ -13,7 +13,7 @@ public class PathCreatorImpl implements PathCreator {
     private final static String EDIT_BOOK = "edit-book";
     private final static String EDIT_PROFILE = "edit-profile";
     private final static String GET_BOOKS_PAGE = "/controller?command=view-all-books";
-
+    private final static String GET_USERS_PAGE = "/controller?command=view-all-users";
     @Override
     public String getBooksPage() {
         return MAIN_PAGE;
@@ -21,6 +21,11 @@ public class PathCreatorImpl implements PathCreator {
 
     @Override
     public String getForwardMainPage(String contextPath) {
+        return contextPath + GET_USERS_PAGE;
+    }
+
+    @Override
+    public String getForwardUsersPage(String contextPath) {
         return contextPath + GET_BOOKS_PAGE;
     }
 

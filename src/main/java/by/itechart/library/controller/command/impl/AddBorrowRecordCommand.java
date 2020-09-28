@@ -36,7 +36,7 @@ public class AddBorrowRecordCommand implements Command {
         long userId = user.getId();
 
         LocalDate borrowDate = LocalDate.now();
-        LocalDate dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));//проверить
+        LocalDate dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
 
         BorrowRecord borrowRecord = new BorrowRecord();

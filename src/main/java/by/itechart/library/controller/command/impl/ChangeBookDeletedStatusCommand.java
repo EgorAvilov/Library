@@ -28,7 +28,7 @@ public class ChangeBookDeletedStatusCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         HttpSession session = request.getSession();
 
-        String path = pathCreator.getError();
+        String path;
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
