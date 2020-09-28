@@ -21,12 +21,12 @@ public class PathCreatorImpl implements PathCreator {
 
     @Override
     public String getForwardMainPage(String contextPath) {
-        return contextPath + GET_USERS_PAGE;
+        return contextPath + GET_BOOKS_PAGE;
     }
 
     @Override
     public String getForwardUsersPage(String contextPath) {
-        return contextPath + GET_BOOKS_PAGE;
+        return contextPath + GET_USERS_PAGE;
     }
 
     @Override
