@@ -26,22 +26,22 @@ public class ViewAllBooksCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         PathCreator pathCreator = utilFactory.getPathCreator();
 
-        int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
-        int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
+        //int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
+        //int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
 
         String path = pathCreator.getError();
         List<Book> books;
         try {
             int numberOfRows = commonService.getNumberOfBookRows();
-            int numberOfPages = numberOfRows / recordsPerPage;
-            if (numberOfRows % recordsPerPage > 0) {
-                numberOfPages++;
-            }
-            books = commonService.getAllBooks(currentPage, recordsPerPage);
+//            int numberOfPages = numberOfRows / recordsPerPage;
+//            if (numberOfRows % recordsPerPage > 0) {
+//                numberOfPages++;
+//            }
+            books = commonService.getAllBooks(1, 10);
             request.setAttribute(ParameterName.BOOKS, books);
-            request.setAttribute(ParameterName.NUMBER_OF_PAGES, numberOfPages);
-            request.setAttribute(ParameterName.CURRENT_PAGE, currentPage);
-            request.setAttribute(ParameterName.RECORDS_PER_PAGE, recordsPerPage);
+            request.setAttribute(ParameterName.NUMBER_OF_PAGES, 1);
+            request.setAttribute(ParameterName.CURRENT_PAGE, 1);
+            request.setAttribute(ParameterName.RECORDS_PER_PAGE, 10);
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {
             log.error(e);

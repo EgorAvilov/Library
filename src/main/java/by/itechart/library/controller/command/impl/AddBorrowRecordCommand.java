@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.exception.ServiceException;
@@ -30,8 +31,9 @@ public class AddBorrowRecordCommand implements Command {
 
         String path = pathCreator.getError();
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute(ParameterName.USER_ID);
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
+        long userId = user.getId();
 
         LocalDate borrowDate = LocalDate.now();
         LocalDate dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));//проверить
@@ -45,7 +47,7 @@ public class AddBorrowRecordCommand implements Command {
         try {
             if (valueChecker.isUser(role)) {
                 userService.addBorrowRecord(borrowRecord);
-                path = pathCreator.getBooksPage();
+                path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
                 path = pathCreator.getError();
             }

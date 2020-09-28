@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
@@ -32,7 +33,8 @@ public class ForwardEditBorrowRecordCommand implements Command {
 
         BorrowRecord borrowRecord;
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isAnyUser(role)) {
                 borrowRecord = commonService.getBorrowRecord(borrowRecordId);

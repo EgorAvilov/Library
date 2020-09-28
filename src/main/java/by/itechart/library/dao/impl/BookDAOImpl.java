@@ -259,20 +259,20 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException {
-        String request = SQLRequest.CHANGE_BOOK_AVAILABLE_AMOUNT;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = dbConnectionPool.getConnection();
-            statement = connection.prepareStatement(request);
-            statementInitializer.updateBookAvailableAmount(statement, bookId, availableAmount);
-            statement.executeQuery();
-        } catch (SQLException | ConnectionPoolException e) {
-            log.error(e);
-            throw new DAOException("Something went wrong during setting available amount of books");
-        } finally {
-            resourceCloser.close(statement);
-            resourceCloser.close(connection);
-        }
+//        String request = SQLRequest.CHANGE_BOOK_AVAILABLE_AMOUNT;
+//        Connection connection = null;
+//        PreparedStatement statement = null;
+//        try {
+//            connection = dbConnectionPool.getConnection();
+//            statement = connection.prepareStatement(request);
+//            statementInitializer.updateBookAvailableAmount(statement, bookId, availableAmount);
+//            statement.executeQuery();
+//        } catch (SQLException | ConnectionPoolException e) {
+//            log.error(e);
+//            throw new DAOException("Something went wrong during setting available amount of books");
+//        } finally {
+//            resourceCloser.close(statement);
+//            resourceCloser.close(connection);
+//        }
     }
 }

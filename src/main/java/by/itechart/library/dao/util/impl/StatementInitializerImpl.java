@@ -5,6 +5,8 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -55,7 +57,13 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void addBook(PreparedStatement statement, Book book) throws SQLException {
-        statement.setBytes(1, book.getCover());
+        InputStream stream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
+        statement.setBinaryStream(1, stream);
         statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());
@@ -71,8 +79,13 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void updateBook(PreparedStatement statement, Book book) throws SQLException {
-        statement.setBytes(1, book.getCover());
-        statement.setNString(2, book.getTitle());
+        InputStream stream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
+        statement.setBinaryStream(1, stream);        statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());
         statement.setDate(5, Date.valueOf(book.getPublishDate()));

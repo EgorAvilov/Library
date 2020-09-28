@@ -41,7 +41,9 @@ public class EditProfileCommand implements Command {
         user.setPhoneNumber(phoneNumber);
         user.setPassword(password);
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+
+        User userSession = (User) session.getAttribute(ParameterName.USER);
+        int role = userSession.getRole().getRoleId();
         try {
             if (valueChecker.isAnyUser(role)) {
                 commonService.updateProfile(user);

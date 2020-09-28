@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.Book;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
@@ -30,7 +31,8 @@ public class ForwardEditBookCommand implements Command {
         HttpSession session = request.getSession();
         String path = pathCreator.getError();
         int bookId = Integer.parseInt(request.getParameter(ParameterName.BOOK_ID));
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         Book book;
 
         try {

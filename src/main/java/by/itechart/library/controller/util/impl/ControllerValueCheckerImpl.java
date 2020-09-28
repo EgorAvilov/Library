@@ -11,20 +11,20 @@ public class ControllerValueCheckerImpl implements ControllerValueChecker {
 
     @Override
     public boolean isAdmin(int statusId) {
-        Role role = Role.values()[statusId];
+        Role role = Role.values()[statusId-1];
         return role == Role.ADMIN;
     }
 
     @Override
     public boolean isAnyUser(int statusId) {
-        Role role = Role.values()[statusId];
+        Role role = Role.values()[statusId-1];
         return role == Role.ADMIN
                 || role == Role.USER;
     }
 
     @Override
     public boolean isUser(int statusId) {
-        Role role = Role.values()[statusId];
+        Role role = Role.values()[statusId-1];
         return role == Role.USER;
     }
 }

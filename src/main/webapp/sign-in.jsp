@@ -19,7 +19,7 @@
 
     <title>Sign in</title>
 </head>
-<body style="background-image: url('resource/img/background.jpg')">
+<body style="background: url('resource/img/background.jpg') no-repeat center center fixed">
     <div class="col-sm-9 main-section">
         <div class="modal-content">
 
@@ -51,15 +51,6 @@
                                aria-describedby="addon-wrapping">
                     </div>
                     <br>
-                    <c:if test="${sign_in_message != null}">
-                        <p style="color: #FF0000;"><fmt:message key="message.invalid-sign-in-values"/><p>
-                    </c:if>
-                    <c:if test="${user_banned_message != null}">
-                        <p style="color: #FF0000;"><fmt:message key="message.user-banned"/></p>
-                    </c:if>
-                    <c:if test="${success_sign_up != null}">
-                        <p style="color: #00FF00;"><fmt:message key="message.success-sign-up"/></p>
-                    </c:if>
                     <input type="hidden" name="command" value="sign-in">
                     <button type="submit" class="btn btn-success">
                         Sign in
@@ -68,10 +59,7 @@
             </div>
             <div class="col-12 forgot">
                 <p class="add">
-                    <a href="restore-password">Forgot password?</a>
-                </p>
-                <p class="add">
-                    <a href="sign-up">Don't have an account? Sign up!</a>
+                    Don't have an account? <a href="sign-up">Sign up!</a>
                 </p>
             </div>
         </div>

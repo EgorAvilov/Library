@@ -29,9 +29,9 @@ public class ViewProfileCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
 
-        long userId = (long) session.getAttribute(ParameterName.USER_ID);
-        int role = (int) session.getAttribute(ParameterName.ROLE);
-        User user;
+        User user = (User) session.getAttribute(ParameterName.USER);
+        long userId= user.getId();
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isAnyUser(role)) {
                 user = commonService.getProfile(userId);

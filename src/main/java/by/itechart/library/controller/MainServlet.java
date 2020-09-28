@@ -68,7 +68,7 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
         PathCreator pathCreator = utilFactory.getPathCreator();
         CommandFactory commandFactory = CommandFactory.getInstance();

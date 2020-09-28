@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.exception.ServiceException;
@@ -34,8 +35,9 @@ public class ViewAllBorrowRecordsByUserCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
         List<BorrowRecord> borrowRecords;
-        int role = (int) session.getAttribute(ParameterName.ROLE);
-        int userId = (int) session.getAttribute(ParameterName.USER_ID);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        long userId= user.getId();
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isUser(role)) {
                 int numberOfRows = userService.getNumberOfBorrowRecordRows(userId);
@@ -48,7 +50,8 @@ public class ViewAllBorrowRecordsByUserCommand implements Command {
                 request.setAttribute(ParameterName.NUMBER_OF_PAGES, numberOfPages);
                 request.setAttribute(ParameterName.CURRENT_PAGE, currentPage);
                 request.setAttribute(ParameterName.RECORDS_PER_PAGE, recordsPerPage);
-                path = pathCreator.getBooksPage();
+                //path = pathCreator.getBooksPage();
+                path = "";
             } else {
                 path = pathCreator.getError();
             }

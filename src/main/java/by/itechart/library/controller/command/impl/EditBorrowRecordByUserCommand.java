@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.exception.ServiceException;
@@ -37,7 +38,8 @@ public class EditBorrowRecordByUserCommand implements Command {
         borrowRecord.setId(borrowRecordId);
         borrowRecord.setReturnDate(returnDate);
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isUser(role)) {
                 userService.updateBorrowRecord(borrowRecord);

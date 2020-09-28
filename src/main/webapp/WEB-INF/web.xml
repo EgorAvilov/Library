@@ -40,7 +40,7 @@
 
     <servlet>
         <servlet-name>MainPage</servlet-name>
-        <jsp-file>/WEB-INF/main-page.jsp</jsp-file>
+        <jsp-file>/WEB-INF/jsp/main-page.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainPage</servlet-name>
@@ -48,11 +48,16 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>BooksPage</servlet-name>
-        <jsp-file>/WEB-INF/books-page.jsp</jsp-file>
+        <servlet-name>BookPage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/book-page.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BooksPage</servlet-name>
-        <url-pattern>/books-page</url-pattern>
+        <servlet-name>BookPage</servlet-name>
+        <url-pattern>/book-page</url-pattern>
     </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error-404.jsp</location>
+    </error-page>
 </web-app>

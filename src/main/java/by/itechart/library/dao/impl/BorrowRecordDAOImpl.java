@@ -66,7 +66,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.addBorrowRecord(statement, borrowRecord);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during adding borrow record");

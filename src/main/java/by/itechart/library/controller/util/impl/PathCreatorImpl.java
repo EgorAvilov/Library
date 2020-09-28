@@ -12,8 +12,17 @@ public class PathCreatorImpl implements PathCreator {
     private final static String MAIN_PAGE = "main-page";
     private final static String EDIT_BOOK = "edit-book";
     private final static String EDIT_PROFILE = "edit-profile";
-    private final static String BOOKS_PAGE = "books-page";
+    private final static String GET_BOOKS_PAGE = "/controller?command=view-all-books";
 
+    @Override
+    public String getBooksPage() {
+        return MAIN_PAGE;
+    }
+
+    @Override
+    public String getForwardMainPage(String contextPath) {
+        return contextPath + GET_BOOKS_PAGE;
+    }
 
     @Override
     public String getError() {
@@ -31,13 +40,8 @@ public class PathCreatorImpl implements PathCreator {
     }
 
     @Override
-    public String getBooksPage() {
-        return BOOKS_PAGE;
-    }
-
-    @Override
     public String getBookPage(String contextPath, long bookId) {
-        return null;
+        return "book-page";
     }
 
     @Override

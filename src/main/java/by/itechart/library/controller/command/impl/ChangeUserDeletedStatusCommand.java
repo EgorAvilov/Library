@@ -6,6 +6,7 @@ import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
@@ -28,9 +29,9 @@ public class ChangeUserDeletedStatusCommand implements Command {
         HttpSession session = request.getSession();
 
         String path = pathCreator.getError();
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         long userId = Long.parseLong(request.getParameter(ParameterName.USER_ID));
-        int role = (int) session.getAttribute(ParameterName.ROLE);
-
         try {
             if (valueChecker.isAdmin(role)) {
                  adminService.changeUserDeletedStatus(userId);

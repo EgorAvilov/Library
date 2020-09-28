@@ -13,7 +13,7 @@ public class Book implements Serializable {
     private static final long serialVersionUID = 7197102530298867633L;
 
     private long id;
-    private byte[] cover;
+    private String cover;
     private String title;
     private String authors;
     private String publisher;

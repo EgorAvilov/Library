@@ -8,13 +8,15 @@ import by.itechart.library.service.dto.EmailSenderDto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Base64;
 
 public class ResultCreatorImpl implements ResultCreator {
 
     @Override
     public Book getNextBook(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong(ColumnName.BOOK_ID);
-        byte[] cover = resultSet.getBytes(ColumnName.BOOK_COVER);
+        byte[] byteCover = resultSet.getBytes(ColumnName.BOOK_COVER);
+        String cover = encodeImage(byteCover);
         String title = resultSet.getNString(ColumnName.BOOK_TITLE);
         String authors = resultSet.getNString(ColumnName.BOOK_AUTHORS);
         String publisher = resultSet.getNString(ColumnName.BOOK_PUBLISHER);
@@ -121,5 +123,14 @@ public class ResultCreatorImpl implements ResultCreator {
 
 
         return null;
+    }
+
+    private String encodeImage(byte[] imgArray){
+        Base64.Encoder base64 = Base64.getEncoder();
+        String img = "";
+        if (imgArray != null) {
+            img = base64.encodeToString(imgArray);
+        }
+        return img;
     }
 }

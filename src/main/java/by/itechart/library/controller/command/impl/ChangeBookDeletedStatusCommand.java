@@ -6,6 +6,7 @@ import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
@@ -29,11 +30,12 @@ public class ChangeBookDeletedStatusCommand implements Command {
 
         String path = pathCreator.getError();
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
-                 adminService.changeBookDeletedStatus(bookId);
-                path = pathCreator.getBooksPage();
+                adminService.changeBookDeletedStatus(bookId);
+                path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
                 path = pathCreator.getError();
             }

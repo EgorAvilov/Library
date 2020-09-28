@@ -29,9 +29,12 @@ public class ForwardEditProfileCommand implements Command {
         String path;
 
         HttpSession session = request.getSession();
-        long userId = (int) session.getAttribute(ParameterName.USER_ID);
-        int role = (int) session.getAttribute(ParameterName.ROLE);
-        User user;
+        User user = (User) session.getAttribute(ParameterName.USER);
+        long userId= user.getId();
+        int role = user.getRole().getRoleId();
+        /*long userId = (int) session.getAttribute(ParameterName.USER_ID);
+        int role = (int) session.getAttribute(ParameterName.ROLE);*/
+
         try {
             if (valueChecker.isAnyUser(role)) {
                 user = commonService.getProfile(userId);

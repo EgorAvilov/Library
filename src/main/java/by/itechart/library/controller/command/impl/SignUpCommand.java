@@ -38,8 +38,7 @@ public class SignUpCommand implements Command {
         String phoneNumber = request.getParameter(ParameterName.PHONE_NUMBER);
         LocalDate dateOfRegistration = LocalDate.now();
         Role role;
-        if (request.getSession()
-                   .isNew()) {
+        if (request.getSession().isNew()) {
             role = Role.USER;
         } else {//проверить на работоспособность
             role = Role.values()[(int) request.getSession()

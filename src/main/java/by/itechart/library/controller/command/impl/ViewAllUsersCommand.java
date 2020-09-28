@@ -34,7 +34,8 @@ public class ViewAllUsersCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
         List<User> users;
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
                 int numberOfRows = adminService.getNumberOfUserRows();

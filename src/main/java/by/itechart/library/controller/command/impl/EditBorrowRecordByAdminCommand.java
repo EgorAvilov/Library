@@ -8,6 +8,7 @@ import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.BorrowRecordStatus;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
@@ -40,7 +41,8 @@ public class EditBorrowRecordByAdminCommand implements Command {
         borrowRecord.setRecordStatus(borrowRecordStatus);
         borrowRecord.setComment(comment);
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBorrowRecord(borrowRecord);

@@ -34,8 +34,7 @@ public class SignInCommand implements Command {
         try {
             User user = commonService.signIn(username, password);
             session.setAttribute(ParameterName.USER, user);
-            //  path = pathCreator.getForwardMainPage(request.getContextPath());
-            path = "main-page";
+            path = pathCreator.getForwardMainPage(request.getContextPath());
         } catch (ServiceException e) {
             log.error(e);
             throw new CommandException(e);

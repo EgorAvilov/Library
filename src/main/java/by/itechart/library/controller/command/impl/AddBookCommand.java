@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.Book;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
@@ -23,9 +24,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @Log4j
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10,      // 10MB
-        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class AddBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -42,7 +40,7 @@ public class AddBookCommand implements Command {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(1024 * 1024 * 2);
         File image = new File(request.getParameter(ParameterName.COVER));
-        byte[] cover = new byte[0];
+        byte[] cover = new byte[0];//сделать как у артема
         try {
             cover = FileUtils.readFileToByteArray(image);
         } catch (IOException e) {
@@ -62,7 +60,7 @@ public class AddBookCommand implements Command {
         int availableAmount = totalAmount;
 
         Book book = new Book();
-        book.setCover(cover);
+        book.setCover("");
         book.setTitle(title);
         book.setAuthors(authors);
         book.setPublisher(publisher);
@@ -74,13 +72,12 @@ public class AddBookCommand implements Command {
         book.setTotalAmount(totalAmount);
         book.setAvailableAmount(availableAmount);
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         try {
-
-
             if (valueChecker.isAdmin(role)) {
                 adminService.addBook(book);
-                path = pathCreator.getBooksPage();
+                path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
                 path = pathCreator.getError();
             }

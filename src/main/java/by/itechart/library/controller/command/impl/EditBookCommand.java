@@ -7,6 +7,7 @@ import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.Book;
+import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
@@ -39,15 +40,7 @@ public class EditBookCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
-        /*byte[] cover = new byte[0];
-        try {
-            //сделать проверку на размер и прочее
-            //если пустая то по умолчанию
-            cover = FileUtils.readFileToByteArray(new File(request.getParameter(ParameterName.COVER)));
-        } catch (IOException e) {
-            log.error(e);
-            e.printStackTrace();
-        }*/
+
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
         String publisher = request.getParameter(ParameterName.PUBLISHER);
@@ -72,7 +65,9 @@ public class EditBookCommand implements Command {
         book.setDescription(description);
         book.setTotalAmount(totalAmount);
 
-        int role = (int) session.getAttribute(ParameterName.ROLE);
+
+        User user = (User) session.getAttribute(ParameterName.USER);
+        int role = user.getRole().getRoleId();
         byte[] cover;
         try {
             Part filePart = request.getPart(ParameterName.COVER);
