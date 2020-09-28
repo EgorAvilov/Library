@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException {
         try {
             borrowRecordDAO.updateBorrowRecordByUser(borrowRecord);
-        } catch (DAOException e) {//здесь вернуть книгу в availableAmount но проверить тсатус который дает админ
+        } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
         }

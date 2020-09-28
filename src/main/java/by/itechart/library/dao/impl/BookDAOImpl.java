@@ -36,7 +36,7 @@ public class BookDAOImpl implements BookDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.addBook(statement, book);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during adding a book");
@@ -82,7 +82,7 @@ public class BookDAOImpl implements BookDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.updateBook(statement, book);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("No such book to update");
@@ -232,6 +232,13 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
+    public void returnBook(long bookId) throws DAOException {
+        int availableAmount = getAvailableAmountOfBooks(bookId);
+        availableAmount++;
+        setAvailableAmountOfBooks(bookId, availableAmount);
+    }
+
+    @Override
     public int getAvailableAmountOfBooks(long bookId) throws DAOException {
         String request = SQLRequest.GET_AVAILABLE_AMOUNT_OF_BOOKS_BY_ID;
         Connection connection = null;
@@ -259,20 +266,20 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException {
-//        String request = SQLRequest.CHANGE_BOOK_AVAILABLE_AMOUNT;
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//            connection = dbConnectionPool.getConnection();
-//            statement = connection.prepareStatement(request);
-//            statementInitializer.updateBookAvailableAmount(statement, bookId, availableAmount);
-//            statement.executeQuery();
-//        } catch (SQLException | ConnectionPoolException e) {
-//            log.error(e);
-//            throw new DAOException("Something went wrong during setting available amount of books");
-//        } finally {
-//            resourceCloser.close(statement);
-//            resourceCloser.close(connection);
-//        }
+        String request = SQLRequest.CHANGE_BOOK_AVAILABLE_AMOUNT;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.updateBookAvailableAmount(statement, bookId, availableAmount);
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during setting available amount of books");
+        } finally {
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
     }
 }

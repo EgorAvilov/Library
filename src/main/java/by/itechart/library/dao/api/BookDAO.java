@@ -24,6 +24,8 @@ public interface BookDAO {
 
     public void takeBook(long bookId) throws DAOException;
 
+    public void returnBook(long bookId) throws DAOException;
+
     public int getAvailableAmountOfBooks(long bookId) throws DAOException;
 
     public void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException;

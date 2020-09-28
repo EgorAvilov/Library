@@ -113,7 +113,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.updateBorrowRecordByAdmin(statement, borrowRecord);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during updating borrow record by admin");
@@ -132,7 +132,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.updateBorrowRecordByUser(statement, borrowRecord);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during updating borrow record by user");

@@ -65,7 +65,7 @@ public class UserDAOImpl implements UserDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.addUser(statement, user);
-            statement.execute();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during adding user");
@@ -84,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             statementInitializer.updateUser(statement, user);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during updating user");

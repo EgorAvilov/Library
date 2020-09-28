@@ -23,20 +23,10 @@ public class BorrowRecordValidatorImpl implements BorrowRecordValidator {
     public boolean validateUpdateByAdmin(BorrowRecord borrowRecord) throws ValidatorException {
         return false;
     }
-
-
-
-
-
-
-
-
-    private boolean validateStatus(BorrowRecordStatus borrowRecordStatus) throws ValidatorException {
-
-      //  if(BorrowRecordStatus.valueOf(String.valueOf(borrowRecordStatus))
-
-
-        return true;
+    @Override
+    public boolean validateStatus(int borrowRecordStatusId) throws ValidatorException {
+        BorrowRecordStatus borrowRecordStatus=BorrowRecordStatus.values()[borrowRecordStatusId-1];
+        return borrowRecordStatus==BorrowRecordStatus.RETURNED;
     }
 
     private boolean validateDueDate(LocalDate dueDate) throws ValidatorException {

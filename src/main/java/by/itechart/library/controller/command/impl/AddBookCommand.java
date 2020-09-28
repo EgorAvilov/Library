@@ -33,7 +33,7 @@ public class AddBookCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
 
         HttpSession session = request.getSession();
 
@@ -71,6 +71,7 @@ public class AddBookCommand implements Command {
         book.setDescription(description);
         book.setTotalAmount(totalAmount);
         book.setAvailableAmount(availableAmount);
+        book.setStatus(true);
 
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
