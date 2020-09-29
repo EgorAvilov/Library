@@ -26,14 +26,11 @@ public class SearchBookCommand implements Command {
         PathCreator pathCreator = utilFactory.getPathCreator();
         String path = pathCreator.getError();
 
-        String title = request.getParameter(ParameterName.SEARCH_TITLE);
-        String authors = request.getParameter(ParameterName.SEARCH_AUTHORS);
-        String genres = request.getParameter(ParameterName.SEARCH_GENRES);
-        String description = request.getParameter(ParameterName.SEARCH_DESCRIPTION);
+        String searchParameter = request.getParameter(ParameterName.SEARCH_PARAMETER);
 
         List<Book> books;
         try {
-            books = commonService.searchBooks(title, authors, genres, description);
+            books = commonService.searchBooks(searchParameter);
             request.setAttribute(ParameterName.BOOKS, books);
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {

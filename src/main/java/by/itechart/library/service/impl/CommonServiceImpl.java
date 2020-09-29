@@ -115,10 +115,10 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<Book> searchBooks(String title, String authors, String genres, String description) throws ServiceException {
+    public List<Book> searchBooks(String searchParameter) throws ServiceException {
         List<Book> books;
         try {
-            books = bookDAO.searchBooks(title, authors, genres, description);
+            books = bookDAO.searchBooks(searchParameter);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);

@@ -48,10 +48,8 @@ public class ParameterName {
     public final static String BORROW_RECORDS = "borrowRecords";
 
 
-    public final static String SEARCH_TITLE = "searchTitle";
-    public final static String SEARCH_AUTHORS = "searchAuthors";
-    public final static String SEARCH_GENRES = "searchGenres";
-    public final static String SEARCH_DESCRIPTION = "searchDescription";
+    public final static String SEARCH_PARAMETER = "searchParameter";
+
 
     public final static String CURRENT_PAGE = "currentPage";
     public final static String RECORDS_PER_PAGE = "recordsPerPage";

@@ -29,7 +29,7 @@ public interface StatementInitializer {
 
     public void updateBorrowRecordByUser(PreparedStatement statement, BorrowRecord borrowRecord) throws SQLException;
 
-    public void addSearchParameters(PreparedStatement statement, String title, String authors, String genres, String description) throws SQLException;
+    public void addSearchParameters(PreparedStatement statement, String searchParameter) throws SQLException;
 
     public void addPaginationParameters(PreparedStatement statement, int start, int recordsPerPage) throws SQLException;
 

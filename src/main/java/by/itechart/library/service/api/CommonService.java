@@ -22,7 +22,7 @@ public interface CommonService {
 
     public BorrowRecord getBorrowRecord(long borrowRecordId) throws ServiceException;
 
-    public List<Book> searchBooks(String title, String authors, String genres, String description) throws ServiceException;
+    public List<Book> searchBooks(String searchParameter) throws ServiceException;
 
     public int getNumberOfBookRows() throws ServiceException;
 }

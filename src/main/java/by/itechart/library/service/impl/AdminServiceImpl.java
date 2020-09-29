@@ -15,8 +15,6 @@ import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
 import by.itechart.library.service.util.BorrowRecordValidator;
-import by.itechart.library.util.annotation.ConstructorForTest;
-import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
@@ -33,22 +31,6 @@ public class AdminServiceImpl implements AdminService {
     private BookValidator bookValidator = utilFactory.getBookValidator();
     private BorrowRecordValidator borrowRecordValidator = utilFactory.getBorrowRecordValidator();
 
-   /* @ConstructorForTest
-    public AdminServiceImpl(DAOFactory daoFactory,
-                            BookDAO bookDAO,
-                            UserDAO userDAO,
-                            BorrowRecordDAO borrowRecordDAO,
-                            UtilFactory utilFactory,
-                            BookValidator bookValidator,
-                            BorrowRecordValidator borrowRecordValidator) {
-        this.daoFactory = daoFactory;
-        this.bookDAO = bookDAO;
-        this.userDAO = userDAO;
-        this.borrowRecordDAO = borrowRecordDAO;
-        this.utilFactory = utilFactory;
-        this.bookValidator = bookValidator;
-        this.borrowRecordValidator = borrowRecordValidator;
-    }*/
 
 
 

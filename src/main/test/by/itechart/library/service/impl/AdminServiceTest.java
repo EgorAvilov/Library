@@ -5,9 +5,6 @@ import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.api.BorrowRecordDAO;
 import by.itechart.library.dao.api.UserDAO;
 import by.itechart.library.dao.exception.DAOException;
-import by.itechart.library.dao.impl.BookDAOImpl;
-import by.itechart.library.dao.impl.BorrowRecordDAOImpl;
-import by.itechart.library.dao.impl.UserDAOImpl;
 import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.BorrowRecordStatus;
@@ -17,15 +14,11 @@ import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
 import by.itechart.library.service.util.BorrowRecordValidator;
-import by.itechart.library.service.util.impl.BookValidatorImpl;
-import by.itechart.library.service.util.impl.BorrowRecordValidatorImpl;
-import lombok.NoArgsConstructor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,20 +26,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class AdminServiceTest {
     @InjectMocks
     AdminServiceImpl adminService;
-/*
-    DAOFactory daoFactory = Mockito.mock(DAOFactory.class);
-    BookDAO bookDAO = Mockito.mock(BookDAOImpl.class);
-    UserDAO userDAO = Mockito.mock(UserDAOImpl.class);
-    BorrowRecordDAO borrowRecordDAO = Mockito.mock(BorrowRecordDAOImpl.class);
-    UtilFactory utilFactory = Mockito.mock(UtilFactory.class);
-    BookValidator bookValidator = Mockito.mock(BookValidatorImpl.class);
-    BorrowRecordValidator borrowRecordValidator = Mockito.mock(BorrowRecordValidatorImpl.class);*/
-@Mock
-    DAOFactory daoFactory;
+
     @Mock
     BookDAO bookDAO;
     @Mock
@@ -54,20 +39,20 @@ public class AdminServiceTest {
     @Mock
     BorrowRecordDAO borrowRecordDAO;
     @Mock
-    UtilFactory utilFactory;
-    @Mock
     BookValidator bookValidator;
     @Mock
     BorrowRecordValidator borrowRecordValidator;
-    Book book = new Book();
-    BorrowRecord borrowRecord = new BorrowRecord();
+    @Mock
+    Book book;
+
+    BorrowRecord borrowRecord=new BorrowRecord();
 
 
     @Before
     public void init() {
         initMocks(this);
-        //adminService = new AdminServiceImpl(daoFactory, bookDAO, userDAO, borrowRecordDAO, utilFactory, bookValidator, borrowRecordValidator);
-
+        borrowRecord.setRecordStatus(BorrowRecordStatus.RETURNED);
+        borrowRecord.setUserId(1);
     }
 
     @Test(expected = ServiceException.class)
@@ -168,8 +153,6 @@ public class AdminServiceTest {
 
     @Test(expected = ServiceException.class)
     public void updateBorrowRecord_ValidatorException() throws ValidatorException, ServiceException {
-        borrowRecord.setRecordStatus(BorrowRecordStatus.RETURNED);
-        borrowRecord.setUserId(1);
         long bookId = borrowRecord.getBookId();
         BorrowRecordStatus borrowRecordStatus = borrowRecord.getRecordStatus();
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
@@ -182,8 +165,7 @@ public class AdminServiceTest {
 
     @Test
     public void updateBorrowRecord_validParams() throws DAOException, ValidatorException, ServiceException {
-        borrowRecord.setRecordStatus(BorrowRecordStatus.RETURNED);
-        borrowRecord.setUserId(1);
+
         long bookId = borrowRecord.getBookId();
         BorrowRecordStatus borrowRecordStatus = borrowRecord.getRecordStatus();
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
@@ -199,8 +181,6 @@ public class AdminServiceTest {
 
     @Test
     public void updateBorrowRecord_DAOException() throws ValidatorException, ServiceException, DAOException {
-        borrowRecord.setRecordStatus(BorrowRecordStatus.RETURNED);
-        borrowRecord.setUserId(1);
         long bookId = borrowRecord.getBookId();
         BorrowRecordStatus borrowRecordStatus = borrowRecord.getRecordStatus();
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();

@@ -121,11 +121,11 @@ public class StatementInitializerImpl implements StatementInitializer {
     }
 
     @Override
-    public void addSearchParameters(PreparedStatement statement, String title, String authors, String genres, String description) throws SQLException {
-        statement.setNString(1, title);
-        statement.setNString(2, authors);
-        statement.setNString(3, genres);
-        statement.setNString(4, description);
+    public void addSearchParameters(PreparedStatement statement, String searchParameter) throws SQLException {
+        statement.setNString(1, searchParameter);
+        statement.setNString(2, searchParameter);
+        statement.setNString(3, searchParameter);
+        statement.setNString(4, searchParameter);
     }
 
     @Override

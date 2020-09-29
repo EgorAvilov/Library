@@ -16,7 +16,7 @@ public interface BookDAO {
 
     public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException;
 
-    public List<Book> searchBooks(String title, String authors, String genres, String description) throws DAOException;
+    public List<Book> searchBooks(String searchParameter) throws DAOException;
 
     public int getNumberOfRows() throws DAOException;
 

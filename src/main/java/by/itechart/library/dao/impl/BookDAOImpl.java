@@ -143,7 +143,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public List<Book> searchBooks(String title, String authors, String genres, String description) throws DAOException {
+    public List<Book> searchBooks(String searchParameter) throws DAOException {
         String request = SQLRequest.SEARCH_BOOKS_BY_PARAMETERS;
         List<Book> books = new ArrayList<>();
         Connection connection = null;
@@ -152,7 +152,7 @@ public class BookDAOImpl implements BookDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addSearchParameters(statement, title, authors, genres, description);
+            statementInitializer.addSearchParameters(statement, searchParameter);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = resultCreator.getNextBook(resultSet);
