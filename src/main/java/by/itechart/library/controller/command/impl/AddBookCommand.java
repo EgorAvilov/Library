@@ -12,22 +12,19 @@ import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.io.FileUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 
 @Log4j
 public class AddBookCommand implements Command {
+
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
@@ -66,11 +63,16 @@ public class AddBookCommand implements Command {
         book.setStatus(true);
 
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
-            InputStream cover = getInputStream(coverPart);
-            book.setCover(cover.toString());
+            if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
+                InputStream cover = getInputStream(coverPart);
+                book.setCover(cover.toString());
+            } else {
+                book.setCover("");
+            }
             if (valueChecker.isAdmin(role)) {
                 adminService.addBook(book);
                 path = pathCreator.getForwardMainPage(request.getContextPath());
@@ -86,8 +88,8 @@ public class AddBookCommand implements Command {
 
     private InputStream getInputStream(Part coverPart) throws IOException {
         InputStream stream = null;
-        if (coverPart != null){
-            stream =  coverPart.getInputStream();
+        if (coverPart != null) {
+            stream = coverPart.getInputStream();
         }
         return stream;
     }
