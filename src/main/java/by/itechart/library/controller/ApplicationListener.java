@@ -38,6 +38,7 @@ public class ApplicationListener implements ServletContextListener,
       */
         DBConnectionPool connectionPool = DBConnectionPool.getInstance();
         connectionPool.destroy();
+        log.info("Destroying of Connection pool");
     }
 
     // -------------------------------------------------------

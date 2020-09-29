@@ -15,11 +15,14 @@ import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
 import by.itechart.library.service.util.BorrowRecordValidator;
+import by.itechart.library.util.annotation.ConstructorForTest;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
 
 @Log4j
+
 public class AdminServiceImpl implements AdminService {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -29,6 +32,25 @@ public class AdminServiceImpl implements AdminService {
     private UtilFactory utilFactory = UtilFactory.getInstance();
     private BookValidator bookValidator = utilFactory.getBookValidator();
     private BorrowRecordValidator borrowRecordValidator = utilFactory.getBorrowRecordValidator();
+
+   /* @ConstructorForTest
+    public AdminServiceImpl(DAOFactory daoFactory,
+                            BookDAO bookDAO,
+                            UserDAO userDAO,
+                            BorrowRecordDAO borrowRecordDAO,
+                            UtilFactory utilFactory,
+                            BookValidator bookValidator,
+                            BorrowRecordValidator borrowRecordValidator) {
+        this.daoFactory = daoFactory;
+        this.bookDAO = bookDAO;
+        this.userDAO = userDAO;
+        this.borrowRecordDAO = borrowRecordDAO;
+        this.utilFactory = utilFactory;
+        this.bookValidator = bookValidator;
+        this.borrowRecordValidator = borrowRecordValidator;
+    }*/
+
+
 
     @Override
     public void addBook(Book book) throws ServiceException {
@@ -61,12 +83,10 @@ public class AdminServiceImpl implements AdminService {
             log.error(e);
             throw new ServiceException(e);
         }
-
     }
 
     @Override
     public void changeUserDeletedStatus(long userId) throws ServiceException {
-
         try {
             userDAO.changeDeletedStatus(userId);
         } catch (DAOException e) {
