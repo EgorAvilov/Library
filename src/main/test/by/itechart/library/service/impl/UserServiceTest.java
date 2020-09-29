@@ -2,10 +2,11 @@ package by.itechart.library.service.impl;
 
 import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.api.BorrowRecordDAO;
-import by.itechart.library.dao.api.UserDAO;
 import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.exception.ServiceException;
+import by.itechart.library.service.exception.ValidatorException;
+import by.itechart.library.service.util.BorrowRecordValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -32,6 +33,9 @@ public class UserServiceTest {
     @Mock
     BorrowRecord borrowRecord;
 
+    @Mock
+    BorrowRecordValidator borrowRecordValidator;
+
     @Before
     public void init() {
         initMocks(this);
@@ -39,8 +43,20 @@ public class UserServiceTest {
     }
 
     @Test(expected = ServiceException.class)
-    public void addBorrowRecord_DAOException_BookDAO_TakeBook() throws DAOException, ServiceException {
+    public void addBorrowRecord_ValidatorException_BookDAO_TakeBook() throws DAOException, ServiceException, ValidatorException {
         long bookId = borrowRecord.getBookId();
+        Mockito.doThrow(ValidatorException.class)
+               .when(borrowRecordValidator)
+               .validateAdd(borrowRecord);
+        userService.addBorrowRecord(borrowRecord);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void addBorrowRecord_DAOException_BookDAO_TakeBook() throws DAOException, ServiceException, ValidatorException {
+        long bookId = borrowRecord.getBookId();
+        Mockito.doReturn(true)
+               .when(borrowRecordValidator)
+               .validateAdd(borrowRecord);
         Mockito.doThrow(DAOException.class)
                .when(bookDAO)
                .takeBook(bookId);
@@ -48,8 +64,11 @@ public class UserServiceTest {
     }
 
     @Test(expected = ServiceException.class)
-    public void addBorrowRecord_DAOException_BorrowRecordDAO_AddBorrowRecord() throws DAOException, ServiceException {
+    public void addBorrowRecord_DAOException_BorrowRecordDAO_AddBorrowRecord() throws DAOException, ServiceException, ValidatorException {
         long bookId = borrowRecord.getBookId();
+        Mockito.doReturn(true)
+               .when(borrowRecordValidator)
+               .validateAdd(borrowRecord);
         Mockito.doNothing()
                .when(bookDAO)
                .takeBook(bookId);
@@ -60,8 +79,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addBorrowRecord_validParams() throws DAOException, ServiceException {
+    public void addBorrowRecord_validParams() throws DAOException, ServiceException, ValidatorException {
         long bookId = borrowRecord.getBookId();
+        Mockito.doReturn(true)
+               .when(borrowRecordValidator)
+               .validateAdd(borrowRecord);
         Mockito.doNothing()
                .when(bookDAO)
                .takeBook(bookId);

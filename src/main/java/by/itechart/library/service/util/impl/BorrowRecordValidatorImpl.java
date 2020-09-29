@@ -21,8 +21,16 @@ public class BorrowRecordValidatorImpl implements BorrowRecordValidator {
 
     @Override
     public boolean validateUpdateByAdmin(BorrowRecord borrowRecord) throws ValidatorException {
-        return false;
+        return validateStatusIsPreset(borrowRecord.getRecordStatus().getBorrowRecordStatusId());
     }
+    private boolean validateStatusIsPreset(int borrowRecordStatusId) throws ValidatorException{
+        BorrowRecordStatus borrowRecordStatus=BorrowRecordStatus.values()[borrowRecordStatusId-1];
+        return borrowRecordStatus==BorrowRecordStatus.RETURNED
+                || borrowRecordStatus==BorrowRecordStatus.RETURNED_AND_DAMAGED
+                || borrowRecordStatus==BorrowRecordStatus.LOST;
+    }
+
+
     @Override
     public boolean validateStatus(int borrowRecordStatusId) throws ValidatorException {
         BorrowRecordStatus borrowRecordStatus=BorrowRecordStatus.values()[borrowRecordStatusId-1];

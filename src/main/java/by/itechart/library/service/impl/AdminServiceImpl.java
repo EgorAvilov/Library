@@ -96,6 +96,7 @@ public class AdminServiceImpl implements AdminService {
             if (borrowRecordValidator.validateStatus(borrowRecordStatusId)) {
                 bookDAO.returnBook(bookId);
             }
+            borrowRecordValidator.validateUpdateByAdmin(borrowRecord);
             borrowRecordDAO.updateBorrowRecordByAdmin(borrowRecord);
         } catch (DAOException | ValidatorException e) {
             log.error(e);
