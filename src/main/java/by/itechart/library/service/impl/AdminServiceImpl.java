@@ -32,8 +32,6 @@ public class AdminServiceImpl implements AdminService {
     private BorrowRecordValidator borrowRecordValidator = utilFactory.getBorrowRecordValidator();
 
 
-
-
     @Override
     public void addBook(Book book) throws ServiceException {
         try {

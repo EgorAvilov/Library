@@ -10,4 +10,7 @@ public interface UserValidator {
 
     public boolean validateUpdate(User user) throws ValidatorException;
 
+    public boolean validateUserDeletedStatus(Boolean deletedStatus) throws ValidatorException;
+
+
 }

@@ -32,6 +32,11 @@ public class UserValidatorImpl implements UserValidator {
                 && validatePhoneNumber(user.getPhoneNumber());
     }
 
+    @Override
+    public boolean validateUserDeletedStatus(Boolean deletedStatus) throws ValidatorException {
+        return !deletedStatus;
+    }
+
     private boolean validateUsername(String username) throws ValidatorException {
         if (username != null && !username.isEmpty()) {
             if (username.matches(USERNAME_FORMAT_REGEX)) {

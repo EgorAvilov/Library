@@ -25,19 +25,15 @@ public class CommonServiceImpl implements CommonService {
     private BookDAO bookDAO = daoFactory.getBookDAO();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
     private UserDAO userDAO = daoFactory.getUserDAO();
-    private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private UserValidator userValidation = utilFactory.getUserValidator();
+    private UserValidator userValidator = utilFactory.getUserValidator();
 
     @Override
     public User signIn(String username, String password) throws ServiceException {
         User user;
-
         try {
             user = userDAO.getUser(username, password);
-            if (user.isDeletedStatus()) {
-                throw new ServiceException("Your account is deleted");
-            }
-        } catch (DAOException e) {
+            userValidator.validateUserDeletedStatus(user.isDeletedStatus());
+        } catch (DAOException | ValidatorException e) {
             log.error(e);
             throw new ServiceException(e);
         }
@@ -47,7 +43,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void signUp(User user) throws ServiceException {
         try {
-            userValidation.validateAdd(user);
+            userValidator.validateAdd(user);
             userDAO.addUser(user);
         } catch (DAOException | ValidatorException e) {
             log.error(e);
@@ -70,7 +66,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void updateProfile(User user) throws ServiceException {
         try {
-            userValidation.validateUpdate(user);
+            userValidator.validateUpdate(user);
             userDAO.updateUser(user);
         } catch (DAOException | ValidatorException e) {
             log.error(e);

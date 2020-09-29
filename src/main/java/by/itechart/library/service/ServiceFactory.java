@@ -31,12 +31,4 @@ public class ServiceFactory {
     @Getter
     private AdminService adminService = new AdminServiceImpl();
 
-    @Getter
-    private BookValidator bookValidation = new BookValidatorImpl();
-
-    @Getter
-    private UserValidator userValidation = new UserValidatorImpl();
-
-    @Getter
-    private BorrowRecordValidator borrowRecordValidation = new BorrowRecordValidatorImpl();
 }

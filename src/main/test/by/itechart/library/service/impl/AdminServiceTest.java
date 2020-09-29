@@ -150,8 +150,6 @@ public class AdminServiceTest {
     public void getAllBorrowRecords_validParams() throws DAOException, ServiceException {
         when(borrowRecordDAO.getAll(1, 1)).thenReturn(Collections.emptyList());
         adminService.getAllBorrowRecords(1, 1);
-
-
     }
 
     @Test(expected = ServiceException.class)
