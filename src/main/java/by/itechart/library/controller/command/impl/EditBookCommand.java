@@ -68,8 +68,12 @@ public class EditBookCommand implements Command {
         int role = user.getRole().getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
-            InputStream cover = getInputStream(coverPart);
-            book.setCover(cover.toString());
+            if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
+                InputStream cover = getInputStream(coverPart);
+                book.setCover(cover.toString());
+            } else {
+                book.setCover("");
+            }
 
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBook(book);
