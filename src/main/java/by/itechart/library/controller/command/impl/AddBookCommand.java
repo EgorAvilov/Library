@@ -15,12 +15,15 @@ import lombok.extern.log4j.Log4j;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.io.FileUtils;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @Log4j
@@ -37,15 +40,6 @@ public class AddBookCommand implements Command {
 
         HttpSession session = request.getSession();
 
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(1024 * 1024 * 2);
-        File image = new File(request.getParameter(ParameterName.COVER));
-        byte[] cover = new byte[0];//сделать как у артема
-        try {
-            cover = FileUtils.readFileToByteArray(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         String title = request.getParameter(ParameterName.TITLE);
@@ -60,7 +54,7 @@ public class AddBookCommand implements Command {
         int availableAmount = totalAmount;
 
         Book book = new Book();
-        book.setCover("");
+
         book.setTitle(title);
         book.setAuthors(authors);
         book.setPublisher(publisher);
@@ -76,17 +70,28 @@ public class AddBookCommand implements Command {
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
         try {
+            Part coverPart = request.getPart(ParameterName.COVER);
+            InputStream cover = getInputStream(coverPart);
+            book.setCover(cover.toString());
             if (valueChecker.isAdmin(role)) {
                 adminService.addBook(book);
                 path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
                 path = pathCreator.getError();
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | IOException | ServletException e) {
             log.error(e);
             throw new CommandException(e);
         }
         return path;
+    }
+
+    private InputStream getInputStream(Part coverPart) throws IOException {
+        InputStream stream = null;
+        if (coverPart != null){
+            stream =  coverPart.getInputStream();
+        }
+        return stream;
     }
 
 

@@ -367,3 +367,5 @@
 16:40:06 2020-09-29 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
 16:40:06 2020-09-29 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException
 16:40:06 2020-09-29 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
+18:45:32 2020-09-29 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
+18:50:28 2020-09-29 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
