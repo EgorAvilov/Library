@@ -54,7 +54,6 @@ public class EditBookCommand implements Command {
 
         Book book = new Book();
         book.setId(bookId);
-        // book.setCover(cover);
         book.setTitle(title);
         book.setAuthors(authors);
         book.setPublisher(publisher);
@@ -65,15 +64,12 @@ public class EditBookCommand implements Command {
         book.setDescription(description);
         book.setTotalAmount(totalAmount);
 
-
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
-        byte[] cover;
         try {
-            Part filePart = request.getPart(ParameterName.COVER);
-            InputStream coverStream = getStreamWithImage(filePart);
-
-            cover = new byte[coverStream.available()];
+            Part coverPart = request.getPart(ParameterName.COVER);
+            InputStream cover = getInputStream(coverPart);
+            book.setCover(cover.toString());
 
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBook(book);
@@ -88,10 +84,10 @@ public class EditBookCommand implements Command {
         return path;
     }
 
-    private InputStream getStreamWithImage(Part part) throws IOException {
+    private InputStream getInputStream(Part coverPart) throws IOException {
         InputStream stream = null;
-        if (part != null) {
-            stream = part.getInputStream();
+        if (coverPart != null){
+            stream =  coverPart.getInputStream();
         }
         return stream;
     }

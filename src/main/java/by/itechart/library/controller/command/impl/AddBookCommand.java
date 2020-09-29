@@ -40,8 +40,6 @@ public class AddBookCommand implements Command {
 
         HttpSession session = request.getSession();
 
-
-
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
         String publisher = request.getParameter(ParameterName.PUBLISHER);
