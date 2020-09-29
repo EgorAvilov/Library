@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
-    private UserDAO userDAO = daoFactory.getUserDAO();
+
 
     @Override
     public void addBorrowRecord(BorrowRecord borrowRecord) throws ServiceException {

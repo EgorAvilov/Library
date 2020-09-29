@@ -1,6 +1,5 @@
 package by.itechart.library.service.impl;
 
-import by.itechart.library.dao.DAOFactory;
 import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.api.BorrowRecordDAO;
 import by.itechart.library.dao.api.UserDAO;
@@ -9,7 +8,6 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.BorrowRecordStatus;
 import by.itechart.library.entity.User;
-import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
@@ -29,24 +27,29 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class AdminServiceTest {
+
     @InjectMocks
     AdminServiceImpl adminService;
 
     @Mock
     BookDAO bookDAO;
+
     @Mock
     UserDAO userDAO;
+
     @Mock
     BorrowRecordDAO borrowRecordDAO;
+
     @Mock
     BookValidator bookValidator;
+
     @Mock
     BorrowRecordValidator borrowRecordValidator;
+
     @Mock
     Book book;
 
-    BorrowRecord borrowRecord=new BorrowRecord();
-
+    BorrowRecord borrowRecord = new BorrowRecord();
 
     @Before
     public void init() {
