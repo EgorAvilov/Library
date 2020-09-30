@@ -26,6 +26,4 @@ public interface BorrowRecordDAO {
     public int getNumberOfRowsByUser(long userId) throws DAOException;
 
     public List<EmailSenderDto> getAllBorrowRecordsForRemind(LocalDate remindDate) throws DAOException;
-
-
 }

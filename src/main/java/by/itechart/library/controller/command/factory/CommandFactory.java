@@ -44,12 +44,6 @@ public class CommandFactory {
     }
 
     public Command createCommand(String commandName) {
-        Command command = null;
-        try {
-            command = operations.get(commandName);
-        } catch (IllegalArgumentException e) {
-            log.error(e);
-        }
-        return command;
+        return operations.get(commandName);
     }
 }
