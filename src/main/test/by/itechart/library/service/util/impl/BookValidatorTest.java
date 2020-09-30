@@ -221,28 +221,77 @@ public class BookValidatorTest {
         bookValidator.validatePageCount(book.getPageCount());
     }
 
+
     @Test(expected = ValidatorException.class)
-    public void validateISBN_isNull() throws ValidatorException {
+    public void validateISBNToAdd_isNull() throws ValidatorException {
         book.setISBN(null);
-        bookValidator.validateISBN(book.getISBN(), 1);
+        bookValidator.validateISBNtoAdd(book.getISBN());
     }
 
     @Test(expected = ValidatorException.class)
-    public void validateISBN_isEmpty() throws ValidatorException {
+    public void validateISBNToAdd_isEmpty() throws ValidatorException {
         book.setISBN("");
-        bookValidator.validateISBN(book.getISBN(),1);
+        bookValidator.validateISBNtoAdd(book.getISBN());
     }
 
     @Test(expected = ValidatorException.class)
-    public void validateISBN_isNotUnique() throws ValidatorException, DAOException {
+    public void validateISBNToAdd_isNotUnique() throws ValidatorException, DAOException {
         book.setISBN("1234");
-        Mockito.doThrow(DAOException.class).when(bookDAO).checkISBN(book.getISBN(), 1);
-        bookValidator.validateISBN(book.getISBN(), 1);
+        Mockito.doThrow(DAOException.class)
+               .when(bookDAO)
+               .checkISBNtoAdd(book.getISBN());
+        bookValidator.validateISBNtoAdd(book.getISBN());
     }
+
     @Test
-    public void validateISBN_validData() throws ValidatorException, DAOException {
+    public void validateISBNToAdd_validData() throws ValidatorException, DAOException {
         book.setISBN("1234");
-        Mockito.doReturn(true).when(bookDAO).checkISBN(book.getISBN(), 1);
-        bookValidator.validateISBN(book.getISBN(), 1);
+        Mockito.doReturn(true)
+               .when(bookDAO)
+               .checkISBNtoAdd(book.getISBN());
+        bookValidator.validateISBNtoAdd(book.getISBN());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Test(expected = ValidatorException.class)
+    public void validateISBNToUpdate_isNull() throws ValidatorException {
+        book.setISBN(null);
+        bookValidator.validateISBNtoUpdate(book.getISBN(), 1);
+    }
+
+    @Test(expected = ValidatorException.class)
+    public void validateISBNToUpdate_isEmpty() throws ValidatorException {
+        book.setISBN("");
+        bookValidator.validateISBNtoUpdate(book.getISBN(), 1);
+    }
+
+    @Test(expected = ValidatorException.class)
+    public void validateISBNToUpdate_isNotUnique() throws ValidatorException, DAOException {
+        book.setISBN("1234");
+        Mockito.doThrow(DAOException.class)
+               .when(bookDAO)
+               .checkISBNtoUpdate(book.getISBN(), 1);
+        bookValidator.validateISBNtoUpdate(book.getISBN(), 1);
+    }
+
+    @Test
+    public void validateISBNToUpdate_validData() throws ValidatorException, DAOException {
+        book.setISBN("1234");
+        Mockito.doReturn(true)
+               .when(bookDAO)
+               .checkISBNtoUpdate(book.getISBN(), 1);
+        bookValidator.validateISBNtoUpdate(book.getISBN(), 1);
     }
 }

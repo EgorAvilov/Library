@@ -91,7 +91,6 @@ public class AdminServiceImpl implements AdminService {
     public void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException {
         long bookId = borrowRecord.getBookId();
         BorrowRecordStatus borrowRecordStatus = borrowRecord.getRecordStatus();
-        int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
         try {
             if (borrowRecordValidator.validateStatus(borrowRecordStatus)) {
                 bookDAO.returnBook(bookId);
@@ -139,6 +138,4 @@ public class AdminServiceImpl implements AdminService {
         }
         return numberOfRows;
     }
-
-
 }
