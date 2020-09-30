@@ -20,22 +20,24 @@ import java.util.List;
 @Log4j
 public class ViewAllUsersCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+
         HttpSession session = request.getSession();
 
         int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
         int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
-
         PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
         List<User> users;
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
                 int numberOfRows = adminService.getNumberOfUserRows();
