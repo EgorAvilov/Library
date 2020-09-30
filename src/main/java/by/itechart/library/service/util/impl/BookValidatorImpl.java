@@ -16,7 +16,6 @@ public class BookValidatorImpl implements BookValidator {
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BookDAO bookDAO = daoFactory.getBookDAO();
 
-    //сделать првоерку на размер картинки
     @Override
     public boolean validateAdd(Book book) throws ValidatorException {
         return validateTitle(book.getTitle())
@@ -26,7 +25,7 @@ public class BookValidatorImpl implements BookValidator {
                 && validateGenres(book.getGenres())
                 && validateTotalAmount(book.getTotalAmount())
                 && validatePageCount(book.getPageCount())
-                && validateISBN(book.getISBN(), book.getId());
+                && validateISBNtoAdd(book.getISBN());
     }
 
     @Override
@@ -38,7 +37,7 @@ public class BookValidatorImpl implements BookValidator {
                 && validateGenres(book.getGenres())
                 && validateTotalAmount(book.getTotalAmount())
                 && validatePageCount(book.getPageCount())
-                && validateISBN(book.getISBN(), book.getId());
+                && validateISBNtoUpdate(book.getISBN(), book.getId());
     }
 
     @Override
@@ -134,12 +133,25 @@ public class BookValidatorImpl implements BookValidator {
     }
 
     @Override
-    public boolean validateISBN(String ISBN, long id) throws ValidatorException {
+    public boolean validateISBNtoAdd(String ISBN) throws ValidatorException {
         if (ISBN == null || ISBN.isEmpty()) {
             throw new ValidatorException("ISBN cant be empty");
         }
         try {
-            bookDAO.checkISBN(ISBN, id);
+            bookDAO.checkISBNtoAdd(ISBN);
+        } catch (DAOException e) {
+            log.error(e);
+            throw new ValidatorException(e);
+        }
+        return true;
+    }
+    @Override
+    public boolean validateISBNtoUpdate(String ISBN, long id) throws ValidatorException {
+        if (ISBN == null || ISBN.isEmpty()) {
+            throw new ValidatorException("ISBN cant be empty");
+        }
+        try {
+            bookDAO.checkISBNtoUpdate(ISBN, id);
         } catch (DAOException e) {
             log.error(e);
             throw new ValidatorException(e);

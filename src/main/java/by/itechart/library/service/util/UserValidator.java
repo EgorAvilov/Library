@@ -13,4 +13,15 @@ public interface UserValidator {
     public boolean validateUserDeletedStatus(Boolean deletedStatus) throws ValidatorException;
 
 
+    boolean validateUsername(String username) throws ValidatorException;
+
+    boolean validatePhoneNumber(String phoneNumber) throws ValidatorException;
+
+    boolean validateEmail(String email) throws ValidatorException;
+
+    boolean validateFirstName(String firstName) throws ValidatorException;
+
+    boolean validateLastName(String lastName) throws ValidatorException;
+
+    boolean validatePassword(String password) throws ValidatorException;
 }

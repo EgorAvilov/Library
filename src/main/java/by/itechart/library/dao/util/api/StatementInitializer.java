@@ -33,7 +33,13 @@ public interface StatementInitializer {
 
     public void addPaginationParameters(PreparedStatement statement, int start, int recordsPerPage) throws SQLException;
 
-    public void addISBN(PreparedStatement statement, String ISBN,long id) throws SQLException;
+    public void addISBNToUpdate(PreparedStatement statement, String ISBN, long id) throws SQLException;
+
+    public void addISBNToAdd(PreparedStatement statement, String ISBN) throws SQLException;
+
+    public void addEmailToAdd(PreparedStatement statement, String email) throws SQLException;
+
+    public void addUsernameToAdd(PreparedStatement statement, String username) throws SQLException;
 
     public void updateBookAvailableAmount(PreparedStatement statement, long bookId, int availableAmount) throws SQLException;
 

@@ -93,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
         BorrowRecordStatus borrowRecordStatus = borrowRecord.getRecordStatus();
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
         try {
-            if (borrowRecordValidator.validateStatus(borrowRecordStatusId)) {
+            if (borrowRecordValidator.validateStatus(borrowRecordStatus)) {
                 bookDAO.returnBook(bookId);
             }
             borrowRecordValidator.validateUpdateByAdmin(borrowRecord);

@@ -2,7 +2,6 @@ package by.itechart.library.service.util.impl;
 
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.BorrowRecordStatus;
-import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BorrowRecordValidator;
 
@@ -21,33 +20,46 @@ public class BorrowRecordValidatorImpl implements BorrowRecordValidator {
 
     @Override
     public boolean validateUpdateByAdmin(BorrowRecord borrowRecord) throws ValidatorException {
-        return validateStatusIsPreset(borrowRecord.getRecordStatus().getBorrowRecordStatusId());
+        return validateStatusIsPreset(borrowRecord.getRecordStatus());
     }
-    private boolean validateStatusIsPreset(int borrowRecordStatusId) throws ValidatorException{
-        BorrowRecordStatus borrowRecordStatus=BorrowRecordStatus.values()[borrowRecordStatusId-1];
-        return borrowRecordStatus==BorrowRecordStatus.RETURNED
-                || borrowRecordStatus==BorrowRecordStatus.RETURNED_AND_DAMAGED
-                || borrowRecordStatus==BorrowRecordStatus.LOST;
+
+    @Override
+    public boolean validateStatusIsPreset(BorrowRecordStatus borrowRecordStatus) throws ValidatorException {
+        // BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.values()[borrowRecordStatusId - 1];
+        if (borrowRecordStatus == BorrowRecordStatus.RETURNED
+                || borrowRecordStatus == BorrowRecordStatus.RETURNED_AND_DAMAGED
+                || borrowRecordStatus == BorrowRecordStatus.LOST) {
+            return true;
+        }
+        throw new ValidatorException("Borrow Record Status is wrong");
     }
 
 
     @Override
-    public boolean validateStatus(int borrowRecordStatusId) throws ValidatorException {
-        BorrowRecordStatus borrowRecordStatus=BorrowRecordStatus.values()[borrowRecordStatusId-1];
-        return borrowRecordStatus==BorrowRecordStatus.RETURNED;
+    public boolean validateStatus(BorrowRecordStatus borrowRecordStatus) {
+        //BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.values()[borrowRecordStatusId - 1];
+        return borrowRecordStatus == BorrowRecordStatus.RETURNED
+                || borrowRecordStatus == BorrowRecordStatus.RETURNED_AND_DAMAGED;
     }
 
-    private boolean validateDueDate(LocalDate dueDate) throws ValidatorException {
+    @Override
+    public boolean validateDueDate(LocalDate dueDate) throws ValidatorException {
+        if (dueDate == null) {
+            throw new ValidatorException("Due date cant be empty");
+        }
         if (dueDate.isBefore(LocalDate.now())) {
             throw new ValidatorException("Due date cant be in past");
         }
         return true;
     }
 
-
-    private boolean validateReturnDate(LocalDate returnDate) throws ValidatorException {
+    @Override
+    public boolean validateReturnDate(LocalDate returnDate) throws ValidatorException {
+        if (returnDate == null) {
+            throw new ValidatorException("Return date cant be empty");
+        }
         if (returnDate.isBefore(LocalDate.now()) || returnDate.equals(LocalDate.now())) {
-            throw new ValidatorException("Return date cant be in past on equals today's date");
+            throw new ValidatorException("Return date cant be in past or equals today's date");
         }
         return true;
     }

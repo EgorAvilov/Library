@@ -19,4 +19,6 @@ public interface UserDAO {
     public int getNumberOfRows() throws DAOException;
 
     public List<User> getAll(int currentPage, int recordsPerPage) throws DAOException;
+    public boolean checkEmail(String email) throws DAOException;
+    public boolean checkUsername(String username) throws DAOException;
 }

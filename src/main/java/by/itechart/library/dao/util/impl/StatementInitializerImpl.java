@@ -76,7 +76,6 @@ public class StatementInitializerImpl implements StatementInitializer {
         statement.setInt(11, book.getAvailableAmount());
     }
 
-
     @Override
     public void updateBook(PreparedStatement statement, Book book) throws SQLException {
         InputStream stream = new InputStream() {
@@ -135,9 +134,25 @@ public class StatementInitializerImpl implements StatementInitializer {
     }
 
     @Override
-    public void addISBN(PreparedStatement statement, String ISBN, long id) throws SQLException {
+    public void addISBNToUpdate(PreparedStatement statement, String ISBN, long id) throws SQLException {
         statement.setNString(1, ISBN);
         statement.setLong(2, id);
+    }
+
+    @Override
+    public void addISBNToAdd(PreparedStatement statement, String ISBN) throws SQLException {
+        statement.setNString(1, ISBN);
+
+    }
+
+    @Override
+    public void addEmailToAdd(PreparedStatement statement, String email) throws SQLException {
+        statement.setNString(1, email);
+    }
+
+    @Override
+    public void addUsernameToAdd(PreparedStatement statement, String username) throws SQLException {
+        statement.setNString(1, username);
     }
 
     @Override

@@ -197,15 +197,15 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean checkISBN(String ISBN, long id) throws DAOException {
-        String request = SQLRequest.GET_ALL_BOOKS_BY_ISBN;
+    public boolean checkISBNtoAdd(String ISBN) throws DAOException {
+        String request = SQLRequest.GET_ALL_BOOKS_BY_ISBN_TO_ADD;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addISBN(statement, ISBN,id);
+            statementInitializer.addISBNToAdd(statement, ISBN);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 throw new DAOException("Your ISBN is not unique");
@@ -220,6 +220,32 @@ public class BookDAOImpl implements BookDAO {
         }
         return true;
     }
+
+    @Override
+    public boolean checkISBNtoUpdate(String ISBN, long id) throws DAOException {
+        String request = SQLRequest.GET_ALL_BOOKS_BY_ISBN_TO_UPDATE;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.addISBNToUpdate(statement, ISBN,id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                throw new DAOException("Your ISBN is not unique");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during checking ISBN");
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+        return true;
+    }
+
 
     @Override
     public void takeBook(long bookId) throws DAOException {

@@ -195,4 +195,54 @@ public class UserDAOImpl implements UserDAO {
         }
         return users;
     }
+
+    @Override
+    public boolean checkEmail(String email) throws DAOException {
+        String request = SQLRequest.GET_ALL_USERS_BY_EMAIL_TO_ADD;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.addEmailToAdd(statement, email);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                throw new DAOException("Your email is not unique");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during checking email");
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkUsername(String username) throws DAOException {
+        String request = SQLRequest.GET_ALL_USERS_BY_USERNAME_TO_ADD;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.addUsernameToAdd(statement, username);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                throw new DAOException("Your username is not unique");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during checking username");
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+        return true;
+    }
 }

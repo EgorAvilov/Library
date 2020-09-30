@@ -25,5 +25,7 @@ public interface BookValidator {
 
     boolean validatePageCount(int pageCount) throws ValidatorException;
 
-    boolean validateISBN(String ISBN, long id) throws ValidatorException;
+    boolean validateISBNtoAdd(String ISBN) throws ValidatorException;
+
+    boolean validateISBNtoUpdate(String ISBN, long id) throws ValidatorException;
 }

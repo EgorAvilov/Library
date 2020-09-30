@@ -159,7 +159,7 @@ public class AdminServiceTest {
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
         Mockito.doThrow(ValidatorException.class)
                .when(borrowRecordValidator)
-               .validateStatus(borrowRecordStatusId);
+               .validateStatus(borrowRecordStatus);
         adminService.updateBorrowRecord(borrowRecord);
     }
 
@@ -172,7 +172,7 @@ public class AdminServiceTest {
         int borrowRecordStatusId = borrowRecordStatus.getBorrowRecordStatusId();
         Mockito.doReturn(true)
                .when(borrowRecordValidator)
-               .validateStatus(Mockito.anyInt());
+               .validateStatus(borrowRecordStatus);
         Mockito.doNothing()
                .when(bookDAO)
                .returnBook(bookId);
