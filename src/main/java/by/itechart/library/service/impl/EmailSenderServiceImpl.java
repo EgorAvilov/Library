@@ -8,9 +8,6 @@ import by.itechart.library.service.exception.ServiceException;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -22,35 +19,33 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
+import java.util.Timer;
 import java.util.TimerTask;
 
 //поставить ежесуточный таймер
-/* Timer timer = new Timer("Timer");
-         long delay  = 3000L;
-         long period = 3000L;
-         timer.scheduleAtFixedRate(repeatedTask, delay, period);*/
-public class EmailSenderServiceImpl implements Job {
+public class EmailSenderServiceImpl {
 
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
 
 
-    public void sendRemindBefore7Days() throws ServiceException {
-        List<EmailSenderDto> emailSenderDtoList;
-        try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                       .plusDays(7));
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+    public void sendRemindBefore7Days()  {
         TimerTask repeatedTask = new TimerTask() {
             @Override
             public void run() {
+                List<EmailSenderDto> emailSenderDtoList=null;
+
+                try {
+                    emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                               .plusDays(7));
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                }
                 for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
                     try {
-                        //  if (emailSenderDto.getDueDate().isEqual(LocalDate.now().plusDays(7))) {
-                        StringTemplateGroup group = new StringTemplateGroup("myGroup", "src/main/resources", DefaultTemplateLexer.class);
+
+                        StringTemplateGroup group = new StringTemplateGroup("myGropu", "src/main/resources/", DefaultTemplateLexer.class);
                         StringTemplate helloAgain = group.getInstanceOf("RemindBefore");
 
                         helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
@@ -77,28 +72,34 @@ public class EmailSenderServiceImpl implements Job {
                     } catch (IOException | MessagingException e) {
                         e.printStackTrace();
                     }
-                    // }
+
                 }
             }
         };
+        Timer timer = new Timer("Timer");
+        long delay  = 5000L;
+        long period = 5000L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
 
     }
 
 
-    public void sendRemindBefore1Day() throws ServiceException {
-        List<EmailSenderDto> emailSenderDtoList;
-        try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                       .plusDays(1));
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+    public void sendRemindBefore1Day()  {
+
         TimerTask repeatedTask = new TimerTask() {
             @Override
             public void run() {
+                List<EmailSenderDto> emailSenderDtoList=null;
+
+                try {
+                    emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                               .plusDays(1));
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                }
+
                 for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
                     try {
-                        //  if (emailSenderDto.getDueDate().isEqual(LocalDate.now().plusDays(7))) {
                         StringTemplateGroup group = new StringTemplateGroup("myGroup", "src/main/resources", DefaultTemplateLexer.class);
                         StringTemplate helloAgain = group.getInstanceOf("RemindBefore");
 
@@ -126,28 +127,33 @@ public class EmailSenderServiceImpl implements Job {
                     } catch (IOException | MessagingException e) {
                         e.printStackTrace();
                     }
-                    // }
+
                 }
             }
         };
+        Timer timer = new Timer("Timer");
+        long delay  = 5000L;
+        long period = 5000L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
 
     }
 
 
-    public void sendRemindAfter1Day() throws ServiceException {
-        List<EmailSenderDto> emailSenderDtoList;
-        try {
-            emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                       .minusDays(1));
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+    public void sendRemindAfter1Day() {
+
         TimerTask repeatedTask = new TimerTask() {
+
             @Override
             public void run() {
+                List<EmailSenderDto> emailSenderDtoList = null;
+                try {
+                    emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
+                                                                                               .minusDays(1));
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                }
                 for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
                     try {
-                        //  if (emailSenderDto.getDueDate().isEqual(LocalDate.now().plusDays(7))) {
                         StringTemplateGroup group = new StringTemplateGroup("myGroup", "src/main/resources", DefaultTemplateLexer.class);
                         StringTemplate helloAgain = group.getInstanceOf("RemindAfter");
 
@@ -175,22 +181,20 @@ public class EmailSenderServiceImpl implements Job {
                     } catch (IOException | MessagingException e) {
                         e.printStackTrace();
                     }
-                    // }
                 }
             }
         };
+        Timer timer = new Timer("Timer");
+        long delay  = 5000L;
+        long period = 5000L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
 
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        try {
-            sendRemindBefore7Days();
-            sendRemindBefore1Day();
-            sendRemindAfter1Day();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+    public void execute() throws ServiceException {
+        sendRemindBefore7Days();
+       // sendRemindBefore1Day();
+       // sendRemindAfter1Day();
     }
 }
 

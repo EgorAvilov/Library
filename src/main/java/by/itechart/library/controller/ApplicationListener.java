@@ -1,6 +1,8 @@
 package by.itechart.library.controller;
 
 import by.itechart.library.dao.pool.DBConnectionPool;
+import by.itechart.library.service.exception.ServiceException;
+import by.itechart.library.service.impl.EmailSenderServiceImpl;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -28,6 +30,12 @@ public class ApplicationListener implements ServletContextListener,
         DBConnectionPool connectionPool = DBConnectionPool.getInstance();
         connectionPool.init();
         log.info("Initialization of Connection pool");
+        EmailSenderServiceImpl emailSenderService=new EmailSenderServiceImpl();
+        try {
+            emailSenderService.execute();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
 
     }
 

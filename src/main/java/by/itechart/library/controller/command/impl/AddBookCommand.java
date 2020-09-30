@@ -28,13 +28,12 @@ public class AddBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
         String path;
-
         HttpSession session = request.getSession();
 
         String title = request.getParameter(ParameterName.TITLE);
@@ -86,7 +85,7 @@ public class AddBookCommand implements Command {
         return path;
     }
 
-    private InputStream getInputStream(Part coverPart) throws IOException {
+    public InputStream getInputStream(Part coverPart) throws IOException {
         InputStream stream = null;
         if (coverPart != null) {
             stream = coverPart.getInputStream();

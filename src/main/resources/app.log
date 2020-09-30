@@ -433,3 +433,7 @@
 12:13:14 2020-09-30 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
 18:41:49 2020-09-30 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
 18:41:49 2020-09-30 ERROR [method: main]: by.itechart.library.dao.exception.DAOException
+20:45:24 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
+20:45:24 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
+20:46:01 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
+20:46:01 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future

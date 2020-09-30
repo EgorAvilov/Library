@@ -120,12 +120,19 @@ public class ResultCreatorImpl implements ResultCreator {
 
     @Override
     public EmailSenderDto getNextEmailSender(ResultSet resultSet) throws SQLException {
+        String bookTitle = resultSet.getNString(1);
+        String userEmail = resultSet.getNString(2);
+        String userFirstName = resultSet.getNString(3);
 
+        EmailSenderDto emailSenderDto = new EmailSenderDto();
+        emailSenderDto.setBookTitle(bookTitle);
+        emailSenderDto.setUserEmail(userEmail);
+        emailSenderDto.setUserFirstName(userFirstName);
 
-        return null;
+        return emailSenderDto;
     }
 
-    private String encodeImage(byte[] imgArray){
+    private String encodeImage(byte[] imgArray) {
         Base64.Encoder base64 = Base64.getEncoder();
         String img = "";
         if (imgArray != null) {

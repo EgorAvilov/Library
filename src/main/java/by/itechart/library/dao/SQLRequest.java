@@ -43,7 +43,7 @@ public class SQLRequest {
     public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_ADMIN = "SELECT count(id) FROM borrow_records WHERE deleted_status<>1";
     public static final String COUNT_ROWS_OF_BORROW_RECORDS_BY_USER = "SELECT count(id) FROM borrow_records WHERE user_id=? AND deleted_status<>1";
 
-    public static final String GET_ALL_BORROW_RECORDS_FOR_REMINDS = "SELECT b.title, u.email, u.first_name FROM borrow_records br JOIN books b ON b.id=br.book_id JOIN users u ON br.user_id=u.id WHERE br.due_date=?";
+    public static final String GET_ALL_BORROW_RECORDS_FOR_REMINDS = "SELECT b.title, u.email, u.first_name FROM borrow_records br JOIN books b ON b.id=br.book_id JOIN users u ON br.user_id=u.id WHERE br.due_date=? AND return_date IS NULL";
 
 
 }
