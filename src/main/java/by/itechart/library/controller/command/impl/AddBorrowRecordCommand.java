@@ -21,16 +21,16 @@ import java.time.LocalDate;
 @Log4j
 public class AddBorrowRecordCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private UserService userService = serviceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-
-        String path = pathCreator.getError();
         HttpSession session = request.getSession();
+        String path;
+
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
         long userId = user.getId();

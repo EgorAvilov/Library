@@ -437,3 +437,11 @@
 20:45:24 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
 20:46:01 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
 20:46:01 2020-09-30 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Publish date cant be in future
+16:29:09 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:29:09 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:31:11 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:31:11 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:31:53 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:31:53 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:41:03 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ValidatorException: Due date cant be in past
+16:41:03 2020-10-01 ERROR [method: main]: by.itechart.library.service.exception.ServiceException: by.itechart.library.service.exception.ValidatorException: Due date cant be in past

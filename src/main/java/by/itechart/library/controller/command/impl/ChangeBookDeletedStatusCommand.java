@@ -19,13 +19,14 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ChangeBookDeletedStatusCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
+
         HttpSession session = request.getSession();
 
         String path;
