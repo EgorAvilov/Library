@@ -20,17 +20,18 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ForwardEditBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-
         HttpSession session = request.getSession();
-        String path = pathCreator.getError();
-        int bookId = Integer.parseInt(request.getParameter(ParameterName.BOOK_ID));
+
+        String path;
+
+        long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole().getRoleId();
         Book book;
