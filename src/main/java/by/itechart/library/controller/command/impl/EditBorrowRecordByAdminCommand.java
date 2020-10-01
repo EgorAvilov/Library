@@ -21,18 +21,18 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class EditBorrowRecordByAdminCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         HttpSession session = request.getSession();
 
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
-        long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
+        String path;
 
+        long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
         BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.valueOf(request.getParameter(ParameterName.STATUS));
         String comment = request.getParameter(ParameterName.COMMENT);
 
@@ -42,7 +42,8 @@ public class EditBorrowRecordByAdminCommand implements Command {
         borrowRecord.setComment(comment);
 
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBorrowRecord(borrowRecord);

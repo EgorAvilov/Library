@@ -25,18 +25,16 @@ import java.time.LocalDate;
 @Log4j
 public class EditBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
-
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
         HttpSession session = request.getSession();
+        String path;
 
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
 
         String title = request.getParameter(ParameterName.TITLE);
@@ -87,7 +85,7 @@ public class EditBookCommand implements Command {
         return path;
     }
 
-    private InputStream getInputStream(Part coverPart) throws IOException {
+    public InputStream getInputStream(Part coverPart) throws IOException {
         InputStream stream = null;
         if (coverPart != null) {
             stream = coverPart.getInputStream();
