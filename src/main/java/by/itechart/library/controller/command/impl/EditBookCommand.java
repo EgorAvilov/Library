@@ -12,7 +12,6 @@ import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
-import sun.instrument.InstrumentationImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.instrument.Instrumentation;
 import java.time.LocalDate;
 
 @Log4j
@@ -65,7 +63,8 @@ public class EditBookCommand implements Command {
         book.setTotalAmount(totalAmount);
 
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
             if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
@@ -90,8 +89,8 @@ public class EditBookCommand implements Command {
 
     private InputStream getInputStream(Part coverPart) throws IOException {
         InputStream stream = null;
-        if (coverPart != null){
-            stream =  coverPart.getInputStream();
+        if (coverPart != null) {
+            stream = coverPart.getInputStream();
         }
         return stream;
     }

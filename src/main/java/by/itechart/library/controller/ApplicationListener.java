@@ -31,11 +31,11 @@ public class ApplicationListener implements ServletContextListener,
         connectionPool.init();
         log.info("Initialization of Connection pool");
         EmailSenderServiceImpl emailSenderService=new EmailSenderServiceImpl();
-        try {
+    /*    try {
             emailSenderService.execute();
         } catch (ServiceException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
