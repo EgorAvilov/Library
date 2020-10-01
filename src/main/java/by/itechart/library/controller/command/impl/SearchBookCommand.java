@@ -18,13 +18,13 @@ import java.util.List;
 @Log4j
 public class SearchBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
 
         String searchParameter = request.getParameter(ParameterName.SEARCH_PARAMETER);
 

@@ -25,8 +25,8 @@ import java.time.LocalDate;
 @Log4j
 public class EditBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-    ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-    PathCreator pathCreator = utilFactory.getPathCreator();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 

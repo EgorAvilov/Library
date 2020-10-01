@@ -19,14 +19,14 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class SignInCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
+        String path;
 
-        String path = pathCreator.getError();
         String username = request.getParameter(ParameterName.USERNAME);
         String password = request.getParameter(ParameterName.PASSWORD);
 

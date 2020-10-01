@@ -19,22 +19,22 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ForwardEditProfileCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
+
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
+        HttpSession session = request.getSession();
+
         String path;
 
-        HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ParameterName.USER);
-        long userId= user.getId();
-        int role = user.getRole().getRoleId();
-        /*long userId = (int) session.getAttribute(ParameterName.USER_ID);
-        int role = (int) session.getAttribute(ParameterName.ROLE);*/
-
+        long userId = user.getId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             if (valueChecker.isAnyUser(role)) {
                 user = commonService.getProfile(userId);

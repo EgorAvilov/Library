@@ -13,15 +13,18 @@ import javax.servlet.http.HttpSession;
 
 public class SignOutCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
         HttpSession session = request.getSession();
+
         String path;
+
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         if (valueChecker.isAnyUser(role)) {
             session.invalidate();
             return pathCreator.getSignIn();

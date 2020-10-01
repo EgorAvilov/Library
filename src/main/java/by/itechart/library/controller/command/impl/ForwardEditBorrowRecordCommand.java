@@ -20,16 +20,16 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ForwardEditBorrowRecordCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
         HttpSession session = request.getSession();
-        String path = pathCreator.getError();
-        int borrowRecordId = Integer.parseInt(request.getParameter(ParameterName.BORROW_RECORD_ID));
+        String path;
+        long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
 
         BorrowRecord borrowRecord;
 
@@ -39,7 +39,7 @@ public class ForwardEditBorrowRecordCommand implements Command {
             if (valueChecker.isAnyUser(role)) {
                 borrowRecord = commonService.getBorrowRecord(borrowRecordId);
                 request.setAttribute(ParameterName.BORROW_RECORD, borrowRecord);
-                path = pathCreator.getEditBook();
+                path = pathCreator.getEditBorrowRecord();
             } else {
                 path = pathCreator.getError();
             }

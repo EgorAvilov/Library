@@ -11,6 +11,7 @@ public class PathCreatorImpl implements PathCreator {
     private final static String USERS_PAGE = "users-page";
     private final static String MAIN_PAGE = "main-page";
     private final static String EDIT_BOOK = "edit-book";
+    private final static String EDIT_BORROW_RECORD = "edit-borrow-record";
     private final static String EDIT_PROFILE = "edit-profile";
     private final static String GET_BOOKS_PAGE = "/controller?command=view-all-books";
     private final static String GET_USERS_PAGE = "/controller?command=view-all-users";
@@ -72,6 +73,11 @@ public class PathCreatorImpl implements PathCreator {
     @Override
     public String getEditBook() {
         return EDIT_BOOK;
+    }
+
+    @Override
+    public String getEditBorrowRecord() {
+        return EDIT_BORROW_RECORD;
     }
 
     @Override

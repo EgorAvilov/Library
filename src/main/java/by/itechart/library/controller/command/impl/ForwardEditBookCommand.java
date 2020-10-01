@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ForwardEditBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-    ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-    PathCreator pathCreator = utilFactory.getPathCreator();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 

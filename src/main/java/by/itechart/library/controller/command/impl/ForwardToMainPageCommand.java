@@ -18,13 +18,14 @@ import java.util.List;
 @Log4j
 public class ForwardToMainPageCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+
+        String path;
         int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
         int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
         List<Book> books;

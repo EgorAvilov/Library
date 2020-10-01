@@ -12,6 +12,7 @@ public interface PathCreator {
     public String getBorrowRecordsPage();
     public String getBorrowRecordPage(String contextPath, long borrowRecordId);
     public String getEditBook();
+    public String getEditBorrowRecord();
     public String getForwardMainPage(String contextPath);
     public String getForwardUsersPage(String contextPath);
     public String getEditProfile();

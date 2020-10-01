@@ -21,8 +21,8 @@ import java.time.LocalDate;
 @Log4j
 public class EditBorrowRecordByUserCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-    ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-    PathCreator pathCreator = utilFactory.getPathCreator();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private UserService userService = serviceFactory.getUserService();
 
