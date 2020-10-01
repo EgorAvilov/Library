@@ -19,22 +19,24 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class ChangeUserDeletedStatusCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
+
         HttpSession session = request.getSession();
 
         String path = pathCreator.getError();
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         long userId = Long.parseLong(request.getParameter(ParameterName.USER_ID));
         try {
             if (valueChecker.isAdmin(role)) {
-                 adminService.changeUserDeletedStatus(userId);
+                adminService.changeUserDeletedStatus(userId);
                 path = pathCreator.getForwardUsersPage(request.getContextPath());
             } else {
                 path = pathCreator.getError();

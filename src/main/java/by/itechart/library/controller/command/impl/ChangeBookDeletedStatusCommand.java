@@ -26,13 +26,13 @@ public class ChangeBookDeletedStatusCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
         HttpSession session = request.getSession();
-
         String path;
+
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.changeBookDeletedStatus(bookId);

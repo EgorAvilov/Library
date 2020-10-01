@@ -48,8 +48,6 @@ public class AddBookCommandTest {
     @Mock
     PathCreator pathCreator;
     @Mock
-    Command command;
-    @Mock
     Part coverPart;
     @Mock
     InputStream cover;
