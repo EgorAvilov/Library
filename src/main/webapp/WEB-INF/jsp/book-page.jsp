@@ -129,7 +129,7 @@
                                     </div>
                                     </c:when>
                                 <c:otherwise>
-                                        <form action="controller" method="delete">
+                                        <form action="controller" method="post">
                                             <input type="hidden" name="bookId" value="${requestScope.book.id}">
                                             <button type="submit" name="command" value="change-book-deleted-status" class="btn btn-danger">Delete</button>
                                         </form>

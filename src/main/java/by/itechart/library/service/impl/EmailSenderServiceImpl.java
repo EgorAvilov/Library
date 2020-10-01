@@ -22,7 +22,6 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//поставить ежесуточный таймер
 public class EmailSenderServiceImpl {
 
 
