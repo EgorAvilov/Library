@@ -6,10 +6,14 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 
 public interface EmailSenderService {
-    public void execute();
-    public void sendRemindBefore7Days();
-    public void sendRemindBefore1Day();
-    public void sendRemindAfter1Day();
-    public void send(StringTemplate mail) throws IOException, MessagingException;
+    void execute();
+
+    void sendRemindBefore7Days();
+
+    void sendRemindBefore1Day();
+
+    void sendRemindAfter1Day();
+
+    void send(StringTemplate mail) throws IOException, MessagingException;
 
 }

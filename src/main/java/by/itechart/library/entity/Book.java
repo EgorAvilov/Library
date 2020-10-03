@@ -3,6 +3,7 @@ package by.itechart.library.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ public class Book implements Serializable {
 
     private long id;
     private String cover;
+    private InputStream coverStream;
     private String title;
     private String authors;
     private String publisher;

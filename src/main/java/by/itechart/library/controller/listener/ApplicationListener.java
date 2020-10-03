@@ -30,12 +30,7 @@ public class ApplicationListener implements ServletContextListener,
         DBConnectionPool connectionPool = DBConnectionPool.getInstance();
         connectionPool.init();
         log.info("Initialization of Connection pool");
-        EmailSenderServiceImpl emailSenderService=new EmailSenderServiceImpl();
-    /*    try {
-            emailSenderService.execute();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }*/
+
 
     }
 

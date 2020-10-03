@@ -6,23 +6,23 @@ import by.itechart.library.entity.User;
 import java.util.List;
 
 public interface UserDAO {
-    public User getUser(String username, String password) throws DAOException;
+     User getUser(String username, String password) throws DAOException;
 
-    public void addUser(User user) throws DAOException;
+     void addUser(User user) throws DAOException;
 
-    public void updateUser(User user) throws DAOException;
+     void updateUser(User user) throws DAOException;
 
-    public User getUser(long userId) throws DAOException;
+     User getUser(long userId) throws DAOException;
 
-    public void changeDeletedStatus(long userId) throws DAOException;
+     void changeDeletedStatus(long userId) throws DAOException;
 
-    public void changeRole(long userId) throws DAOException;
+     void changeRole(long userId) throws DAOException;
 
-    public int getNumberOfRows() throws DAOException;
+     int getNumberOfRows() throws DAOException;
 
-    public List<User> getAll(int currentPage, int recordsPerPage) throws DAOException;
+     List<User> getAll(int currentPage, int recordsPerPage) throws DAOException;
 
-    public boolean checkEmail(String email) throws DAOException;
+     boolean checkEmail(String email) throws DAOException;
 
-    public boolean checkUsername(String username) throws DAOException;
+     boolean checkUsername(String username) throws DAOException;
 }

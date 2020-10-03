@@ -21,7 +21,7 @@ import java.util.List;
 public class ViewAllUsersCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
@@ -32,7 +32,7 @@ public class ViewAllUsersCommand implements Command {
 
         //int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
         //int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
-        PathCreator pathCreator = utilFactory.getPathCreator();
+
         String path;
         List<User> users;
         User user = (User) session.getAttribute(ParameterName.USER);
@@ -43,7 +43,7 @@ public class ViewAllUsersCommand implements Command {
                 //int numberOfRows = adminService.getNumberOfUserRows();
                 //int numberOfPages = numberOfRows / recordsPerPage;
                 //if (numberOfRows % recordsPerPage > 0) {
-               //     numberOfPages++;
+                //     numberOfPages++;
                 //}
                 users = adminService.getAllUsers(1, 10);
                 request.setAttribute(ParameterName.USERS, users);

@@ -19,15 +19,16 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class EditProfileCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
         HttpSession session = request.getSession();
+
         long id = Long.parseLong(request.getParameter(ParameterName.USER_ID));
         String firstName = request.getParameter(ParameterName.FIRST_NAME);
         String lastName = request.getParameter(ParameterName.LAST_NAME);
@@ -43,7 +44,8 @@ public class EditProfileCommand implements Command {
 
 
         User userSession = (User) session.getAttribute(ParameterName.USER);
-        int role = userSession.getRole().getRoleId();
+        int role = userSession.getRole()
+                              .getRoleId();
         try {
             if (valueChecker.isAnyUser(role)) {
                 commonService.updateProfile(user);

@@ -6,11 +6,11 @@ import by.itechart.library.service.exception.ServiceException;
 import java.util.List;
 
 public interface UserService {
-    public void addBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
+     void addBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
 
-    public void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
+     void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
 
-    public List<BorrowRecord> getAllBorrowRecords(long userId, int currentPage, int recordsPerPage) throws ServiceException;
+     List<BorrowRecord> getAllBorrowRecords(long userId, int currentPage, int recordsPerPage) throws ServiceException;
 
-    public int getNumberOfBorrowRecordRows(long userId) throws ServiceException;
+     int getNumberOfBorrowRecordRows(long userId) throws ServiceException;
 }

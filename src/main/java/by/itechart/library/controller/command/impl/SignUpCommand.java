@@ -24,7 +24,6 @@ public class SignUpCommand implements Command {
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         String path;
@@ -48,7 +47,7 @@ public class SignUpCommand implements Command {
         user.setEmail(email);
         user.setGender(gender);
         user.setPhoneNumber(phoneNumber);
-         user.setRole(role);
+        user.setRole(role);
         user.setDateOfRegistration(dateOfRegistration);
 
         HttpSession session = request.getSession();
@@ -56,7 +55,7 @@ public class SignUpCommand implements Command {
         try {
             commonService.signUp(user);
             session.setAttribute(ParameterName.USER, user);
-            path = pathCreator.getMainPage();
+            path = pathCreator.getForwardMainPage(request.getContextPath());
         } catch (ServiceException e) {
             log.error(e);
             throw new CommandException(e);

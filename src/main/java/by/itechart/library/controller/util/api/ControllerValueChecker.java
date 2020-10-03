@@ -4,13 +4,13 @@ import javax.servlet.http.Part;
 
 public interface ControllerValueChecker {
 
-    public boolean isAdmin(int statusId);
+     boolean isAdmin(int statusId);
 
-    public boolean isAnyUser(int statusId);
+     boolean isAnyUser(int statusId);
 
-    public boolean isUser(int statusId);
+     boolean isUser(int statusId);
 
-    public boolean isPhoto(Part part);
+     boolean isPhoto(Part part);
 
-    public boolean suitsSize(long fileSize);
+     boolean isSize(long fileSize);
 }

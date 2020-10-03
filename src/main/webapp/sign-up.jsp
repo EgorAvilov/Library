@@ -64,7 +64,7 @@
                     <div class="input-group-prepend">
                     </div>
                     <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
-                           placeholder="Phone number" aria-label="Phone number"
+                           placeholder="Phone number +375 (044) 111-1111" aria-label="Phone number"
                            aria-describedby="addon-wrapping">
                 </div>
                 <br>

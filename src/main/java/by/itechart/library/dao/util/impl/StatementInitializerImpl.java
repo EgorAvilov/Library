@@ -57,8 +57,7 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void addBook(PreparedStatement statement, Book book) throws SQLException {
-        statement.setBlob(1, new ByteArrayInputStream(book.getCover()
-                                                          .getBytes()));
+        statement.setBinaryStream(1,book.getCoverStream());
         statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());
@@ -73,13 +72,7 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void updateBook(PreparedStatement statement, Book book) throws SQLException {
-        InputStream stream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return 0;
-            }
-        };
-        statement.setBinaryStream(1, stream);
+        statement.setBinaryStream(1,book.getCoverStream());
         statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());

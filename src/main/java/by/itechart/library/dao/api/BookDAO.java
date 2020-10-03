@@ -6,30 +6,30 @@ import by.itechart.library.entity.Book;
 import java.util.List;
 
 public interface BookDAO {
-    public void addBook(Book book) throws DAOException;
+     void addBook(Book book) throws DAOException;
 
-    public Book getBook(long id) throws DAOException;
+     Book getBook(long id) throws DAOException;
 
-    public void updateBook(Book book) throws DAOException;
+     void updateBook(Book book) throws DAOException;
 
-    public void changeDeletedStatus(long bookId) throws DAOException;
+     void changeDeletedStatus(long bookId) throws DAOException;
 
-    public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException;
+     List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException;
 
-    public List<Book> searchBooks(String searchParameter) throws DAOException;
+     List<Book> searchBooks(String searchParameter) throws DAOException;
 
-    public int getNumberOfRows() throws DAOException;
+     int getNumberOfRows() throws DAOException;
 
-    public boolean checkISBNtoAdd(String ISBN) throws DAOException;
+     boolean checkISBNtoAdd(String ISBN) throws DAOException;
 
-    public boolean checkISBNtoUpdate(String ISBN, long id) throws DAOException;
+     boolean checkISBNtoUpdate(String ISBN, long id) throws DAOException;
 
-    public void takeBook(long bookId) throws DAOException;
+     void takeBook(long bookId) throws DAOException;
 
-    public void returnBook(long bookId) throws DAOException;
+     void returnBook(long bookId) throws DAOException;
 
-    public int getAvailableAmountOfBooks(long bookId) throws DAOException;
+     int getAvailableAmountOfBooks(long bookId) throws DAOException;
 
-    public void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException;
+     void setAvailableAmountOfBooks(long bookId, int availableAmount) throws DAOException;
 
 }

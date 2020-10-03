@@ -21,19 +21,20 @@ import java.util.List;
 @Log4j
 public class ViewAllBorrowRecordsByAdminCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private AdminService adminService = serviceFactory.getAdminService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
+
         HttpSession session = request.getSession();
 
         int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
         int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
 
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
         List<BorrowRecord> borrowRecords;
 
         User user = (User) session.getAttribute(ParameterName.USER);

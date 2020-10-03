@@ -1,19 +1,33 @@
 package by.itechart.library.controller.util.api;
 
 public interface PathCreator {
-    public String getError();
-    public String getSignIn();
-    public String getMainPage();
-    public String getSignUp();
-    public String getBooksPage();
-    public String getBookPage(String contextPath, long bookId);
-    public String getUsersPage();
-    public String getUserPage();
-    public String getBorrowRecordsPage();
-    public String getBorrowRecordPage(String contextPath, long borrowRecordId);
-    public String getEditBook();
-    public String getEditBorrowRecord();
-    public String getForwardMainPage(String contextPath);
-    public String getForwardUsersPage(String contextPath);
-    public String getEditProfile();
+    String getError();
+
+    String getSignIn();
+
+    String getMainPage();
+
+    String getSignUp();
+
+    String getBooksPage();
+
+    String getBookPage(String contextPath, long bookId);
+
+    String getUsersPage();
+
+    String getUserPage();
+
+    String getBorrowRecordsPage();
+
+    String getBorrowRecordPage(String contextPath, long borrowRecordId);
+
+    String getEditBook();
+
+    String getEditBorrowRecord();
+
+    String getForwardMainPage(String contextPath);
+
+    String getForwardUsersPage(String contextPath);
+
+    String getEditProfile();
 }

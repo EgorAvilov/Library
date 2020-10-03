@@ -17,13 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 @Log4j
 public class ViewBookCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+
+        String path;
 
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
         Book book;

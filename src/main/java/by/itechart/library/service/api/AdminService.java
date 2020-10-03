@@ -8,25 +8,25 @@ import by.itechart.library.service.exception.ServiceException;
 import java.util.List;
 
 public interface AdminService {
-    public void addBook(Book book) throws ServiceException;
+    void addBook(Book book) throws ServiceException;
 
-    public void updateBook(Book book) throws ServiceException;
+    void updateBook(Book book) throws ServiceException;
 
-    public void changeBookDeletedStatus(long bookId) throws ServiceException;
+    void changeBookDeletedStatus(long bookId) throws ServiceException;
 
-    public void changeUserDeletedStatus(long userId) throws ServiceException;
+    void changeUserDeletedStatus(long userId) throws ServiceException;
 
-    public List<BorrowRecord> getAllBorrowRecords(int currentPage, int recordsPerPage) throws ServiceException;
+    List<BorrowRecord> getAllBorrowRecords(int currentPage, int recordsPerPage) throws ServiceException;
 
-    public void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
+    void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException;
 
-    public List<User> getAllUsers(int currentPage, int recordsPerPage) throws ServiceException;
+    List<User> getAllUsers(int currentPage, int recordsPerPage) throws ServiceException;
 
-    public int getNumberOfBorrowRecordRows() throws ServiceException;
+    int getNumberOfBorrowRecordRows() throws ServiceException;
 
-    public int getNumberOfUserRows() throws ServiceException;
-    public void changeUserRole(long userId) throws ServiceException;
+    int getNumberOfUserRows() throws ServiceException;
 
+    void changeUserRole(long userId) throws ServiceException;
 
 
 }

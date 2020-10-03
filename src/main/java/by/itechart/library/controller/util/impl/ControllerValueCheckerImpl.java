@@ -6,6 +6,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import javax.servlet.http.Part;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ControllerValueCheckerImpl implements ControllerValueChecker {
     private final long MAX_FILE_SIZE = 2 * 1024 * 1024;
@@ -31,15 +33,13 @@ public class ControllerValueCheckerImpl implements ControllerValueChecker {
 
     @Override
     public boolean isPhoto(Part part) {
-        File file = (File) part;//проверить работу
-        String extension = FilenameUtils.getExtension(file.getName());
-        return extension.equalsIgnoreCase("jpg")
-                || extension.equalsIgnoreCase("jpeg")
-                || extension.equalsIgnoreCase("png");
+       return part.getContentType().endsWith("jpg")
+               || part.getContentType().endsWith("jpeg")
+               || part.getContentType().endsWith("png");
     }
 
     @Override
-    public boolean suitsSize(long fileSize) {
+    public boolean isSize(long fileSize) {
         return fileSize <= MAX_FILE_SIZE;
     }
 }

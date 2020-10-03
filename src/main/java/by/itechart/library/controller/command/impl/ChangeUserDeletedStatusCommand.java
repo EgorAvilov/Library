@@ -29,7 +29,7 @@ public class ChangeUserDeletedStatusCommand implements Command {
 
         HttpSession session = request.getSession();
 
-        String path = pathCreator.getError();
+        String path;
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole()
                        .getRoleId();

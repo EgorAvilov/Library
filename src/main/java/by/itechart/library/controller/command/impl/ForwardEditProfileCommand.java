@@ -21,7 +21,6 @@ public class ForwardEditProfileCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private ControllerValueChecker valueChecker = utilFactory.getControllerValueChecker();
     private PathCreator pathCreator = utilFactory.getPathCreator();
-
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 

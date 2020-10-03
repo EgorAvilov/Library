@@ -91,7 +91,7 @@ public class EditBookCommandTest {
                .thenReturn(coverPart);
         Mockito.when(valueChecker.isPhoto(coverPart))
                .thenReturn(true);
-        Mockito.when(valueChecker.suitsSize(coverPart.getSize()))
+        Mockito.when(valueChecker.isSize(coverPart.getSize()))
                .thenReturn(true);
         Mockito.when(editBookCommand.getInputStream(coverPart))
                .thenReturn(cover);
@@ -131,7 +131,7 @@ public class EditBookCommandTest {
                .thenReturn(coverPart);
         Mockito.when(valueChecker.isPhoto(coverPart))
                .thenReturn(false);
-        Mockito.when(valueChecker.suitsSize(coverPart.getSize()))
+        Mockito.when(valueChecker.isSize(coverPart.getSize()))
                .thenReturn(false);
         Mockito.when(editBookCommand.getInputStream(coverPart))
                .thenReturn(cover);

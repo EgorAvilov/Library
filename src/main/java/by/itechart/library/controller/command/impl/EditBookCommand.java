@@ -65,11 +65,9 @@ public class EditBookCommand implements Command {
                        .getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
-            if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
+            if(valueChecker.isPhoto(coverPart) && valueChecker.isSize(coverPart.getSize())) {
                 InputStream cover = getInputStream(coverPart);
-                book.setCover(cover.toString());
-            } else {
-                book.setCover("");
+                book.setCoverStream(cover);
             }
 
             if (valueChecker.isAdmin(role)) {
