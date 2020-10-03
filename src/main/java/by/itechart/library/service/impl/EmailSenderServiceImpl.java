@@ -35,10 +35,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             @Override
             public void run() {
                 List<EmailSenderDto> emailSenderDtoList = null;
-
                 try {
                     emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                               .plusDays(7));
+                            .plusDays(7));
                 } catch (DAOException e) {
                     e.printStackTrace();
                 }
@@ -50,10 +49,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                         mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
                         mail.setAttribute("dueDate", LocalDate.now()
-                                                              .plusDays(7));
-
+                                .plusDays(7));
                         try {
-                            send(mail,emailSenderDto);
+                            send(mail, emailSenderDto);
                         } catch (IOException | MessagingException e) {
                             log.error(e);
                         }
@@ -70,15 +68,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void sendRemindBefore1Day() {
-
         TimerTask repeatedTask = new TimerTask() {
             @Override
             public void run() {
                 List<EmailSenderDto> emailSenderDtoList = null;
-
                 try {
                     emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                               .plusDays(1));
+                            .plusDays(1));
                 } catch (DAOException e) {
                     e.printStackTrace();
                 }
@@ -91,10 +87,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                         mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
                         mail.setAttribute("dueDate", LocalDate.now()
-                                                              .plusDays(1));
-                       // mail.setAttribute("libraryEmail", "egoravilov99@gmail.com");
+                                .plusDays(1));
                         try {
-                            send(mail,emailSenderDto);
+                            send(mail, emailSenderDto);
                         } catch (IOException | MessagingException e) {
                             e.printStackTrace();
                         }
@@ -120,7 +115,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 List<EmailSenderDto> emailSenderDtoList = null;
                 try {
                     emailSenderDtoList = borrowRecordDAO.getAllBorrowRecordsForRemind(LocalDate.now()
-                                                                                               .minusDays(1));
+                            .minusDays(1));
                 } catch (DAOException e) {
                     e.printStackTrace();
                 }
@@ -133,10 +128,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                         mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
                         mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
                         mail.setAttribute("dueDate", LocalDate.now()
-                                                              .minusDays(1));
-                       // mail.setAttribute("libraryEmail", "egoravilov99@gmail.com");
+                                .minusDays(1));
                         try {
-                            send(mail,emailSenderDto);
+                            send(mail, emailSenderDto);
                         } catch (IOException | MessagingException e) {
                             e.printStackTrace();
                         }
@@ -158,10 +152,10 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    public void send(StringTemplate mail,EmailSenderDto emailSenderDto) throws IOException, MessagingException {
+    public void send(StringTemplate mail, EmailSenderDto emailSenderDto) throws IOException, MessagingException {
         Properties properties = new Properties();
         properties.load(EmailSenderServiceImpl.class.getClassLoader()
-                                                    .getResourceAsStream("mail.properties"));
+                .getResourceAsStream("mail.properties"));
         mail.setAttribute("libraryEmail", properties.get("mail.smtps.user").toString());
         Session session = Session.getDefaultInstance(properties);
         MimeMessage message = new MimeMessage(session);

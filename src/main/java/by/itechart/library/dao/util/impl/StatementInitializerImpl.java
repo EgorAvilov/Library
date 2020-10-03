@@ -31,7 +31,7 @@ public class StatementInitializerImpl implements StatementInitializer {
         statement.setString(7, user.getUsername());
         statement.setString(8, user.getPassword());
         statement.setInt(9, user.getRole()
-                                .getRoleId());//тут сделать +-1
+                                .getRoleId());
     }
 
     @Override

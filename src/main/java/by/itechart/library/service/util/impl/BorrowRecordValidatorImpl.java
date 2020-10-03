@@ -25,7 +25,6 @@ public class BorrowRecordValidatorImpl implements BorrowRecordValidator {
 
     @Override
     public boolean validateStatusIsPreset(BorrowRecordStatus borrowRecordStatus) throws ValidatorException {
-        // BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.values()[borrowRecordStatusId - 1];
         if (borrowRecordStatus == BorrowRecordStatus.RETURNED
                 || borrowRecordStatus == BorrowRecordStatus.RETURNED_AND_DAMAGED
                 || borrowRecordStatus == BorrowRecordStatus.LOST) {
@@ -37,7 +36,6 @@ public class BorrowRecordValidatorImpl implements BorrowRecordValidator {
 
     @Override
     public boolean validateStatus(BorrowRecordStatus borrowRecordStatus) {
-        //BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.values()[borrowRecordStatusId - 1];
         return borrowRecordStatus == BorrowRecordStatus.RETURNED
                 || borrowRecordStatus == BorrowRecordStatus.RETURNED_AND_DAMAGED;
     }

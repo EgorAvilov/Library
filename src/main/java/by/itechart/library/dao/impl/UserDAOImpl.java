@@ -28,11 +28,10 @@ public class UserDAOImpl implements UserDAO {
     private ResourceCloser resourceCloser = utilFactory.getResourceCloser();
     private StatementInitializer statementInitializer = utilFactory.getStatementInitializer();
 
-
     @Override
     public User getUser(String username, String password) throws DAOException {
         String request = SQLRequest.GET_USER_BY_CREDENTIALS;
-        User user = null;
+        User user;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -97,7 +96,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUser(long userId) throws DAOException {
         String request = SQLRequest.GET_USER_BY_ID;
-        User user = null;
+        User user;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -129,7 +128,6 @@ public class UserDAOImpl implements UserDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            User user = getUser(userId);
             statementInitializer.changeDeletedStatus(statement, userId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
@@ -149,7 +147,6 @@ public class UserDAOImpl implements UserDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            User user = getUser(userId);
             statementInitializer.changeUserRole(statement, userId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
