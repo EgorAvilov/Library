@@ -20,14 +20,14 @@ import java.time.LocalDate;
 @Log4j
 public class SignUpCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        String path = pathCreator.getError();
+        String path;
 
         String username = request.getParameter(ParameterName.USERNAME);
         String password = request.getParameter(ParameterName.PASSWORD);
@@ -37,14 +37,7 @@ public class SignUpCommand implements Command {
         boolean gender = Boolean.parseBoolean(request.getParameter(ParameterName.GENDER));
         String phoneNumber = request.getParameter(ParameterName.PHONE_NUMBER);
         LocalDate dateOfRegistration = LocalDate.now();
-        Role role;
-        if (request.getSession().isNew()) {
-            role = Role.USER;
-        } else {//проверить на работоспособность
-            role = Role.values()[(int) request.getSession()
-                                              .getAttribute(ParameterName.ROLE)];
-        }
-
+        Role role = Role.USER;
 
         User user = new User();
 
@@ -55,14 +48,13 @@ public class SignUpCommand implements Command {
         user.setEmail(email);
         user.setGender(gender);
         user.setPhoneNumber(phoneNumber);
-        user.setRole(role);//сделать по проверке сессии, если админ то другое
+         user.setRole(role);
         user.setDateOfRegistration(dateOfRegistration);
 
         HttpSession session = request.getSession();
 
         try {
             commonService.signUp(user);
-            path = pathCreator.getSignIn();
             session.setAttribute(ParameterName.USER, user);
             path = pathCreator.getMainPage();
         } catch (ServiceException e) {

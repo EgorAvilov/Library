@@ -5,7 +5,7 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
     <listener>
-        <listener-class>by.itechart.library.controller.ApplicationListener</listener-class>
+        <listener-class>by.itechart.library.controller.listener.ApplicationListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>MainServlet</servlet-name>
@@ -15,6 +15,19 @@
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>SecurityPageFilter</filter-name>
+        <filter-class>by.itechart.library.controller.filter.SecurityPageFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityPageFilter</filter-name>
+        <url-pattern>/sign-in</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SecurityPageFilter</filter-name>
+        <url-pattern>/book-page</url-pattern>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>Sign-up</servlet-name>
@@ -55,7 +68,25 @@
         <servlet-name>BookPage</servlet-name>
         <url-pattern>/book-page</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AddBook</servlet-name>
+        <jsp-file>/WEB-INF/jsp/add-book.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddBook</servlet-name>
+        <url-pattern>/add-book</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UsersPage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/users-page.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersPage</servlet-name>
+        <url-pattern>/users-page</url-pattern>
+    </servlet-mapping>
+    
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/jsp/error-404.jsp</location>

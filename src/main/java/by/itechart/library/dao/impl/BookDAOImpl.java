@@ -102,7 +102,7 @@ public class BookDAOImpl implements BookDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             Book book = getBook(bookId);
-            statementInitializer.changeDeletedStatus(statement, !book.isDeletedStatus(), bookId);
+            statementInitializer.changeDeletedStatus(statement, bookId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);

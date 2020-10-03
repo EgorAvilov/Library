@@ -14,6 +14,7 @@ public class CommandName {
     public static final String COMMAND_FORWARD_EDIT_PROFILE = "forward-edit-profile";
     public static final String COMMAND_FORWARD_TO_MAIN_PAGE = "forward-to-main-page";
     public static final String COMMAND_SEARCH_BOOK = "search-book";
+    public static final String COMMAND_SET_ADMIN = "set-admin";
     public static final String COMMAND_SIGN_IN = "sign-in";
     public static final String COMMAND_SIGN_OUT = "sign-out";
     public static final String COMMAND_SIGN_UP = "sign-up";

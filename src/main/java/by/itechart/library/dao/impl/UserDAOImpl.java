@@ -130,11 +130,31 @@ public class UserDAOImpl implements UserDAO {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
             User user = getUser(userId);
-            statementInitializer.changeDeletedStatus(statement, !user.isDeletedStatus(), userId);
+            statementInitializer.changeDeletedStatus(statement, userId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
             throw new DAOException("Something went wrong during deleting user");
+        } finally {
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+    }
+
+    @Override
+    public void changeRole(long userId) throws DAOException {
+        String request = SQLRequest.CHANGE_USER_ROLE;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            User user = getUser(userId);
+            statementInitializer.changeUserRole(statement, userId);
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during changing user role");
         } finally {
             resourceCloser.close(statement);
             resourceCloser.close(connection);

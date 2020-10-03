@@ -3,8 +3,9 @@ package by.itechart.library.service.impl;
 import by.itechart.library.dao.DAOFactory;
 import by.itechart.library.dao.api.BorrowRecordDAO;
 import by.itechart.library.dao.exception.DAOException;
+import by.itechart.library.service.api.EmailSenderService;
 import by.itechart.library.service.dto.EmailSenderDto;
-import by.itechart.library.service.exception.ServiceException;
+import lombok.extern.log4j.Log4j;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
@@ -22,13 +23,13 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EmailSenderServiceImpl {
-
+@Log4j
+public class EmailSenderServiceImpl implements EmailSenderService {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
     private BorrowRecordDAO borrowRecordDAO = daoFactory.getBorrowRecordDAO();
 
-
+    @Override
     public void sendRemindBefore7Days() {
         TimerTask repeatedTask = new TimerTask() {
             @Override
@@ -43,36 +44,19 @@ public class EmailSenderServiceImpl {
                 }
                 if (emailSenderDtoList != null) {
                     for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
+                        StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
+                        StringTemplate mail = group.getInstanceOf("RemindBefore");
+
+                        mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
+                        mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
+                        mail.setAttribute("dueDate", LocalDate.now()
+                                                              .plusDays(7));
+                        mail.setAttribute("libraryEmail", "egoravilov99@gmail.com");
                         try {
-
-                            StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
-                            StringTemplate helloAgain = group.getInstanceOf("RemindBefore");
-
-                            helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
-                            helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                            helloAgain.setAttribute("dueDate", LocalDate.now()
-                                                                        .plusDays(7));
-
-                            Properties properties = new Properties();
-                            properties.load(EmailSenderServiceImpl.class.getClassLoader()
-                                                                        .getResourceAsStream("mail.properties"));
-
-                            Session session = Session.getDefaultInstance(properties);
-                            MimeMessage message = new MimeMessage(session);
-                            message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
-                                                                          .toString()));
-                            message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
-                            message.setSubject("Test");
-                            message.setText(helloAgain.toString());
-
-                            Transport tr = session.getTransport();
-                            tr.connect("egoravilov99@gmail.com", "password");
-                            tr.sendMessage(message, message.getAllRecipients());
-                            tr.close();
+                            send(mail);
                         } catch (IOException | MessagingException e) {
-                            e.printStackTrace();
+                            log.error(e);
                         }
-
                     }
                 }
             }
@@ -84,7 +68,7 @@ public class EmailSenderServiceImpl {
 
     }
 
-
+    @Override
     public void sendRemindBefore1Day() {
 
         TimerTask repeatedTask = new TimerTask() {
@@ -100,31 +84,17 @@ public class EmailSenderServiceImpl {
                 }
                 if (emailSenderDtoList != null) {
                     for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
+
+                        StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
+                        StringTemplate mail = group.getInstanceOf("RemindBefore");
+
+                        mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
+                        mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
+                        mail.setAttribute("dueDate", LocalDate.now()
+                                                              .plusDays(1));
+                        mail.setAttribute("libraryEmail", "egoravilov99@gmail.com");
                         try {
-                            StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
-                            StringTemplate helloAgain = group.getInstanceOf("RemindBefore");
-
-                            helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
-                            helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                            helloAgain.setAttribute("dueDate", LocalDate.now()
-                                                                        .plusDays(1));
-
-                            Properties properties = new Properties();
-                            properties.load(EmailSenderServiceImpl.class.getClassLoader()
-                                                                        .getResourceAsStream("mail.properties"));
-
-                            Session session = Session.getDefaultInstance(properties);
-                            MimeMessage message = new MimeMessage(session);
-                            message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
-                                                                          .toString()));
-                            message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
-                            message.setSubject("Test");
-                            message.setText(helloAgain.toString());
-
-                            Transport tr = session.getTransport();
-                            tr.connect("egoravilov99@gmail.com", "password");
-                            tr.sendMessage(message, message.getAllRecipients());
-                            tr.close();
+                            send(mail);
                         } catch (IOException | MessagingException e) {
                             e.printStackTrace();
                         }
@@ -140,7 +110,7 @@ public class EmailSenderServiceImpl {
 
     }
 
-
+    @Override
     public void sendRemindAfter1Day() {
 
         TimerTask repeatedTask = new TimerTask() {
@@ -156,31 +126,17 @@ public class EmailSenderServiceImpl {
                 }
                 if (emailSenderDtoList != null) {
                     for (EmailSenderDto emailSenderDto : emailSenderDtoList) {
+
+                        StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
+                        StringTemplate mail = group.getInstanceOf("RemindAfter");
+
+                        mail.setAttribute("firstName", emailSenderDto.getUserFirstName());
+                        mail.setAttribute("bookTitle", emailSenderDto.getBookTitle());
+                        mail.setAttribute("dueDate", LocalDate.now()
+                                                              .minusDays(1));
+                        mail.setAttribute("libraryEmail", "egoravilov99@gmail.com");
                         try {
-                            StringTemplateGroup group = new StringTemplateGroup("src/main/resources", DefaultTemplateLexer.class);
-                            StringTemplate helloAgain = group.getInstanceOf("RemindAfter");
-
-                            helloAgain.setAttribute("firstName", emailSenderDto.getUserFirstName());
-                            helloAgain.setAttribute("bookTitle", emailSenderDto.getBookTitle());
-                            helloAgain.setAttribute("dueDate", LocalDate.now()
-                                                                        .minusDays(1));
-
-                            Properties properties = new Properties();
-                            properties.load(EmailSenderServiceImpl.class.getClassLoader()
-                                                                        .getResourceAsStream("mail.properties"));
-
-                            Session session = Session.getDefaultInstance(properties);
-                            MimeMessage message = new MimeMessage(session);
-                            message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
-                                                                          .toString()));
-                            message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
-                            message.setSubject("Test");
-                            message.setText(helloAgain.toString());
-
-                            Transport tr = session.getTransport();
-                            tr.connect("egoravilov99@gmail.com", "password");
-                            tr.sendMessage(message, message.getAllRecipients());
-                            tr.close();
+                            send(mail);
                         } catch (IOException | MessagingException e) {
                             e.printStackTrace();
                         }
@@ -194,11 +150,31 @@ public class EmailSenderServiceImpl {
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
-
-    public void execute() throws ServiceException {
+    @Override
+    public void execute() {
         sendRemindBefore7Days();
         sendRemindBefore1Day();
         sendRemindAfter1Day();
+    }
+
+    @Override
+    public void send(StringTemplate mail) throws IOException, MessagingException {
+        Properties properties = new Properties();
+        properties.load(EmailSenderServiceImpl.class.getClassLoader()
+                                                    .getResourceAsStream("mail.properties"));
+
+        Session session = Session.getDefaultInstance(properties);
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(properties.get("mail.smtps.user")
+                                                      .toString()));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress("egoravilov999@mail.ru"));
+        message.setSubject("Library Borrow Record Remind");
+        message.setText(mail.toString());
+
+        Transport tr = session.getTransport();
+        tr.connect("egoravilov99@gmail.com", "password");
+        tr.sendMessage(message, message.getAllRecipients());
+        tr.close();
     }
 }
 

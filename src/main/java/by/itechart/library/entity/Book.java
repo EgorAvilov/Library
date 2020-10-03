@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-
 public class Book implements Serializable {
     private static final long serialVersionUID = 7197102530298867633L;
 

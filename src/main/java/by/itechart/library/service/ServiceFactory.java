@@ -2,9 +2,11 @@ package by.itechart.library.service;
 
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.api.CommonService;
+import by.itechart.library.service.api.EmailSenderService;
 import by.itechart.library.service.api.UserService;
 import by.itechart.library.service.impl.AdminServiceImpl;
 import by.itechart.library.service.impl.CommonServiceImpl;
+import by.itechart.library.service.impl.EmailSenderServiceImpl;
 import by.itechart.library.service.impl.UserServiceImpl;
 import by.itechart.library.service.util.BookValidator;
 import by.itechart.library.service.util.BorrowRecordValidator;
@@ -30,5 +32,8 @@ public class ServiceFactory {
 
     @Getter
     private AdminService adminService = new AdminServiceImpl();
+
+    @Getter
+    private EmailSenderService emailSenderService=new EmailSenderServiceImpl();
 
 }

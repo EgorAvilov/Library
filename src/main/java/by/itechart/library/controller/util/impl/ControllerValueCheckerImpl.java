@@ -8,12 +8,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 
 public class ControllerValueCheckerImpl implements ControllerValueChecker {
-    private final long MAX_FILE_SIZE = 2 * 1028 * 1024;
-
-    @Override
-    public boolean isNumber(String number) {
-        return false;
-    }
+    private final long MAX_FILE_SIZE = 2 * 1024 * 1024;
 
     @Override
     public boolean isAdmin(int statusId) {

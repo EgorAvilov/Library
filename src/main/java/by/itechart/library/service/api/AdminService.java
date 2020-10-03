@@ -25,6 +25,8 @@ public interface AdminService {
     public int getNumberOfBorrowRecordRows() throws ServiceException;
 
     public int getNumberOfUserRows() throws ServiceException;
+    public void changeUserRole(long userId) throws ServiceException;
+
 
 
 }

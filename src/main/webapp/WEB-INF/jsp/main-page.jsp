@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="u" tagdir="/WEB-INF/tags"%>
 <%@ page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,63 +21,11 @@
 </head>
 <body style="background: url('resource/img/background.jpg') no-repeat center center fixed">
 <header class="sticky-top">
-    <div class="collapse bg-dark " id="navbarHeader">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-                <form action="controller" method="get">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link text-white" href="#">Main page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Borrow records</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Profile
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item text-dark" href="#">View</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-dark" href="#">Edit</a>
-                                </div>
-                            </li>
-                                <input type="hidden" name="command" value="sign-out">
-                                <li class="nav-item">
-                                        <button type="submit" class="btn btn-link text-white">Sign out</button>
-                                </li>
-                        </ul>
-                </div>
-                </form>
-            </nav>
-        </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
+    <u:nav/>
 </header>
 <main role="main">
-    <section style="background: none" class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading text-white">Library</h1>
-            <p class="lead text-white">Welcome to my online library</p>
-            <c:if test="${sessionScope.user.role.roleId == 1}">
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Add book</a>
-                </p>
-            </c:if>
-        </div>
-    </section>
     <div class="album py-5">
-        <div class="container">
+        <div class="container" style="min-height: 800px;">
             <div class="row">
                 <c:forEach items="${requestScope.books}" var="book">
                     <div class="col-md-4">
@@ -117,7 +66,6 @@
             </div>
         </div>
     </div>
-
 </main>
 <footer class="text-muted bg-dark sticky-bottom">
     <div class="container">

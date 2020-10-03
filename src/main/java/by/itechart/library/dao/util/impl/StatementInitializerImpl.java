@@ -5,6 +5,7 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -50,20 +51,14 @@ public class StatementInitializerImpl implements StatementInitializer {
     }
 
     @Override
-    public void changeDeletedStatus(PreparedStatement statement, boolean deletedStatus, long id) throws SQLException {
-        statement.setBoolean(1, deletedStatus);
-        statement.setLong(2, id);
+    public void changeDeletedStatus(PreparedStatement statement, long id) throws SQLException {
+        statement.setLong(1, id);
     }
 
     @Override
     public void addBook(PreparedStatement statement, Book book) throws SQLException {
-        InputStream stream = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return 0;
-            }
-        };
-        statement.setBinaryStream(1, stream);
+        statement.setBlob(1, new ByteArrayInputStream(book.getCover()
+                                                          .getBytes()));
         statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());
@@ -84,7 +79,8 @@ public class StatementInitializerImpl implements StatementInitializer {
                 return 0;
             }
         };
-        statement.setBinaryStream(1, stream);        statement.setNString(2, book.getTitle());
+        statement.setBinaryStream(1, stream);
+        statement.setNString(2, book.getTitle());
         statement.setNString(3, book.getAuthors());
         statement.setNString(4, book.getPublisher());
         statement.setDate(5, Date.valueOf(book.getPublishDate()));
@@ -171,5 +167,10 @@ public class StatementInitializerImpl implements StatementInitializer {
     @Override
     public void addRemindDate(PreparedStatement statement, LocalDate dueDate) throws SQLException {
         statement.setDate(1, Date.valueOf(dueDate));
+    }
+
+    @Override
+    public void changeUserRole(PreparedStatement statement, long userId) throws SQLException {
+        statement.setLong(1, userId);
     }
 }

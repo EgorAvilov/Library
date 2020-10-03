@@ -4,7 +4,7 @@ public interface PathCreator {
     public String getError();
     public String getSignIn();
     public String getMainPage();
-
+    public String getSignUp();
     public String getBooksPage();
     public String getBookPage(String contextPath, long bookId);
     public String getUsersPage();

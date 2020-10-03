@@ -138,4 +138,14 @@ public class AdminServiceImpl implements AdminService {
         }
         return numberOfRows;
     }
+
+    @Override
+    public void changeUserRole(long userId) throws ServiceException {
+        try {
+            userDAO.changeRole(userId);
+        } catch (DAOException e) {
+            log.error(e);
+            throw new ServiceException(e);
+        }
+    }
 }

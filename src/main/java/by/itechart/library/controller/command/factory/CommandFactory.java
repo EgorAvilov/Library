@@ -32,6 +32,7 @@ public class CommandFactory {
         operations.put(CommandName.COMMAND_FORWARD_EDIT_PROFILE, new ForwardEditProfileCommand());
         operations.put(CommandName.COMMAND_FORWARD_TO_MAIN_PAGE, new ForwardToMainPageCommand());
         operations.put(CommandName.COMMAND_SEARCH_BOOK, new SearchBookCommand());
+        operations.put(CommandName.COMMAND_SET_ADMIN, new SetAdminCommand());
         operations.put(CommandName.COMMAND_SIGN_IN, new SignInCommand());
         operations.put(CommandName.COMMAND_SIGN_OUT, new SignOutCommand());
         operations.put(CommandName.COMMAND_SIGN_UP, new SignUpCommand());

@@ -10,12 +10,14 @@ import lombok.extern.log4j.Log4j;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Log4j
+@MultipartConfig
 public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = -8384500438307619158L;
 

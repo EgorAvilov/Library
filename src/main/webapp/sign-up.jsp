@@ -15,7 +15,7 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <link rel="stylesheet" type="text/css" href="resource/css/sign-in.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resource/css/sign-in.css"/>">
 
     <title>Sign up</title>
 </head>
@@ -54,11 +54,10 @@
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
-                    <div class="input-group-prepend">
-                    </div>
-                    <input type="text" name="gender" id="gender" class="form-control"
-                           placeholder="Gender" aria-label="Gender"
-                           aria-describedby="addon-wrapping">
+                    <select class="custom-select">
+                        <option selected value="true">Male</option>
+                        <option value="false">Female</option>
+                    </select>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">

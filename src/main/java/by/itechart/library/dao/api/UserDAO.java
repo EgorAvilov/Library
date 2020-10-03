@@ -16,6 +16,8 @@ public interface UserDAO {
 
     public void changeDeletedStatus(long userId) throws DAOException;
 
+    public void changeRole(long userId) throws DAOException;
+
     public int getNumberOfRows() throws DAOException;
 
     public List<User> getAll(int currentPage, int recordsPerPage) throws DAOException;

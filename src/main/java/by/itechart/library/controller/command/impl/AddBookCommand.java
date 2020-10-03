@@ -12,6 +12,8 @@ import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -65,13 +67,13 @@ public class AddBookCommand implements Command {
         int role = user.getRole()
                        .getRoleId();
         try {
-            Part coverPart = request.getPart(ParameterName.COVER);
-            if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
+                Part coverPart = request.getPart(ParameterName.COVER);
+            //if (valueChecker.isPhoto(coverPart) && valueChecker.suitsSize(coverPart.getSize())) {
                 InputStream cover = getInputStream(coverPart);
-                book.setCover(cover.toString());
-            } else {
-                book.setCover("");
-            }
+                book.setCover(IOUtils.toString(cover, "UTF-8"));
+//            } else {
+//                book.setCover("");
+//            }
             if (valueChecker.isAdmin(role)) {
                 adminService.addBook(book);
                 path = pathCreator.getForwardMainPage(request.getContextPath());

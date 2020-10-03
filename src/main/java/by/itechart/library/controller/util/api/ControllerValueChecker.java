@@ -3,7 +3,6 @@ package by.itechart.library.controller.util.api;
 import javax.servlet.http.Part;
 
 public interface ControllerValueChecker {
-    public boolean isNumber(String number);
 
     public boolean isAdmin(int statusId);
 

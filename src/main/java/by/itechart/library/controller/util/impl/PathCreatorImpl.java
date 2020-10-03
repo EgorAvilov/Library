@@ -7,6 +7,7 @@ import lombok.Getter;
 public class PathCreatorImpl implements PathCreator {
     private final static String ERROR = "error";
     private final static String SIGN_IN = "sign-in";
+    private final static String SIGN_UP = "sign-up";
     private final static String USER_PAGE = "user-page";
     private final static String USERS_PAGE = "users-page";
     private final static String MAIN_PAGE = "main-page";
@@ -15,6 +16,12 @@ public class PathCreatorImpl implements PathCreator {
     private final static String EDIT_PROFILE = "edit-profile";
     private final static String GET_BOOKS_PAGE = "/controller?command=view-all-books";
     private final static String GET_USERS_PAGE = "/controller?command=view-all-users";
+
+    @Override
+    public String getSignUp() {
+        return SIGN_UP;
+    }
+
     @Override
     public String getBooksPage() {
         return MAIN_PAGE;
