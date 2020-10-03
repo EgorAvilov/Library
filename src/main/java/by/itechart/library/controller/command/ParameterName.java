@@ -3,7 +3,8 @@ package by.itechart.library.controller.command;
 public class ParameterName {
 
     public final static String COMMAND = "command";
-
+    public final static String ENCODING = "UTF-8";
+    public final static String ENCODING_FILTER = "EncodingFilter";
     public final static String USER = "user";
     public final static String USERS = "users";
     public final static String USER_ID = "userId";

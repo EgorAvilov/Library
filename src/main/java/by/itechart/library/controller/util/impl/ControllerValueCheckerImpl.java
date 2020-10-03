@@ -2,12 +2,10 @@ package by.itechart.library.controller.util.impl;
 
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.entity.Role;
-import org.apache.commons.io.FilenameUtils;
+
 
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+
 
 public class ControllerValueCheckerImpl implements ControllerValueChecker {
     private final long MAX_FILE_SIZE = 2 * 1024 * 1024;
@@ -33,9 +31,9 @@ public class ControllerValueCheckerImpl implements ControllerValueChecker {
 
     @Override
     public boolean isPhoto(Part part) {
-       return part.getContentType().endsWith("jpg")
-               || part.getContentType().endsWith("jpeg")
-               || part.getContentType().endsWith("png");
+        return part.getContentType().endsWith("jpg")
+                || part.getContentType().endsWith("jpeg")
+                || part.getContentType().endsWith("png");
     }
 
     @Override

@@ -10,18 +10,18 @@ import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.exception.ServiceException;
-import lombok.extern.log4j.Log4j;
-
+import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Log4j
+
 public class SignInCommand implements Command {
     private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
     private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
+    private static final Logger log = Logger.getLogger(String.valueOf(SignInCommand.class));
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -34,6 +34,7 @@ public class SignInCommand implements Command {
         try {
             User user = commonService.signIn(username, password);
             session.setAttribute(ParameterName.USER, user);
+            log.info("signing in");
             path = pathCreator.getForwardMainPage(request.getContextPath());
         } catch (ServiceException e) {
             log.error(e);
