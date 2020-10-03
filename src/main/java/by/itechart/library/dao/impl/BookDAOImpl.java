@@ -68,7 +68,6 @@ public class BookDAOImpl implements BookDAO {
             resourceCloser.close(resultSet);
             resourceCloser.close(statement);
             resourceCloser.close(connection);
-
         }
         return book;
     }
@@ -97,11 +96,9 @@ public class BookDAOImpl implements BookDAO {
         String request = SQLRequest.CHANGE_BOOK_DELETED_STATUS;
         Connection connection = null;
         PreparedStatement statement = null;
-
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            Book book = getBook(bookId);
             statementInitializer.changeDeletedStatus(statement, bookId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
