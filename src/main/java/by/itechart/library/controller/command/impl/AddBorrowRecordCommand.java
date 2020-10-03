@@ -36,6 +36,9 @@ public class AddBorrowRecordCommand implements Command {
         long userId = user.getId();
 
         LocalDate borrowDate = LocalDate.now();
+        if(request.getParameter(ParameterName.DUE_DATE)==null){
+            throw new CommandException("Due date cant be empty");
+        }
         LocalDate dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
 

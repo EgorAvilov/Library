@@ -33,6 +33,9 @@ public class EditBorrowRecordByUserCommand implements Command {
         String path;
 
         long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
+        if(request.getParameter(ParameterName.RETURN_DATE)==null){
+            throw new CommandException("Return date cant be empty");
+        }
         LocalDate returnDate = LocalDate.parse(request.getParameter(ParameterName.RETURN_DATE));
 
         BorrowRecord borrowRecord = new BorrowRecord();

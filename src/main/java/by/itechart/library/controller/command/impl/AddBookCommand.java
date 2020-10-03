@@ -39,6 +39,9 @@ public class AddBookCommand implements Command {
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
         String publisher = request.getParameter(ParameterName.PUBLISHER);
+        if(request.getParameter(ParameterName.PUBLISH_DATE)==null){
+            throw new CommandException("Publish date cant be empty");
+        }
         LocalDate publishDate = LocalDate.parse(request.getParameter(ParameterName.PUBLISH_DATE));
         String genres = request.getParameter(ParameterName.GENRES);
         int pageCount = Integer.parseInt(request.getParameter(ParameterName.PAGE_COUNT));

@@ -25,7 +25,9 @@ public class SearchBookCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         String path;
-
+        if(request.getParameter(ParameterName.SEARCH_PARAMETER)==null){
+            throw new CommandException("Search parameters cant be empty");
+        }
         String searchParameter = request.getParameter(ParameterName.SEARCH_PARAMETER);
 
         List<Book> books;

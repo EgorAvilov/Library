@@ -33,6 +33,9 @@ public class EditBorrowRecordByAdminCommand implements Command {
         String path;
 
         long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
+        if(request.getParameter(ParameterName.STATUS)==null){
+            throw new CommandException("Status cant be empty");
+        }
         BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.valueOf(request.getParameter(ParameterName.STATUS));
         String comment = request.getParameter(ParameterName.COMMENT);
 

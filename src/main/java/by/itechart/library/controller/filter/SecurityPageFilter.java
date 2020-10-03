@@ -43,7 +43,7 @@ public class SecurityPageFilter implements javax.servlet.Filter {
         }
         Set<String> pathsSet = paths.keySet();//достает все пути из мапы
         for (String path : pathsSet) {
-            if (path.equals(requestURI) && Objects.equals(role, paths.get(path))) {
+            if (path.equals(requestURI) && (Objects.equals(role, paths.get(path)) || (role == null && paths.get(path) == null))) {
                 response.sendRedirect(requestURI);//тут дописать чтоб кидало туда что написал
             }
         }
