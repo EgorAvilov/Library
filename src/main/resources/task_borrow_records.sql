@@ -1,0 +1,4 @@
+INSERT INTO task.borrow_records (id, user_id, borrow_date, due_date, return_date, book_id, status_id, comment) VALUES (4, 3, '2020-09-09', '2020-10-08', '2020-09-14', 3, 0, null);
+INSERT INTO task.borrow_records (id, user_id, borrow_date, due_date, return_date, book_id, status_id, comment) VALUES (5, 2, '2020-09-28', '2020-10-02', null, 4, 0, null);
+INSERT INTO task.borrow_records (id, user_id, borrow_date, due_date, return_date, book_id, status_id, comment) VALUES (6, 2, '2020-09-28', '2020-10-09', null, 4, 0, null);
+INSERT INTO task.borrow_records (id, user_id, borrow_date, due_date, return_date, book_id, status_id, comment) VALUES (7, 2, '2020-09-09', '2020-10-10', null, 5, 0, null);
