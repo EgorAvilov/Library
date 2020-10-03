@@ -139,7 +139,9 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>root</server>
-
+                    <path>/mycontext</path>
+                    <username>root</username>
+                    <password>root</password>
                 </configuration>
             </plugin>
         </plugins>
