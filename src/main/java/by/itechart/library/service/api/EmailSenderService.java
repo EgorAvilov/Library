@@ -1,5 +1,6 @@
 package by.itechart.library.service.api;
 
+import by.itechart.library.service.dto.EmailSenderDto;
 import org.antlr.stringtemplate.StringTemplate;
 
 import javax.mail.MessagingException;
@@ -14,6 +15,6 @@ public interface EmailSenderService {
 
     void sendRemindAfter1Day();
 
-    void send(StringTemplate mail) throws IOException, MessagingException;
+    void send(StringTemplate mail, EmailSenderDto emailSenderDto) throws IOException, MessagingException;
 
 }
