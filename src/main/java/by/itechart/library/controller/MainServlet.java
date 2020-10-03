@@ -20,11 +20,12 @@ import java.io.IOException;
 @MultipartConfig
 public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = -8384500438307619158L;
+    private ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
+    private PathCreator pathCreator = utilFactory.getPathCreator();
+    private CommandFactory commandFactory = CommandFactory.getInstance();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        CommandFactory commandFactory = CommandFactory.getInstance();
+
 
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
@@ -38,9 +39,6 @@ public class MainServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        CommandFactory commandFactory = CommandFactory.getInstance();
 
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
