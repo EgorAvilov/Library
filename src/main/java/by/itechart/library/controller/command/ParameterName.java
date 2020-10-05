@@ -37,12 +37,12 @@ public class ParameterName {
 
     public final static String AVAILABLE_AMOUNT = "availableAmount";
 
-    public final static String BORROW_RECORD_ID = "borrow_recordId";
+    public final static String BORROW_RECORD_ID = "borrowRecordId";
 
     public final static String BORROW_DATE = "borrowDate";
     public final static String DUE_DATE = "dueDate";
     public final static String RETURN_DATE = "returnDate";
-    public final static String STATUS = "status";
+    public final static String STATUS_ID = "statusId";
     public final static String COMMENT = "comment";
 
     public final static String BORROW_RECORD = "borrowRecord";

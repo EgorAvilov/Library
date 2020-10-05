@@ -1,6 +1,8 @@
 package by.itechart.library.service.exception;
 
-public class ValidatorException extends Exception {
+public class ValidatorException extends ServiceException {
+    private static final long serialVersionUID = -5286116736853763894L;
+
     public ValidatorException(String message) {
         super(message);
     }

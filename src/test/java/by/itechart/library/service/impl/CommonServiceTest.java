@@ -59,26 +59,12 @@ public class CommonServiceTest {
         commonService.signIn(Mockito.anyString(), Mockito.anyString());
     }
 
-    @Test(expected = ServiceException.class)
-    public void signIn_ValidatorException_User_DeletedStatus() throws ServiceException, ValidatorException, DAOException {
-        Mockito.doReturn(user)
-               .when(userDAO)
-               .getUser(Mockito.anyString(), Mockito.anyString());
-        Mockito.doThrow(ValidatorException.class)
-               .when(userValidator)
-               .validateUserDeletedStatus(user.isDeletedStatus());
-        commonService.signIn(Mockito.anyString(), Mockito.anyString());
-    }
 
     @Test
     public void signIn_validParams() throws ServiceException, ValidatorException, DAOException {
         Mockito.doReturn(user)
                .when(userDAO)
                .getUser(Mockito.anyString(), Mockito.anyString());
-        Mockito.doReturn(false)
-               .when(userValidator)
-               .validateUserDeletedStatus(user.isDeletedStatus());
-
         User result = commonService.signIn(Mockito.anyString(), Mockito.anyString());
         assertEquals(user, result);
     }
@@ -165,8 +151,8 @@ public class CommonServiceTest {
     public void getAllBooks_DAOException() throws DAOException, ServiceException {
         Mockito.doThrow(DAOException.class)
                .when(bookDAO)
-               .getAllBooks(Mockito.anyInt(),Mockito.anyInt());
-        commonService.getAllBooks(Mockito.anyInt(),Mockito.anyInt());
+               .getAllBooks();
+        commonService.getAllBooks();
     }
 
 
@@ -175,8 +161,8 @@ public class CommonServiceTest {
         List<Book> books=new ArrayList<>();
         Mockito.doReturn(books)
                .when(bookDAO)
-               .getAllBooks(Mockito.anyInt(),Mockito.anyInt());
-       List<Book> result= commonService.getAllBooks(Mockito.anyInt(),Mockito.anyInt());
+               .getAllBooks();
+       List<Book> result= commonService.getAllBooks();
        assertEquals(result,books);
     }
 

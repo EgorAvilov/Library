@@ -47,9 +47,10 @@ public class EditBorrowRecordByUserCommand implements Command {
         try {
             if (valueChecker.isUser(role)) {
                 userService.updateBorrowRecord(borrowRecord);
-                path = pathCreator.getBorrowRecordPage(request.getContextPath(), borrowRecordId);
+                log.info("updating borrow record by user");
+                path = pathCreator.getBorrowRecordPageUser(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

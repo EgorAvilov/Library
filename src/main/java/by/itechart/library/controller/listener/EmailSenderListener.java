@@ -1,24 +1,22 @@
 package by.itechart.library.controller.listener;
 
-import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.EmailSenderService;
+import by.itechart.library.service.impl.EmailSenderServiceImpl;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import javax.servlet.http.HttpSessionBindingEvent;
 
-@WebListener()
+@Log4j
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class EmailSenderListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
-
-    // Public constructor is required by servlet spec
-    public EmailSenderListener() {
-    }
-
     // -------------------------------------------------------
     // ServletContextListener implementation
     // -------------------------------------------------------
@@ -27,8 +25,8 @@ public class EmailSenderListener implements ServletContextListener,
          initialized(when the Web application is deployed). 
          You can initialize servlet context related data here.
       */
-        ServiceFactory serviceFactory=ServiceFactory.getInstance();
-        EmailSenderService emailSenderService=serviceFactory.getEmailSenderService();
+        EmailSenderService emailSenderService = new EmailSenderServiceImpl();
+        log.info("sending emails");
         emailSenderService.execute();
 
     }

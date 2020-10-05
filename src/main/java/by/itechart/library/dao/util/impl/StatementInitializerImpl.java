@@ -42,12 +42,11 @@ public class StatementInitializerImpl implements StatementInitializer {
     @Override
     public void updateUser(PreparedStatement statement, User user) throws SQLException {
         statement.setNString(1, user.getFirstName());
-        statement.setNString(2, user.getEmail());
-        statement.setNString(3, user.getPhoneNumber());
-        statement.setNString(4, user.getLastName());
-        statement.setBoolean(5, user.isGender());
-        statement.setNString(6, user.getPassword());
-        statement.setLong(7, user.getId());
+        statement.setNString(2, user.getPhoneNumber());
+        statement.setNString(3, user.getLastName());
+        statement.setBoolean(4, user.isGender());
+        statement.setNString(5, user.getPassword());
+        statement.setLong(6, user.getId());
     }
 
     @Override
@@ -110,16 +109,10 @@ public class StatementInitializerImpl implements StatementInitializer {
 
     @Override
     public void addSearchParameters(PreparedStatement statement, String searchParameter) throws SQLException {
-        statement.setNString(1, searchParameter);
-        statement.setNString(2, searchParameter);
-        statement.setNString(3, searchParameter);
-        statement.setNString(4, searchParameter);
-    }
-
-    @Override
-    public void addPaginationParameters(PreparedStatement statement, int start, int recordsPerPage) throws SQLException {
-        statement.setInt(1, start);
-        statement.setInt(2, recordsPerPage);
+        statement.setString(1, searchParameter);
+        statement.setString(2, searchParameter);
+        statement.setString(3, searchParameter);
+        statement.setString(4, searchParameter);
     }
 
     @Override
@@ -151,10 +144,8 @@ public class StatementInitializerImpl implements StatementInitializer {
     }
 
     @Override
-    public void addPaginationParameters(PreparedStatement statement, long userId, int start, int recordsPerPage) throws SQLException {
+    public void addPaginationParameters(PreparedStatement statement, long userId) throws SQLException {
         statement.setLong(1, userId);
-        statement.setInt(2, start);
-        statement.setInt(3, recordsPerPage);
     }
 
     @Override

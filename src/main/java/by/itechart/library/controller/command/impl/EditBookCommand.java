@@ -10,6 +10,7 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
+import by.itechart.library.service.exception.InvalidValuesException;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
 
@@ -40,9 +41,6 @@ public class EditBookCommand implements Command {
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
         String publisher = request.getParameter(ParameterName.PUBLISHER);
-        if(request.getParameter(ParameterName.PUBLISH_DATE)==null){
-            throw new CommandException("Publish date cant be empty");
-        }
         LocalDate publishDate = LocalDate.parse(request.getParameter(ParameterName.PUBLISH_DATE));
         String genres = request.getParameter(ParameterName.GENRES);
         int pageCount = Integer.parseInt(request.getParameter(ParameterName.PAGE_COUNT));
@@ -68,17 +66,23 @@ public class EditBookCommand implements Command {
                        .getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
-            if(valueChecker.isPhoto(coverPart) && valueChecker.isSize(coverPart.getSize())) {
+            if (valueChecker.isPhoto(coverPart) && valueChecker.isSize(coverPart.getSize())) {
                 InputStream cover = getInputStream(coverPart);
                 book.setCoverStream(cover);
             }
 
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBook(book);
+                request.setAttribute(ParameterName.BOOK, book);
+                log.info("updating book");
                 path = pathCreator.getBookPage(request.getContextPath(), bookId);
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
+        } catch(InvalidValuesException e){
+            request.setAttribute("message_add_book", e.getMessage());
+            request.setAttribute(ParameterName.BOOK,book);
+            path = pathCreator.getEditBook();
         } catch (ServiceException | IOException | ServletException e) {
             log.error(e);
             throw new CommandException(e);

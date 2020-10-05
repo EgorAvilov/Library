@@ -38,9 +38,10 @@ public class ForwardEditProfileCommand implements Command {
             if (valueChecker.isAnyUser(role)) {
                 user = commonService.getProfile(userId);
                 request.setAttribute(ParameterName.USER, user);
+                log.info("forward to update profile");
                 path = pathCreator.getEditProfile();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

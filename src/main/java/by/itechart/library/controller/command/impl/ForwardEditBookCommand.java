@@ -40,9 +40,10 @@ public class ForwardEditBookCommand implements Command {
             if (valueChecker.isAdmin(role)) {
                 book = commonService.getBook(bookId);
                 request.setAttribute(ParameterName.BOOK, book);
+                log.info("forward to update book");
                 path = pathCreator.getEditBook();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

@@ -25,8 +25,6 @@ public class MainServlet extends HttpServlet {
     private CommandFactory commandFactory = CommandFactory.getInstance();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
         try {
@@ -39,45 +37,12 @@ public class MainServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String action = request.getParameter(ParameterName.COMMAND);
         Command command = commandFactory.createCommand(action);
         try {
             String path = command.execute(request, response);
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request, response);
-        } catch (CommandException e) {
-            log.error(e);
-            response.sendRedirect(pathCreator.getError());
-        }
-    }
-
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        CommandFactory commandFactory = CommandFactory.getInstance();
-
-        String action = request.getParameter(ParameterName.COMMAND);
-        Command command = commandFactory.createCommand(action);
-        try {
-            String path = command.execute(request, response);
-            response.sendRedirect(path);
-        } catch (CommandException e) {
-            log.error(e);
-            response.sendRedirect(pathCreator.getError());
-        }
-    }
-
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ControllerUtilFactory utilFactory = ControllerUtilFactory.getInstance();
-        PathCreator pathCreator = utilFactory.getPathCreator();
-        CommandFactory commandFactory = CommandFactory.getInstance();
-
-        String action = request.getParameter(ParameterName.COMMAND);
-        Command command = commandFactory.createCommand(action);
-        try {
-            String path = command.execute(request, response);
-            response.sendRedirect(path);
         } catch (CommandException e) {
             log.error(e);
             response.sendRedirect(pathCreator.getError());

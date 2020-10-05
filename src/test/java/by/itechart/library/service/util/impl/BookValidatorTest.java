@@ -101,11 +101,7 @@ public class BookValidatorTest {
         bookValidator.validateAuthors(book.getAuthors());
     }
 
-    @Test(expected = ValidatorException.class)
-    public void validateAuthors_notUnique() throws ValidatorException {
-        book.setAuthors("Пушкин Лермонтов ПУШКИН");
-        bookValidator.validateAuthors(book.getAuthors());
-    }
+
 
     @Test
     public void validateAuthors_validData() throws ValidatorException {
@@ -169,17 +165,7 @@ public class BookValidatorTest {
         bookValidator.validateGenres(book.getGenres());
     }
 
-    @Test(expected = ValidatorException.class)
-    public void validateGenres_isLowCase() throws ValidatorException {
-        book.setGenres("Драма комедия");
-        bookValidator.validateGenres(book.getGenres());
-    }
 
-    @Test(expected = ValidatorException.class)
-    public void validateGenres_notUnique() throws ValidatorException {
-        book.setGenres("Драма Комедия КОМЕДИЯ");
-        bookValidator.validateGenres(book.getGenres());
-    }
 
     @Test
     public void validateGenres_validData() throws ValidatorException {

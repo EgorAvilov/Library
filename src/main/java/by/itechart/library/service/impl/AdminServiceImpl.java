@@ -11,6 +11,8 @@ import by.itechart.library.entity.BorrowRecordStatus;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.api.AdminService;
+import by.itechart.library.service.dto.BorrowRecordDto;
+import by.itechart.library.service.exception.InvalidValuesException;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
@@ -36,9 +38,11 @@ public class AdminServiceImpl implements AdminService {
         try {
             bookValidator.validateAdd(book);
             bookDAO.addBook(book);
-        } catch (DAOException | ValidatorException e) {
+        } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
+        } catch(ValidatorException e){
+            throw new InvalidValuesException(e);
         }
     }
 
@@ -47,9 +51,11 @@ public class AdminServiceImpl implements AdminService {
         try {
             bookValidator.validateUpdate(book);
             bookDAO.updateBook(book);
-        } catch (DAOException | ValidatorException e) {
+        } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
+        } catch(ValidatorException e){
+            throw new InvalidValuesException(e);
         }
     }
 
@@ -75,17 +81,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<BorrowRecord> getAllBorrowRecords(int currentPage, int recordsPerPage) throws ServiceException {
-        List<BorrowRecord> borrowRecords;
+    public List<BorrowRecordDto> getAllBorrowRecords() throws ServiceException {
+        List<BorrowRecordDto> borrowRecordDtos;
         try {
-            borrowRecords = borrowRecordDAO.getAll(currentPage, recordsPerPage);
+            borrowRecordDtos = borrowRecordDAO.getAllNew();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
         }
-        return borrowRecords;
+        return borrowRecordDtos;
     }
-
     @Override
     public void updateBorrowRecord(BorrowRecord borrowRecord) throws ServiceException {
         long bookId = borrowRecord.getBookId();
@@ -103,10 +108,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<User> getAllUsers(int currentPage, int recordsPerPage) throws ServiceException {
+    public List<User> getAllUsers() throws ServiceException {
         List<User> users;
         try {
-            users = userDAO.getAll(currentPage, recordsPerPage);
+            users = userDAO.getAll();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);

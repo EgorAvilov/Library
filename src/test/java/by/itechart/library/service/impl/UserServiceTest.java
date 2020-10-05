@@ -4,6 +4,7 @@ import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.api.BorrowRecordDAO;
 import by.itechart.library.dao.exception.DAOException;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.service.dto.BorrowRecordDto;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BorrowRecordValidator;
@@ -111,21 +112,43 @@ public class UserServiceTest {
     }
 
     @Test(expected = ServiceException.class)
+    public void getABorrowRecord_DAOException() throws DAOException, ServiceException {
+        Mockito.doThrow(DAOException.class)
+               .when(borrowRecordDAO)
+               .getAllByUserIdNew(Mockito.anyLong());
+        userService.getAllBorrowRecords(Mockito.anyLong());
+
+    }
+
+    @Test
+    public void getBorrowRecord_validParams() throws DAOException, ServiceException {
+        BorrowRecord borrowRecord=new BorrowRecord();
+        Mockito.doReturn(borrowRecord)
+               .when(borrowRecordDAO)
+               .getBorrowRecord(Mockito.anyLong());
+       userService.getAllBorrowRecords(Mockito.anyLong());
+
+
+    }
+
+
+
+    @Test(expected = ServiceException.class)
     public void getAllBorrowRecords_DAOException() throws DAOException, ServiceException {
         Mockito.doThrow(DAOException.class)
                .when(borrowRecordDAO)
-               .getAllByUserId(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt());
-        userService.getAllBorrowRecords(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt());
+               .getAllByUserIdNew(Mockito.anyLong());
+        userService.getAllBorrowRecords(Mockito.anyLong());
 
     }
 
     @Test
     public void getAllBorrowRecords_validParams() throws DAOException, ServiceException {
-        List<BorrowRecord> borrowRecords = new ArrayList<>();
+        List<BorrowRecordDto> borrowRecords = new ArrayList<>();
         Mockito.doReturn(borrowRecords)
                .when(borrowRecordDAO)
-               .getAllByUserId(Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt());
-        List<BorrowRecord> result = userService.getAllBorrowRecords(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt());
+               .getAllByUserId(Mockito.anyLong());
+        List<BorrowRecordDto> result = userService.getAllBorrowRecords(Mockito.anyLong());
 
         assertEquals(result, borrowRecords);
     }

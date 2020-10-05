@@ -49,9 +49,10 @@ public class EditProfileCommand implements Command {
         try {
             if (valueChecker.isAnyUser(role)) {
                 commonService.updateProfile(user);
+                log.info("updating profile");
                 path = pathCreator.getUserPage();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

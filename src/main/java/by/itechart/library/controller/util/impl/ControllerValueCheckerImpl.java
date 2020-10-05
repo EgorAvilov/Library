@@ -8,7 +8,6 @@ import javax.servlet.http.Part;
 
 
 public class ControllerValueCheckerImpl implements ControllerValueChecker {
-    private final long MAX_FILE_SIZE = 2 * 1024 * 1024;
 
     @Override
     public boolean isAdmin(int statusId) {
@@ -38,6 +37,7 @@ public class ControllerValueCheckerImpl implements ControllerValueChecker {
 
     @Override
     public boolean isSize(long fileSize) {
+        long MAX_FILE_SIZE = 2 * 1024 * 1024;
         return fileSize <= MAX_FILE_SIZE;
     }
 }

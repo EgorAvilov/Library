@@ -43,10 +43,10 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateTitle(String title) throws ValidatorException {
         if (title == null || title.isEmpty()) {
-            throw new ValidatorException("Title cant be empty");
+            throw new ValidatorException("message.empty_title");
         }
         if (!Character.isUpperCase(title.charAt(0)) && Character.isLetter(title.charAt(0))) {
-            throw new ValidatorException("Title should starts with upper case");
+            throw new ValidatorException("message.title_uppercase");
         }
         return true;
     }
@@ -54,20 +54,13 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateAuthors(String authors) throws ValidatorException {
         if (authors == null || authors.isEmpty()) {
-            throw new ValidatorException("Authors cant be empty");
+            throw new ValidatorException("message.empty_authors");
         }
         String[] authorsList = authors.split("\\s*(\\s|,|!|\\.)\\s*");
         for (String author : authorsList) {
 
             if (!Character.isUpperCase(author.charAt(0)) && Character.isLetter(author.charAt(0))) {
-                throw new ValidatorException("Authors should start with upper case");
-            }
-        }
-        for (int i = 0; i < authorsList.length; i++) {
-            for (int j = i + 1; j < authorsList.length; j++) {
-                if (authorsList[i].equalsIgnoreCase(authorsList[j])) {
-                    throw new ValidatorException("Authors should be unique");
-                }
+                throw new ValidatorException("message.authors_uppercase");
             }
         }
         return true;
@@ -76,10 +69,10 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validatePublisher(String publisher) throws ValidatorException {
         if (publisher == null || publisher.isEmpty()) {
-            throw new ValidatorException("Publisher cant be empty");
+            throw new ValidatorException("message.empty_publisher");
         }
         if (!Character.isUpperCase(publisher.charAt(0)) && Character.isLetter(publisher.charAt(0))) {
-            throw new ValidatorException("Publisher should starts with upper case");
+            throw new ValidatorException("message.publisher_uppercase");
         }
         return true;
     }
@@ -87,10 +80,10 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validatePublishDate(LocalDate publishDate) throws ValidatorException {
         if (publishDate == null) {
-            throw new ValidatorException("Publish date cant be empty");
+            throw new ValidatorException("message.empty_publishDate");
         }
         if (publishDate.isAfter(LocalDate.now())) {
-            throw new ValidatorException("Publish date cant be in future");
+            throw new ValidatorException("message.future_date");
         }
         return true;
     }
@@ -98,20 +91,7 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateGenres(String genres) throws ValidatorException {
         if (genres == null || genres.isEmpty()) {
-            throw new ValidatorException("Genres cant be empty");
-        }
-        String[] genresList = genres.split("\\s*(\\s|,|!|\\.)\\s*");
-        for (String genre : genresList) {
-            if (!Character.isUpperCase(genre.charAt(0)) && Character.isLetter(genre.charAt(0))) {
-                throw new ValidatorException("Genres should start with upper case");
-            }
-        }
-        for (int i = 0; i < genresList.length; i++) {
-            for (int j = i + 1; j < genresList.length; j++) {
-                if (genresList[i].equalsIgnoreCase(genresList[j])) {
-                    throw new ValidatorException("Genres should be unique");
-                }
-            }
+            throw new ValidatorException("message.empty_genres");
         }
         return true;
     }
@@ -119,7 +99,7 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateTotalAmount(int totalAmount) throws ValidatorException {
         if (totalAmount <= 0) {
-            throw new ValidatorException("Total amount cant be <=0");
+            throw new ValidatorException("message.minus_totalAmount");
         }
         return true;
     }
@@ -127,7 +107,7 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validatePageCount(int pageCount) throws ValidatorException {
         if (pageCount <= 0) {
-            throw new ValidatorException("Page count cant be <=0");
+            throw new ValidatorException("message.minus_pageCount");
         }
         return true;
     }
@@ -135,7 +115,7 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateISBNtoAdd(String ISBN) throws ValidatorException {
         if (ISBN == null || ISBN.isEmpty()) {
-            throw new ValidatorException("ISBN cant be empty");
+            throw new ValidatorException("message.empty_ISBN");
         }
         try {
             bookDAO.checkISBNtoAdd(ISBN);
@@ -148,7 +128,7 @@ public class BookValidatorImpl implements BookValidator {
     @Override
     public boolean validateISBNtoUpdate(String ISBN, long id) throws ValidatorException {
         if (ISBN == null || ISBN.isEmpty()) {
-            throw new ValidatorException("ISBN cant be empty");
+            throw new ValidatorException("message.empty_ISBN");
         }
         try {
             bookDAO.checkISBNtoUpdate(ISBN, id);

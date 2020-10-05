@@ -9,7 +9,6 @@ import by.itechart.library.controller.util.api.PathCreator;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.CommonService;
-import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,23 +26,16 @@ public class ViewProfileCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         HttpSession session = request.getSession();
-
         String path;
-
         User user = (User) session.getAttribute(ParameterName.USER);
-        long userId= user.getId();
-        int role = user.getRole().getRoleId();
-        try {
-            if (valueChecker.isAnyUser(role)) {
-                user = commonService.getProfile(userId);
-                request.setAttribute(ParameterName.USER, user);
-                path = pathCreator.getUserPage();
-            } else {
-                path = pathCreator.getError();
-            }
-        } catch (ServiceException e) {
-            log.error(e);
-            throw new CommandException(e);
+        int role = user.getRole()
+                       .getRoleId();
+        if (valueChecker.isAnyUser(role)) {
+            request.setAttribute(ParameterName.USER, user);
+            log.info("viewing profile");
+            path = pathCreator.getUserPage();
+        } else {
+            path = pathCreator.getNoAccess();
         }
         return path;
     }

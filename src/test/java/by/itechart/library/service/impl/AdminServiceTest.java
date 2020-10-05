@@ -59,12 +59,23 @@ public class AdminServiceTest {
     }
 
     @Test(expected = ServiceException.class)
-    public void addBook_ValidatorException() throws ValidatorException, ServiceException {
+    public void addBook_ValidatorException() throws ValidatorException, ServiceException, DAOException {
         Mockito.doThrow(ValidatorException.class)
                .when(bookValidator)
                .validateAdd(Mockito.any());
 
-        adminService.addBook(Mockito.any());
+        adminService.addBook(book);
+
+    }
+    @Test(expected = ServiceException.class)
+    public void addBook_DAOException() throws ValidatorException, ServiceException, DAOException {
+        Mockito.doReturn(true)
+               .when(bookValidator)
+               .validateAdd(Mockito.any());
+        Mockito.doThrow(DAOException.class)
+               .when(bookDAO)
+               .addBook(book);
+        adminService.addBook(book);
 
     }
 
@@ -73,13 +84,6 @@ public class AdminServiceTest {
         when(bookValidator.validateAdd(Mockito.any())).thenReturn(true);
         adminService.addBook(Mockito.any());
 
-    }
-
-    @Test
-    public void addBook_DAOException() throws DAOException {
-        Mockito.doThrow(DAOException.class)
-               .when(bookDAO)
-               .addBook(book);
     }
 
 
@@ -91,12 +95,13 @@ public class AdminServiceTest {
         adminService.updateBook(Mockito.any());
     }
 
-
-    @Test
-    public void updateBook_DAOException() throws DAOException {
-        Mockito.doThrow(DAOException.class)
-               .when(bookDAO)
-               .updateBook(book);
+    @Test(expected = ServiceException.class)
+    public void updateBook_DAOException() throws ValidatorException, ServiceException, DAOException {
+        Mockito.doReturn(true)
+               .when(bookValidator)
+               .validateUpdate(Mockito.any());
+        Mockito.doThrow(DAOException.class).when(bookDAO).updateBook(book);
+        adminService.updateBook(book);
     }
 
 
@@ -138,19 +143,20 @@ public class AdminServiceTest {
         adminService.changeUserDeletedStatus(Mockito.anyInt());
     }
 
-    @Test(expected = ServiceException.class)
-    public void getAllBorrowRecords_DAOException() throws DAOException, ServiceException {
-        Mockito.doThrow(DAOException.class)
-               .when(borrowRecordDAO)
-               .getAll(1, 1);
-        adminService.getAllBorrowRecords(1, 1);
+
+    @Test
+    public void getAllBorrowRecordsNew_validParams() throws DAOException, ServiceException {
+        when(borrowRecordDAO.getAll()).thenReturn(Collections.emptyList());
+        adminService.getAllBorrowRecords();
     }
+
 
     @Test
     public void getAllBorrowRecords_validParams() throws DAOException, ServiceException {
-        when(borrowRecordDAO.getAll(1, 1)).thenReturn(Collections.emptyList());
-        adminService.getAllBorrowRecords(1, 1);
+        when(borrowRecordDAO.getAll()).thenReturn(Collections.emptyList());
+        adminService.getAllBorrowRecords();
     }
+
 
     @Test(expected = ServiceException.class)
     public void updateBorrowRecord_ValidatorException() throws ValidatorException, ServiceException {
@@ -195,8 +201,8 @@ public class AdminServiceTest {
     public void getAllUsers_DAOException() throws DAOException, ServiceException {
         Mockito.doThrow(DAOException.class)
                .when(userDAO)
-               .getAll(Mockito.anyInt(), Mockito.anyInt());
-        adminService.getAllUsers(Mockito.anyInt(), Mockito.anyInt());
+               .getAll();
+        adminService.getAllUsers();
 
     }
 
@@ -205,8 +211,8 @@ public class AdminServiceTest {
         List<User> users = new ArrayList<>();
         Mockito.doReturn(users)
                .when(userDAO)
-               .getAll(Mockito.anyInt(), Mockito.anyInt());
-        List<User> result = adminService.getAllUsers(Mockito.anyInt(), Mockito.anyInt());
+               .getAll();
+        List<User> result = adminService.getAllUsers();
 
         assertEquals(result, users);
     }

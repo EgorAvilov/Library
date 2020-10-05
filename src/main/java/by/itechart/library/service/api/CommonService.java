@@ -16,7 +16,7 @@ public interface CommonService {
 
      void updateProfile(User user) throws ServiceException;
 
-     List<Book> getAllBooks(int currentPage, int recordsPerPage) throws ServiceException;
+     List<Book> getAllBooks() throws ServiceException;
 
      Book getBook(long bookId) throws ServiceException;
 

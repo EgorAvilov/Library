@@ -3,55 +3,48 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ tag isELIgnored="false" %>
 <nav>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-                <form action="controller" method="get">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-books">Main page</a>
-                            </li>
-                            <c:choose>
-                                <c:when test="${sessionScope.user.role.roleId == 1}">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-users">Users</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" href="${pageContext.request.contextPath}/add-book">Add book</a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" href="#">Borrow records</a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Profile
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item text-dark" href="#">View</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-dark" href="#">Edit</a>
-                                </div>
-                            </li>
-                            <input type="hidden" name="command" value="sign-out">
-                            <li class="nav-item">
-                                <button type="submit" class="btn btn-link text-white">Sign out</button>
-                            </li>
-                        </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="max-height: 60px;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-books">Main page</a>
+                </li>
+                <li class="nav-item active">
+                    <c:choose>
+                    <c:when test="${sessionScope.user.role.roleId==1}">
+                        <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-borrow-records-by-admin">Borrow records</a>
+                    </c:when>
+                        <c:otherwise>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-borrow-records-by-user">Borrow records</a>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+                <c:if test="${sessionScope.user.role.roleId == 1}">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/controller?command=view-all-users">Users</a>
+                </li>
+                </c:if>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="user-page">View</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-dark" href="edit-profile">Edit</a>
                     </div>
-                </form>
-            </nav>
+                </li>
+                <li class="nav-item active">
+                    <form action="controller" method="get">
+                        <button type="submit" name="command" value="sign-out" class="btn btn-link text-white">Sign out</button>
+                    </form>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 " action="controller" method="get">
+                <input class="form-control mr-sm-2" name="searchParameter"   type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0"  name="command" value="search-book" type="submit">Search</button>
+            </form>
         </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
+    </nav>
 </nav>

@@ -24,22 +24,12 @@ public class ForwardToMainPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
         String path;
-        int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
-        int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
         List<Book> books;
         try {
-            int numberOfRows = commonService.getNumberOfBookRows();
-            int numberOfPages = numberOfRows / recordsPerPage;
-            if (numberOfRows % recordsPerPage > 0) {
-                numberOfPages++;
-            }
-            books = commonService.getAllBooks(currentPage, recordsPerPage);
+            books = commonService.getAllBooks();
             request.setAttribute(ParameterName.BOOKS, books);
-            request.setAttribute(ParameterName.NUMBER_OF_PAGES, numberOfPages);
-            request.setAttribute(ParameterName.CURRENT_PAGE, currentPage);
-            request.setAttribute(ParameterName.RECORDS_PER_PAGE, recordsPerPage);
+            log.info("forward to main page");
             path = pathCreator.getMainPage();
         } catch (ServiceException e) {
             log.error(e);

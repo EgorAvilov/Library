@@ -27,12 +27,7 @@ public class ViewAllUsersCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
         HttpSession session = request.getSession();
-
-        //int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
-        //int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
-
         String path;
         List<User> users;
         User user = (User) session.getAttribute(ParameterName.USER);
@@ -40,19 +35,12 @@ public class ViewAllUsersCommand implements Command {
                        .getRoleId();
         try {
             if (valueChecker.isAdmin(role)) {
-                //int numberOfRows = adminService.getNumberOfUserRows();
-                //int numberOfPages = numberOfRows / recordsPerPage;
-                //if (numberOfRows % recordsPerPage > 0) {
-                //     numberOfPages++;
-                //}
-                users = adminService.getAllUsers(1, 10);
+                users = adminService.getAllUsers();
                 request.setAttribute(ParameterName.USERS, users);
-//                request.setAttribute(ParameterName.NUMBER_OF_PAGES, numberOfPages);
-//                request.setAttribute(ParameterName.CURRENT_PAGE, currentPage);
-//                request.setAttribute(ParameterName.RECORDS_PER_PAGE, recordsPerPage);
+                log.info("viewing all users");
                 path = pathCreator.getUsersPage();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

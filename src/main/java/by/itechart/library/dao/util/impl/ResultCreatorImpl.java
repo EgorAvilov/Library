@@ -3,6 +3,7 @@ package by.itechart.library.dao.util.impl;
 import by.itechart.library.dao.ColumnName;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.entity.*;
+import by.itechart.library.service.dto.BorrowRecordDto;
 import by.itechart.library.service.dto.EmailSenderDto;
 
 import java.sql.ResultSet;
@@ -59,8 +60,11 @@ public class ResultCreatorImpl implements ResultCreator {
                                         .toLocalDate();
         LocalDate dueDate = resultSet.getDate(ColumnName.BORROW_RECORD_DUE_DATE)
                                      .toLocalDate();
-        LocalDate returnDate = resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE)
-                                        .toLocalDate();
+        LocalDate returnDate = null;
+        if (resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE) != null) {
+            returnDate = resultSet.getDate(ColumnName.BORROW_RECORD_RETURN_DATE)
+                                  .toLocalDate();
+        }
         int statusId = resultSet.getInt(ColumnName.BORROW_RECORD_STATUS_ID);
         String comment = resultSet.getNString(ColumnName.BORROW_RECORD_COMMENT);
         long bookId = resultSet.getLong(ColumnName.BORROW_RECORD_BOOK_ID);
@@ -73,11 +77,45 @@ public class ResultCreatorImpl implements ResultCreator {
         borrowRecord.setDueDate(dueDate);
         borrowRecord.setReturnDate(returnDate);
         //borrowRecord.setStatusId(statusId);
-        borrowRecord.setRecordStatus(BorrowRecordStatus.values()[statusId - 1]);
+        if (statusId != 0) {
+            borrowRecord.setRecordStatus(BorrowRecordStatus.values()[statusId - 1]);
+        }
         borrowRecord.setComment(comment);
         borrowRecord.setBookId(bookId);
 
         return borrowRecord;
+    }
+
+    @Override
+    public BorrowRecordDto getNextBorrowRecordDto(ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong(1);
+        String bookTitle = resultSet.getNString(2);
+        LocalDate returnDate = null;
+        if (resultSet.getDate(3) != null) {
+            returnDate = resultSet.getDate(3)
+                                  .toLocalDate();
+        }
+        LocalDate dueDate = resultSet.getDate(4)
+                                     .toLocalDate();
+        LocalDate borrowDate = resultSet.getDate(5)
+                                        .toLocalDate();
+        String username = resultSet.getNString(6);
+        int statusId = resultSet.getInt(7);
+        String comment = resultSet.getNString(8);
+        long bookId = resultSet.getLong(9);
+
+
+        BorrowRecordDto borrowRecordDto = new BorrowRecordDto();
+        borrowRecordDto.setId(id);
+        borrowRecordDto.setBookTitle(bookTitle);
+        borrowRecordDto.setReturnDate(returnDate);
+        borrowRecordDto.setDueDate(dueDate);
+        borrowRecordDto.setBorrowDate(borrowDate);
+        borrowRecordDto.setUsername(username);
+        borrowRecordDto.setStatusId(statusId);
+        borrowRecordDto.setComment(comment);
+        borrowRecordDto.setBookId(bookId);
+        return borrowRecordDto;
     }
 
     @Override

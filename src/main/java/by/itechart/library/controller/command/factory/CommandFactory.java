@@ -19,6 +19,7 @@ public class CommandFactory {
     private final Map<String, Command> operations = new HashMap<>();
 
     private CommandFactory() {
+        operations.put(CommandName.COMMAND_VIEW_BORROW_RECORD, new ViewBorrowRecordByUserCommand());
         operations.put(CommandName.COMMAND_ADD_BOOK, new AddBookCommand());
         operations.put(CommandName.COMMAND_ADD_BORROW_RECORD, new AddBorrowRecordCommand());
         operations.put(CommandName.COMMAND_CHANGE_BOOK_DELETED_STATUS, new ChangeBookDeletedStatusCommand());

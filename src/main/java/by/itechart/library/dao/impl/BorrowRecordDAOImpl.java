@@ -10,6 +10,7 @@ import by.itechart.library.dao.util.api.ResourceCloser;
 import by.itechart.library.dao.util.api.ResultCreator;
 import by.itechart.library.dao.util.api.StatementInitializer;
 import by.itechart.library.entity.BorrowRecord;
+import by.itechart.library.service.dto.BorrowRecordDto;
 import by.itechart.library.service.dto.EmailSenderDto;
 import lombok.extern.log4j.Log4j;
 
@@ -30,9 +31,8 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     private DBConnectionPool dbConnectionPool = DBConnectionPool.getInstance();
 
     @Override
-    public List<BorrowRecord> getAll(int currentPage, int recordsPerPage) throws DAOException {
+    public List<BorrowRecord> getAll() throws DAOException {
         String request = SQLRequest.GET_ALL_BORROW_RECORDS;
-        int start = currentPage * recordsPerPage - recordsPerPage;
         List<BorrowRecord> borrowRecords = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -40,7 +40,6 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addPaginationParameters(statement, start, recordsPerPage);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 BorrowRecord borrowRecord = resultCreator.getNextBorrowRecord(resultSet);
@@ -55,6 +54,32 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             resourceCloser.close(connection);
         }
         return borrowRecords;
+    }
+
+    @Override
+    public List<BorrowRecordDto> getAllNew() throws DAOException {
+        String request = SQLRequest.GET_ALL_BORROW_RECORDS_NEW;
+        List<BorrowRecordDto> borrowRecordDtos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                BorrowRecordDto borrowRecordDto = resultCreator.getNextBorrowRecordDto(resultSet);
+                borrowRecordDtos.add(borrowRecordDto);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during getting all borrow records");
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+        return borrowRecordDtos;
     }
 
     @Override
@@ -77,9 +102,8 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
     }
 
     @Override
-    public List<BorrowRecord> getAllByUserId(long userId, int currentPage, int recordsPerPage) throws DAOException {
+    public List<BorrowRecord> getAllByUserId(long userId) throws DAOException {
         String request = SQLRequest.GET_BORROW_RECORDS_BY_USER_ID;
-        int start = currentPage * recordsPerPage - recordsPerPage;
         List<BorrowRecord> borrowRecords = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -87,7 +111,7 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addPaginationParameters(statement, userId, start, recordsPerPage);
+            statementInitializer.addPaginationParameters(statement, userId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 BorrowRecord borrowRecord = resultCreator.getNextBorrowRecord(resultSet);
@@ -102,6 +126,33 @@ public class BorrowRecordDAOImpl implements BorrowRecordDAO {
             resourceCloser.close(connection);
         }
         return borrowRecords;
+    }
+
+    @Override
+    public List<BorrowRecordDto> getAllByUserIdNew(long userId) throws DAOException {
+        String request = SQLRequest.GET_BORROW_RECORDS_BY_USER_ID_NEW;
+        List<BorrowRecordDto> borrowRecordDtos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnectionPool.getConnection();
+            statement = connection.prepareStatement(request);
+            statementInitializer.addPaginationParameters(statement, userId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                BorrowRecordDto borrowRecordDto = resultCreator.getNextBorrowRecordDto(resultSet);
+                borrowRecordDtos.add(borrowRecordDto);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException("Something went wrong during getting all user borrow records");
+        } finally {
+            resourceCloser.close(resultSet);
+            resourceCloser.close(statement);
+            resourceCloser.close(connection);
+        }
+        return borrowRecordDtos;
     }
 
     @Override

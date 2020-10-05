@@ -36,9 +36,10 @@ public class SetAdminCommand implements Command {
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.changeUserRole(userId);
+                log.info("setting admin");
                 path = pathCreator.getForwardUsersPage(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

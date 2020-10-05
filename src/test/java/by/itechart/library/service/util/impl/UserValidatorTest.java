@@ -1,3 +1,4 @@
+
 package by.itechart.library.service.util.impl;
 
 import by.itechart.library.dao.api.UserDAO;
@@ -47,22 +48,10 @@ public class UserValidatorTest {
         userValidator.validateUpdate(user);
     }
 
-    @Test
-    public void validateUserDeletedStatus_isNull() throws ValidatorException {
-        userValidator.validateUserDeletedStatus(user.isDeletedStatus());
-    }
 
-    @Test(expected = ValidatorException.class)
-    public void validateUserDeletedStatus_isDeleted() throws ValidatorException {
-        user.setDeletedStatus(true);
-        userValidator.validateUserDeletedStatus(user.isDeletedStatus());
-    }
 
-    @Test
-    public void validateUserDeletedStatus_validData() throws ValidatorException {
-        user.setDeletedStatus(false);
-        userValidator.validateUserDeletedStatus(user.isDeletedStatus());
-    }
+
+
 
 
     @Test(expected = ValidatorException.class)

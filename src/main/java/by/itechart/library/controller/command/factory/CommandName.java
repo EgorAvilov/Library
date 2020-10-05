@@ -1,6 +1,6 @@
 package by.itechart.library.controller.command.factory;
 
-public class CommandName {
+public final class CommandName {
     public static final String COMMAND_ADD_BOOK = "add-book";
     public static final String COMMAND_ADD_BORROW_RECORD = "add-borrow-record";
     public static final String COMMAND_CHANGE_BOOK_DELETED_STATUS = "change-book-deleted-status";
@@ -24,5 +24,8 @@ public class CommandName {
     public static final String COMMAND_VIEW_ALL_USERS = "view-all-users";
     public static final String COMMAND_VIEW_BOOK = "view-book";
     public static final String COMMAND_VIEW_PROFILE = "view-profile";
+    public static final String COMMAND_VIEW_BORROW_RECORD = "view-borrow-record";
+
+    private CommandName(){}
 
 }

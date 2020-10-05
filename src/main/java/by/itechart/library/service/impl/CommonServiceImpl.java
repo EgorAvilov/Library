@@ -32,10 +32,9 @@ public class CommonServiceImpl implements CommonService {
         User user;
         try {
             user = userDAO.getUser(username, password);
-            userValidator.validateUserDeletedStatus(user.isDeletedStatus());
-        } catch (DAOException | ValidatorException e) {
+        } catch (DAOException e) {
             log.error(e);
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
         return user;
     }
@@ -75,10 +74,10 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws ServiceException {
+    public List<Book> getAllBooks() throws ServiceException {
         List<Book> books;
         try {
-            books = bookDAO.getAllBooks(currentPage, recordsPerPage);
+            books = bookDAO.getAllBooks();
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);

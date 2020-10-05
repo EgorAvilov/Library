@@ -17,6 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="<c:url value="/resource/css/main-page.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resource/css/calendar.css"/>">
+    <script src="<c:url value="/resource/js/calendar.js"/>"></script>
+
     <title>Title</title>
 </head>
 <body style="background: url('resource/img/background.jpg') no-repeat center center fixed">
@@ -25,11 +28,11 @@
 </header>
 <main role="main">
     <div class="album py-5">
-        <div class="container" style="min-height: 800px;">
-            <div class="row">
+        <div class="container" style="min-height: 800px; overflow: hidden;">
+            <div class="row" style="width: 1200px;">
                 <c:forEach items="${requestScope.books}" var="book">
                     <div class="col-md-4">
-                        <div class="card mb-4 box-shadow bg-dark">
+                        <div class="card mb-4 box-shadow bg-dark" style="min-height: 450px; width: 225px;">
                             <c:choose>
                                 <c:when test="${book.cover == null || book.cover eq ''}">
                                     <img style="height: 225px; width: 225px;" class="card-img-top" src="<c:url value="/resource/img/default-book-cover.jpg"/>" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
@@ -48,16 +51,20 @@
                                 <div>
                                     <h7 class="card-text text-white">Publishing date: ${book.publishDate}</h7>
                                 </div>
+                                <div>
+                                    <p class="card-text text-white">Available amount: ${book.availableAmount}</p>
+                                </div>
                                 <p></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <form action="controller" method="get">
                                             <input type="hidden" name="bookId" value="${book.id}">
                                         <div class="btn-group">
                                             <button type="submit" name="command" value="view-book" class="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" name="command" value="edit-book" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            <c:if test="${sessionScope.user.role.roleId == 1}">
+                                                <button type="submit" name="command" value="forward-edit-book" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            </c:if>
                                         </div>
                                         </form>
-                                    <small class="text-muted text-white">Available amount: ${book.availableAmount}</small>
                                 </div>
                             </div>
                         </div>

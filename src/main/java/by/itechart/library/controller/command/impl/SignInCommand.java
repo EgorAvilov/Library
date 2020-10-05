@@ -25,7 +25,7 @@ public class SignInCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        String path;
+        String path = pathCreator.getSignIn();
 
         String username = request.getParameter(ParameterName.USERNAME);
         String password = request.getParameter(ParameterName.PASSWORD);
@@ -38,7 +38,8 @@ public class SignInCommand implements Command {
             path = pathCreator.getForwardMainPage(request.getContextPath());
         } catch (ServiceException e) {
             log.error(e);
-            throw new CommandException(e);
+            session.setAttribute("message_sign_in", e.getMessage());
+            session.setMaxInactiveInterval(1);
         }
         return path;
     }

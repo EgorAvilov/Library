@@ -14,7 +14,7 @@ public interface BookDAO {
 
      void changeDeletedStatus(long bookId) throws DAOException;
 
-     List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException;
+     List<Book> getAllBooks() throws DAOException;
 
      List<Book> searchBooks(String searchParameter) throws DAOException;
 

@@ -111,9 +111,8 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public List<Book> getAllBooks(int currentPage, int recordsPerPage) throws DAOException {
+    public List<Book> getAllBooks() throws DAOException {
         String request = SQLRequest.GET_ALL_BOOKS;
-        int start = currentPage * recordsPerPage - recordsPerPage;
         List<Book> books = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -121,7 +120,6 @@ public class BookDAOImpl implements BookDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addPaginationParameters(statement, start, recordsPerPage);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = resultCreator.getNextBook(resultSet);
@@ -205,7 +203,7 @@ public class BookDAOImpl implements BookDAO {
             statementInitializer.addISBNToAdd(statement, ISBN);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                throw new DAOException("Your ISBN is not unique");
+                throw new DAOException("message.notUniqueISBN");
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
@@ -230,7 +228,7 @@ public class BookDAOImpl implements BookDAO {
             statementInitializer.addISBNToUpdate(statement, ISBN,id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                throw new DAOException("Your ISBN is not unique");
+                throw new DAOException("message.notUniqueISBN");
             }
         } catch (SQLException | ConnectionPoolException e) {
             log.error(e);
@@ -243,12 +241,11 @@ public class BookDAOImpl implements BookDAO {
         return true;
     }
 
-
     @Override
     public void takeBook(long bookId) throws DAOException {
         int availableAmount = getAvailableAmountOfBooks(bookId);
         if (availableAmount <= 0) {
-            throw new DAOException("No free books");
+            throw new DAOException("message.no_free_books");
         }
         availableAmount--;
         setAvailableAmountOfBooks(bookId, availableAmount);

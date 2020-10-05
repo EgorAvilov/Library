@@ -1,13 +1,17 @@
 package by.itechart.library.controller.util.api;
 
 public interface PathCreator {
+    String getBorrowRecord();
+
+    String getBookPage();
+
+    String getNoAccess();
+
     String getError();
 
     String getSignIn();
 
     String getMainPage();
-
-    String getSignUp();
 
     String getBooksPage();
 
@@ -19,7 +23,9 @@ public interface PathCreator {
 
     String getBorrowRecordsPage();
 
-    String getBorrowRecordPage(String contextPath, long borrowRecordId);
+    String getBorrowRecordPageUser(String contextPath);
+
+    String getBorrowRecordPageAdmin(String contextPath);
 
     String getEditBook();
 

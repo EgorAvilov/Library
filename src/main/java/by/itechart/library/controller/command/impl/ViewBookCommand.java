@@ -31,7 +31,8 @@ public class ViewBookCommand implements Command {
         try {
             book = commonService.getBook(bookId);
             request.setAttribute(ParameterName.BOOK, book);
-            path = pathCreator.getBookPage(request.getContextPath(), bookId);
+            log.info("viewing book");
+            path = pathCreator.getBookPage();
         } catch (ServiceException e) {
             log.error(e);
             throw new CommandException(e);

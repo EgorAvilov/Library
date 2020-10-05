@@ -39,9 +39,10 @@ public class ForwardEditBorrowRecordCommand implements Command {
             if (valueChecker.isAnyUser(role)) {
                 borrowRecord = commonService.getBorrowRecord(borrowRecordId);
                 request.setAttribute(ParameterName.BORROW_RECORD, borrowRecord);
+                log.info("forward to update borrow record");
                 path = pathCreator.getEditBorrowRecord();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

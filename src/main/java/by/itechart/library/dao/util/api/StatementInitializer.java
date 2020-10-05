@@ -31,8 +31,6 @@ public interface StatementInitializer {
 
      void addSearchParameters(PreparedStatement statement, String searchParameter) throws SQLException;
 
-     void addPaginationParameters(PreparedStatement statement, int start, int recordsPerPage) throws SQLException;
-
      void addISBNToUpdate(PreparedStatement statement, String ISBN, long id) throws SQLException;
 
      void addISBNToAdd(PreparedStatement statement, String ISBN) throws SQLException;
@@ -43,7 +41,7 @@ public interface StatementInitializer {
 
      void updateBookAvailableAmount(PreparedStatement statement, long bookId, int availableAmount) throws SQLException;
 
-     void addPaginationParameters(PreparedStatement statement, long userId, int start, int recordsPerPage) throws SQLException;
+     void addPaginationParameters(PreparedStatement statement, long userId) throws SQLException;
 
      void addRemindDate(PreparedStatement statement, LocalDate dueDate) throws SQLException;
 

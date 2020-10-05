@@ -10,6 +10,7 @@ import by.itechart.library.entity.Book;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
 import by.itechart.library.service.api.AdminService;
+import by.itechart.library.service.exception.InvalidValuesException;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
 
@@ -39,16 +40,14 @@ public class AddBookCommand implements Command {
         String title = request.getParameter(ParameterName.TITLE);
         String authors = request.getParameter(ParameterName.AUTHORS);
         String publisher = request.getParameter(ParameterName.PUBLISHER);
-        if(request.getParameter(ParameterName.PUBLISH_DATE)==null){
-            throw new CommandException("Publish date cant be empty");
-        }
-        LocalDate publishDate = LocalDate.parse(request.getParameter(ParameterName.PUBLISH_DATE));
+        LocalDate publishDate;
         String genres = request.getParameter(ParameterName.GENRES);
         int pageCount = Integer.parseInt(request.getParameter(ParameterName.PAGE_COUNT));
         String ISBN = request.getParameter(ParameterName.ISBN);
         String description = request.getParameter(ParameterName.DESCRIPTION);
         int totalAmount = Integer.parseInt(request.getParameter(ParameterName.TOTAL_AMOUNT));
         int availableAmount = totalAmount;
+        publishDate = LocalDate.parse(request.getParameter(ParameterName.PUBLISH_DATE));
 
         Book book = new Book();
 
@@ -69,7 +68,7 @@ public class AddBookCommand implements Command {
                        .getRoleId();
         try {
             Part coverPart = request.getPart(ParameterName.COVER);
-            if(valueChecker.isPhoto(coverPart) && valueChecker.isSize(coverPart.getSize())) {
+            if (valueChecker.isPhoto(coverPart) && valueChecker.isSize(coverPart.getSize())) {
                 InputStream cover = getInputStream(coverPart);
                 book.setCoverStream(cover);
             }
@@ -77,8 +76,13 @@ public class AddBookCommand implements Command {
                 adminService.addBook(book);
                 path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
+        }   catch(InvalidValuesException e){
+            request.setAttribute("message_add_book",e.getMessage());
+            request.setAttribute(ParameterName.BOOK,book);
+            log.info("adding book");
+            path = pathCreator.getEditBook();
         } catch (ServiceException | IOException | ServletException e) {
             log.error(e);
             throw new CommandException(e);

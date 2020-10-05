@@ -32,14 +32,17 @@ public class AddBorrowRecordCommand implements Command {
         String path;
 
         User user = (User) session.getAttribute(ParameterName.USER);
-        int role = user.getRole().getRoleId();
+        int role = user.getRole()
+                       .getRoleId();
         long userId = user.getId();
 
         LocalDate borrowDate = LocalDate.now();
-        if(request.getParameter(ParameterName.DUE_DATE)==null){
-            throw new CommandException("Due date cant be empty");
+        LocalDate dueDate = null;
+        try {
+            dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));
+        } catch (NullPointerException e) {
+            request.setAttribute("message.empty_dueDate", e.getMessage());
         }
-        LocalDate dueDate = LocalDate.parse(request.getParameter(ParameterName.DUE_DATE));
         long bookId = Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
 
         BorrowRecord borrowRecord = new BorrowRecord();
@@ -50,9 +53,10 @@ public class AddBorrowRecordCommand implements Command {
         try {
             if (valueChecker.isUser(role)) {
                 userService.addBorrowRecord(borrowRecord);
+                log.info("adding borrow record");
                 path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

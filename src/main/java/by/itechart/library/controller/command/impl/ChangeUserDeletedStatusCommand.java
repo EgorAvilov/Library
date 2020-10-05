@@ -37,9 +37,10 @@ public class ChangeUserDeletedStatusCommand implements Command {
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.changeUserDeletedStatus(userId);
+                log.info("deleting user");
                 path = pathCreator.getForwardUsersPage(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

@@ -6,10 +6,13 @@ import by.itechart.library.controller.command.exception.CommandException;
 import by.itechart.library.controller.util.ControllerUtilFactory;
 import by.itechart.library.controller.util.api.ControllerValueChecker;
 import by.itechart.library.controller.util.api.PathCreator;
+import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.entity.User;
 import by.itechart.library.service.ServiceFactory;
+import by.itechart.library.service.api.CommonService;
 import by.itechart.library.service.api.UserService;
+import by.itechart.library.service.dto.BorrowRecordDto;
 import by.itechart.library.service.exception.ServiceException;
 import lombok.extern.log4j.Log4j;
 
@@ -25,35 +28,25 @@ public class ViewAllBorrowRecordsByUserCommand implements Command {
     private PathCreator pathCreator = utilFactory.getPathCreator();
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private UserService userService = serviceFactory.getUserService();
+    private CommonService commonService = serviceFactory.getCommonService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         HttpSession session = request.getSession();
 
-        int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
-        int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
-
         String path;
-        List<BorrowRecord> borrowRecords;
+        List<BorrowRecordDto> borrowRecords;
         User user = (User) session.getAttribute(ParameterName.USER);
         long userId= user.getId();
         int role = user.getRole().getRoleId();
         try {
             if (valueChecker.isUser(role)) {
-                int numberOfRows = userService.getNumberOfBorrowRecordRows(userId);
-                int numberOfPages = numberOfRows / recordsPerPage;
-                if (numberOfRows % recordsPerPage > 0) {
-                    numberOfPages++;
-                }
-                borrowRecords = userService.getAllBorrowRecords(userId, currentPage, recordsPerPage);
+                borrowRecords = userService.getAllBorrowRecords(userId );
                 request.setAttribute(ParameterName.BORROW_RECORDS, borrowRecords);
-                request.setAttribute(ParameterName.NUMBER_OF_PAGES, numberOfPages);
-                request.setAttribute(ParameterName.CURRENT_PAGE, currentPage);
-                request.setAttribute(ParameterName.RECORDS_PER_PAGE, recordsPerPage);
-                //path = pathCreator.getBooksPage();
-                path = "";
+                log.info("viewing all borrow record by user");
+                path = pathCreator.getBorrowRecordsPage();
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

@@ -55,6 +55,8 @@ public class SignUpCommand implements Command {
         try {
             commonService.signUp(user);
             session.setAttribute(ParameterName.USER, user);
+            log.info("signing up");
+
             path = pathCreator.getForwardMainPage(request.getContextPath());
         } catch (ServiceException e) {
             log.error(e);

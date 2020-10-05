@@ -3,18 +3,21 @@ package by.itechart.library.service.impl;
 import by.itechart.library.dao.DAOFactory;
 import by.itechart.library.dao.api.BookDAO;
 import by.itechart.library.dao.api.BorrowRecordDAO;
-import by.itechart.library.dao.api.UserDAO;
 import by.itechart.library.dao.exception.DAOException;
+import by.itechart.library.entity.Book;
 import by.itechart.library.entity.BorrowRecord;
 import by.itechart.library.service.UtilFactory;
 import by.itechart.library.service.api.UserService;
+import by.itechart.library.service.dto.BorrowRecordDto;
 import by.itechart.library.service.exception.ServiceException;
 import by.itechart.library.service.exception.ValidatorException;
 import by.itechart.library.service.util.BookValidator;
 import by.itechart.library.service.util.BorrowRecordValidator;
 import lombok.extern.log4j.Log4j;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @Log4j
 public class UserServiceImpl implements UserService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
@@ -23,6 +26,17 @@ public class UserServiceImpl implements UserService {
     private UtilFactory utilFactory = UtilFactory.getInstance();
     private BookValidator bookValidator = utilFactory.getBookValidator();
     private BorrowRecordValidator borrowRecordValidator = utilFactory.getBorrowRecordValidator();
+
+    @Override
+    public BorrowRecord getBorrowRecord(long borrowRecordId) throws ServiceException {
+        BorrowRecord borrowRecord;
+        try {
+            borrowRecord = borrowRecordDAO.getBorrowRecord(borrowRecordId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return borrowRecord;
+    }
 
     @Override
     public void addBorrowRecord(BorrowRecord borrowRecord) throws ServiceException {
@@ -49,15 +63,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BorrowRecord> getAllBorrowRecords(long userId, int currentPage, int recordsPerPage) throws ServiceException {
-        List<BorrowRecord> borrowRecords;
+    public List<BorrowRecordDto> getAllBorrowRecords(long userId) throws ServiceException {
+        List<BorrowRecordDto> borrowRecordDtos;
         try {
-            borrowRecords = borrowRecordDAO.getAllByUserId(userId, currentPage, recordsPerPage);
+            borrowRecordDtos = borrowRecordDAO.getAllByUserIdNew(userId);
         } catch (DAOException e) {
             log.error(e);
             throw new ServiceException(e);
         }
-        return borrowRecords;
+        return borrowRecordDtos;
     }
 
     @Override

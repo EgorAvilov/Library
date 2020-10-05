@@ -33,16 +33,22 @@ public class EditBorrowRecordByAdminCommand implements Command {
         String path;
 
         long borrowRecordId = Long.parseLong(request.getParameter(ParameterName.BORROW_RECORD_ID));
-        if(request.getParameter(ParameterName.STATUS)==null){
+        long bookId=Long.parseLong(request.getParameter(ParameterName.BOOK_ID));
+        if (request.getParameter(ParameterName.STATUS_ID) == null) {
             throw new CommandException("Status cant be empty");
         }
-        BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.valueOf(request.getParameter(ParameterName.STATUS));
-        String comment = request.getParameter(ParameterName.COMMENT);
+        int borrowRecordStatusId = Integer.parseInt(request.getParameter(ParameterName.STATUS_ID));
 
+        BorrowRecordStatus borrowRecordStatus = BorrowRecordStatus.values()[borrowRecordStatusId - 1];
+        String comment = request.getParameter(ParameterName.COMMENT);
+        if (comment == null) {
+            comment = "";
+        }
         BorrowRecord borrowRecord = new BorrowRecord();
         borrowRecord.setId(borrowRecordId);
         borrowRecord.setRecordStatus(borrowRecordStatus);
         borrowRecord.setComment(comment);
+        borrowRecord.setBookId(bookId);
 
         User user = (User) session.getAttribute(ParameterName.USER);
         int role = user.getRole()
@@ -50,9 +56,10 @@ public class EditBorrowRecordByAdminCommand implements Command {
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.updateBorrowRecord(borrowRecord);
-                path = pathCreator.getBorrowRecordPage(request.getContextPath(), borrowRecordId);
+                log.info("updating borrow record by admin");
+                path = pathCreator.getBorrowRecordPageAdmin(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

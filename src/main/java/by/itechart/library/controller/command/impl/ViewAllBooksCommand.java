@@ -21,27 +21,16 @@ public class ViewAllBooksCommand implements Command {
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private CommonService commonService = serviceFactory.getCommonService();
 
-    //здесь убрать хардкод
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         PathCreator pathCreator = utilFactory.getPathCreator();
-
-        //int currentPage = Integer.parseInt(request.getParameter(ParameterName.CURRENT_PAGE));
-        //int recordsPerPage = Integer.parseInt(request.getParameter(ParameterName.RECORDS_PER_PAGE));
-
-        String path = pathCreator.getError();
+        String path;
         List<Book> books;
         try {
-            int numberOfRows = commonService.getNumberOfBookRows();
-//            int numberOfPages = numberOfRows / recordsPerPage;
-//            if (numberOfRows % recordsPerPage > 0) {
-//                numberOfPages++;
-//            }
-            books = commonService.getAllBooks(1, 10);
+            books = commonService.getAllBooks();
             request.setAttribute(ParameterName.BOOKS, books);
-            request.setAttribute(ParameterName.NUMBER_OF_PAGES, 1);
-            request.setAttribute(ParameterName.CURRENT_PAGE, 1);
-            request.setAttribute(ParameterName.RECORDS_PER_PAGE, 10);
+            log.info("viewing all books");
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {
             log.error(e);

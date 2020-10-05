@@ -19,6 +19,9 @@
     <listener>
         <listener-class>by.itechart.library.controller.listener.ApplicationListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>by.itechart.library.controller.listener.EmailSenderListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>by.itechart.library.controller.MainServlet</servlet-class>
@@ -28,18 +31,7 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
-    <filter>
-        <filter-name>SecurityPageFilter</filter-name>
-        <filter-class>by.itechart.library.controller.filter.SecurityPageFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SecurityPageFilter</filter-name>
-        <url-pattern>/sign-in</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>SecurityPageFilter</filter-name>
-        <url-pattern>/book-page</url-pattern>
-    </filter-mapping>
+
 
     <servlet>
         <servlet-name>Sign-up</servlet-name>
@@ -98,7 +90,33 @@
         <servlet-name>UsersPage</servlet-name>
         <url-pattern>/users-page</url-pattern>
     </servlet-mapping>
-    
+
+    <servlet>
+        <servlet-name>BorrowRecords</servlet-name>
+        <jsp-file>/WEB-INF/jsp/borrow-records.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BorrowRecords</servlet-name>
+        <url-pattern>/borrow-records</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <jsp-file>/WEB-INF/jsp/profile.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/user-page</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateProfile</servlet-name>
+        <jsp-file>/WEB-INF/jsp/update-profile.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateProfile</servlet-name>
+        <url-pattern>/edit-profile</url-pattern>
+    </servlet-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/jsp/error-404.jsp</location>

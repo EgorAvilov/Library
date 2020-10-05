@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <link rel="stylesheet" type="text/css" href="resource/css/sign-in.css">
+    <fmt:setBundle basename="message"/>
 
     <title>Sign in</title>
 </head>
@@ -37,7 +38,7 @@
                         </div>
                         <input type="text" name="username" id="username" class="form-control"
                                placeholder="Username" aria-label="Username"
-                               aria-describedby="addon-wrapping">
+                               aria-describedby="addon-wrapping" required>
                     </div>
                     <br>
                     <div class="input-group flex-nowrap">
@@ -48,8 +49,12 @@
                         </div>
                         <input type="password" name="password" id="password" class="form-control"
                                placeholder="Password" aria-label="Password"
-                               aria-describedby="addon-wrapping">
+                               aria-describedby="addon-wrapping" required>
                     </div>
+                    <c:if test="${sessionScope.message_sign_in != null}">
+                    <br>
+                    <p style="color: #FF0000;"><fmt:message key="${sessionScope.message_sign_in}"/><p>
+                    </c:if>
                     <br>
                     <input type="hidden" name="command" value="sign-in">
                     <button type="submit" class="btn btn-success">

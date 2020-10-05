@@ -41,7 +41,7 @@ public class UserDAOImpl implements UserDAO {
             statementInitializer.addCredentials(statement, username, password);
             resultSet = statement.executeQuery();
             if (!resultSet.next()) {
-                throw new DAOException("No user with such credentials!");
+                throw new DAOException("message.no_user");
             }
             user = resultCreator.getNextUser(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
@@ -186,9 +186,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getAll(int currentPage, int recordsPerPage) throws DAOException {
+    public List<User> getAll() throws DAOException {
         String request = SQLRequest.GET_ALL_USERS;
-        int start = currentPage * recordsPerPage - recordsPerPage;
         List<User> users = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -196,7 +195,6 @@ public class UserDAOImpl implements UserDAO {
         try {
             connection = dbConnectionPool.getConnection();
             statement = connection.prepareStatement(request);
-            statementInitializer.addPaginationParameters(statement, start, recordsPerPage);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = resultCreator.getNextUser(resultSet);

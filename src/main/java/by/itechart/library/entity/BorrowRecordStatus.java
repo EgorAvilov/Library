@@ -8,7 +8,6 @@ public enum BorrowRecordStatus {
     LOST(3);
     @Getter
     private int borrowRecordStatusId;
-
     BorrowRecordStatus(int borrowRecordStatusId) {
         this.borrowRecordStatusId = borrowRecordStatusId;
     }

@@ -29,11 +29,11 @@ public class SearchBookCommand implements Command {
             throw new CommandException("Search parameters cant be empty");
         }
         String searchParameter = request.getParameter(ParameterName.SEARCH_PARAMETER);
-
         List<Book> books;
         try {
             books = commonService.searchBooks(searchParameter);
             request.setAttribute(ParameterName.BOOKS, books);
+            log.info("searching book");
             path = pathCreator.getBooksPage();
         } catch (ServiceException e) {
             log.error(e);

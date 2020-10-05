@@ -34,7 +34,7 @@
                     </div>
                     <input type="text" name="firstName" id="firstName" class="form-control"
                            placeholder="First name" aria-label="First name"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
@@ -42,7 +42,7 @@
                     </div>
                     <input type="text" name="lastName" id="LastName" class="form-control"
                            placeholder="Last name" aria-label="Last name"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
@@ -50,11 +50,11 @@
                     </div>
                     <input type="text" name="email" id="email" class="form-control"
                            placeholder="E-mail" aria-label="Email"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
-                    <select class="custom-select">
+                    <select class="custom-select" name="gender">
                         <option selected value="true">Male</option>
                         <option value="false">Female</option>
                     </select>
@@ -65,7 +65,7 @@
                     </div>
                     <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
                            placeholder="Phone number +375 (044) 111-1111" aria-label="Phone number"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
@@ -73,7 +73,7 @@
                     </div>
                     <input type="text" name="username" id="username" class="form-control"
                            placeholder="Username" aria-label="Username"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <div class="input-group flex-nowrap">
@@ -81,7 +81,7 @@
                     </div>
                     <input type="password" name="password" id="password" class="form-control"
                            placeholder="Password" aria-label="Password"
-                           aria-describedby="addon-wrapping">
+                           aria-describedby="addon-wrapping" required>
                 </div>
                 <br>
                 <input type="hidden" name="command" value="sign-up">

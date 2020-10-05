@@ -36,9 +36,10 @@ public class ChangeBookDeletedStatusCommand implements Command {
         try {
             if (valueChecker.isAdmin(role)) {
                 adminService.changeBookDeletedStatus(bookId);
+                log.info("deleting book");
                 path = pathCreator.getForwardMainPage(request.getContextPath());
             } else {
-                path = pathCreator.getError();
+                path = pathCreator.getNoAccess();
             }
         } catch (ServiceException e) {
             log.error(e);

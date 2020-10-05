@@ -1,5 +1,5 @@
 /* Set a style for all buttons */
-button {
+#borrow-button {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -27,13 +27,16 @@ button:hover {
     position: relative;
 }
 
-.container {
+#cont-calendar {
+    padding: 16px;
+}
+
+#cont-calendar1 {
     padding: 16px;
 }
 
 /* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
+#modal-1 {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -47,7 +50,7 @@ button:hover {
 }
 
 /* Modal Content/Box */
-.modal-content {
+#modal-content-1 {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;

@@ -10,9 +10,6 @@ public interface UserValidator {
 
     public boolean validateUpdate(User user) throws ValidatorException;
 
-    public boolean validateUserDeletedStatus(Boolean deletedStatus) throws ValidatorException;
-
-
     boolean validateUsername(String username) throws ValidatorException;
 
     boolean validatePhoneNumber(String phoneNumber) throws ValidatorException;
